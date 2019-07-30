@@ -10,15 +10,20 @@ footer o header
 */
 
 
+const listaProductos = (arreglo) => (
+  arreglo.map(indice => (<Producto key={indice}/>))
+);
+
 const Main = (props) => {
     //Aqui podemos hacer validaciones para retonar diferentes cosas
 
     //El metodo retunr es necesario
+    const arreglo = [1,2,3,4,5,6,7,8,9,0]
     return (
       <div>
       <Header/>
       <main>
-        <Producto/>
+        {listaProductos(arreglo)}
       </main>
       <Footer/>
       </div>
