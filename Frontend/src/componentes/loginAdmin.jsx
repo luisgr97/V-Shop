@@ -1,7 +1,6 @@
 /* Por el momento solo se tiene el login como ejemplo */
 import React, { Component } from 'react'
-import Form from 'react-bootstrap/Form'
-import { Button } from 'react-bootstrap'
+import { Button, Form, Label, FormGroup, Input, CustomInput } from 'reactstrap';
 import axios from 'axios'
 
 /*
@@ -50,37 +49,29 @@ class LoginAdmin extends Component {
 
     //El metodo retunr es necesario
     return (
-      <main>
         <Form className="formulario">
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Ingrese su usuario</Form.Label>
-            <Form.Control placeholder="Usuario" 
-              onChange = {this.onChange('nick')}
-            />
+          <FormGroup>
+            <Label>Ingrese su usuario</Label>
+            <Input type="email" name="email" id="exampleEmail" onChange = {this.onChange('nick')} />                         
             {/*<Form.Text className="text-muted">
               We'll never share your email with anyone else.
             </Form.Text>
             */}
-          </Form.Group>
+          </FormGroup>
             <br/>
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Contraseña</Form.Label>
-            <Form.Control type="password" 
-              onChange={this.onChange('password')}
-              placeholder="Password" 
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicChecbox">
-            <Form.Check custom type="checkbox" label="Recordar" />
-          </Form.Group>
+          <FormGroup>
+          <Label>Contraseña de acceso</Label>
+            <Input type="email" name="email" id="exampleEmail" onChange = {this.onChange('password')} />                                   
+          </FormGroup>
+          <FormGroup>
+          <CustomInput type="checkbox" id="exampleCustomCheckbox" label="Recordar" />            
+          </FormGroup>
           <div className="center">
-            <Button variant="danger" onClick={this.enviar}>
+            <Button color="danger" onClick={this.enviar}>
               Iniciar
             </Button>
           </div>
         </Form>
-      </main>
-
     );
   }
 }

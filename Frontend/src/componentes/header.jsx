@@ -1,5 +1,5 @@
 import React from 'react'
-
+import logo from '../logo.png'
 //Header simple
 const Header = (props) => {
     return(
@@ -9,7 +9,7 @@ const Header = (props) => {
                 <div className="col-md-3">
                     <div className="header-logo">
                         <a href="#" className="logo">
-                            <img src="./img/logo.png" alt=""/>
+                            <img src={logo} alt=""/>
                         </a>
                     </div>
                 </div>

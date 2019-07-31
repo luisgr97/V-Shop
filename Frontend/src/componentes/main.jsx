@@ -1,5 +1,5 @@
 /* Por el momento solo se tiene el login como ejemplo */
-import React, { Component } from 'react'
+import React from 'react'
 import Header from './header'
 import Footer from './footer'
 import Producto from './producto'

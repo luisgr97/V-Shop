@@ -11,7 +11,7 @@
 
 body{
   position: relative;
-  background: #eee;
+  background: #eee!important;
   font-family: 'Roboto', sans-serif!important;
 }
 header{
@@ -20,13 +20,15 @@ header{
 }
 main{
   margin:0 auto;
-  margin-top: 50px;
-  margin-bottom: 50px;
+  padding: 30px;
   height: 100%;
-  max-width: 90%;
+  max-width: 100%;
+  background: #fff;
   text-align: center
 }
+
 .formulario{
+  position: relative;
   background: #fff;
   max-width: 400px;
   margin:0 auto;
@@ -301,9 +303,9 @@ textarea.input {
   box-shadow: 0px 0px 0px 0px #E4E7ED, 0px 0px 0px 1px #E4E7ED;
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
-  max-width: 300px;
+  max-width: 290px;
   display: inline-block;
-  margin: 10px;
+  margin: 15px;
   margin-bottom: 50px;
 }
 
@@ -519,32 +521,5 @@ textarea.input {
   opacity: 1;
   visibility: visible;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
