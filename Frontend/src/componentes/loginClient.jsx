@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-
+import axios from 'axios'
 import { Button, FormGroup, Input } from 'reactstrap';
 import '../estilos/loginClient.css'
 
@@ -16,12 +16,28 @@ class LoginClient extends Component {
         };
         this.handleOnchange = this.handleOnchange.bind(this);
         this.enviarSolicitud = this.enviarSolicitud.bind(this)
+        this.enviar = this.enviar.bind(this);
+
     }
 
 
     handleOnchange = input => e => {
         this.setState({ [input]: e.target.value });
     }
+
+    enviar() {
+      const mensaje = {
+        password: this.state.password,
+        nick: this.state.nick
+      }
+  
+      //Axios se encarga de hacer solicitudes de forma sencilla
+      axios.post('http://localhost:5000/login', mensaje)
+      .then((response) => {
+        alert(JSON.stringify(response.data))
+      })
+    }
+
     enviarSolicitud() {
         /*
             let esConductor = (JSON.parse(this.state.conductor));

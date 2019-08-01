@@ -14,6 +14,7 @@ const listaProductos = (arreglo) => (
   arreglo.map(indice => (<Producto key={indice}/>))
 );
 
+
 const Main = (props) => {
     //Aqui podemos hacer validaciones para retonar diferentes cosas
 
@@ -22,7 +23,7 @@ const Main = (props) => {
     return (
       <div>
       <Header/>
-      <main>
+        <main>
         {listaProductos(arreglo)}
       </main>
       <Footer/>

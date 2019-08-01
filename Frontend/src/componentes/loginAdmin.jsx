@@ -31,12 +31,12 @@ class LoginAdmin extends Component {
   //Funcion ejemplo para hacer solicitud al servidor
   enviar() {
     const mensaje = {
-      password: this.state.password,
+      clave: this.state.password,
       nick: this.state.nick
     }
 
     //Axios se encarga de hacer solicitudes de forma sencilla
-    axios.post('http://localhost:5000/login', mensaje)
+    axios.post('http://localhost:5000/admins/login', mensaje)
     .then((response) => {
       alert(JSON.stringify(response.data))
     })

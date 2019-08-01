@@ -1,5 +1,7 @@
 import React from 'react'
 import logo from '../logo.png'
+import {Link} from 'react-router-dom'
+import {Button} from 'reactstrap'
 //Header simple
 const Header = (props) => {
     return(
@@ -18,26 +20,19 @@ const Header = (props) => {
                     <div className="header-search">
                         <form>
                             <select className="input-select">
-                                <option value="0">All Categories</option>
-                                <option value="1">Category 01</option>
-                                <option value="1">Category 02</option>
+                                <option value="0">Categorias</option>
+                                <option value="1">Computadores</option>
+                                <option value="1">Celulares</option>
                             </select>
-                            <input className="input" placeholder="Search here"/>
-                            <button className="search-btn">Search</button>
+                            <input className="input" placeholder="Buscar producto"/>
+                            <button className="search-btn">Buscar</button>
                         </form>
                     </div>
                 </div>
 
                 <div className="col-md-3 clearfix">
                     <div className="header-ctn">
-                        <div>
-                            <a href="#">
-                                <i className="fa fa-heart-o"></i>
-                                <span>Your Wishlist</span>
-                                <div className="qty">2</div>
-                            </a>
-                        </div>
-
+                        
                         <div className="dropdown">
                             <a className="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i className="fa fa-shopping-cart"></i>
@@ -79,6 +74,13 @@ const Header = (props) => {
                             </div>
                         </div>
 
+                        <div className="ingresarCliente">
+                            <i className="fa fa-user"></i>
+                            <Link to="/cliente">
+                                <span>Ingresar</span>
+                                </Link>
+                        </div>
+                        
                         <div className="menu-toggle">
                             <a href="#">
                                 <i className="fa fa-bars"></i>

@@ -1,104 +1,160 @@
 import React from 'react';
 import { Col, Row, Button, Form, FormGroup, Label, Input, CustomInput } from 'reactstrap';
 import '../estilos/registroClient.css'
+import axios from 'axios'
 
 class Registro extends React.Component {
+    constructor(props){
+        super(props)        
+        this.state={
+            tipo: props.tipo,
+            numero: props.numero,
+            nombre: props.nombre,
+            apellidos: props.apellidos,
+            correo: props.correo,
+            clave: props.clave,
+            direccion: props.direccion,
+            nacimiento: props.nacimiento,
+            cumpleanios: props.cumpleanios
+        };
+        this.handleOnChange = this.handleOnChange.bind(this) 
+        this.enviar = this.enviar.bind(this);
+
+    }
+
+    handleOnChange = input => e =>{ 
+        this.setState({ [input]: e.target.value});
+      }  
+
+    handleRadioChange = changeEvent => {
+    this.setState({
+        tipo: changeEvent.target.value
+    });
+    }
+
+    enviar() {
+        const mensaje = {
+            documento: this.state.tipo,
+            numero: this.state.numero,
+            nombre: this.state.nombre,
+            apellidos: this.state.apellidos,            
+            clave: this.state.clave,
+            direccion: this.state.direccion,
+            nacimiento: this.state.nacimiento,
+            cumpleanios: this.state.cumpleanios,
+            correo: this.state.correo
+        }
+    
+        //Axios se encarga de hacer solicitudes de forma sencilla
+        axios.post('http://localhost:5000/usuario/create', mensaje)
+        .then((response) => {
+          alert(JSON.stringify(response.data))
+        })
+    }
+
     render() {
         return (
             <Form className="registro">
                 <Row form>
                     <Col md={3}>
                         <FormGroup check inline>
-                            <CustomInput type="radio" id="cc" name="customRadio" label="CC" />
+                            <CustomInput type="radio" id="cc" name="customRadio" label="CC" value="cc"
+                            checked={this.state.tipo === 'cc'}
+                            onChange={this.handleRadioChange}
+                           />
                         </FormGroup>
                     </Col>
                     <Col md={3}>
                         <FormGroup check inline>
-                            <CustomInput type="radio" id="ti" name="customRadio" label="TI" />
+                            <CustomInput type="radio" id="ti" name="customRadio" label="TI" value="ti"                       
+                            checked={this.state.tipo === 'ti'}
+                            onChange={this.handleRadioChange}/>
+
                         </FormGroup>
                     </Col>
                     <Col md={6}>
                         <FormGroup>
-                            <Label for="exampleEmail">Numero</Label>
-                            <Input name="email" id="exampleEmail" placeholder="with a placeholder" />
+                            <Label for="numero">Numero *</Label>
+                            <Input type="text" id="numero" placeholder="Su identificacion..." 
+                            value={this.state.numero}  
+                            onChange = {this.handleOnChange('numero')}/>
                         </FormGroup>
                     </Col>
                     <Col md={6}>
                         <FormGroup>
-                            <Label for="exampleEmail">Nombre</Label>
-                            <Input name="email" id="exampleEmail" placeholder="with a placeholder" />
+                            <Label for="nombre">Nombre *</Label>
+                            <Input type="text" id="nombre" placeholder="Su nombre" 
+                            value={this.state.nombre}  
+                            onChange = {this.handleOnChange('nombre')}/>
                         </FormGroup>
                     </Col>
                     <Col md={6}>
                         <FormGroup>
-                            <Label for="exampleEmail">Apellidos</Label>
-                            <Input name="email" id="exampleEmail" placeholder="with a placeholder" />
+                            <Label for="apellidos">Apellidos *</Label>
+                            <Input type="text" id="apellidos" placeholder="Su apellido" 
+                            value={this.state.apellidos}                            
+                            onChange = {this.handleOnChange('apellidos')}/>
                         </FormGroup>
                     </Col>
                     <Col md={6}>
                         <FormGroup>
-                            <Label for="exampleEmail">Correo</Label>
-                            <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
+                            <Label for="correo">Correo *</Label>
+                            <Input type="email" name="email" id="correo" placeholder="correo electronico" 
+                            value={this.state.correo}  
+                            onChange = {this.handleOnChange('correo')}/>
                         </FormGroup>
                     </Col>
                     <Col md={6}>
                         <FormGroup>
-                            <Label for="examplePassword">Contraseña</Label>
-                            <Input type="password" name="password" id="examplePassword" placeholder="password placeholder" />
+                            <Label for="password">Contraseña *</Label>
+                            <Input type="password" name="password" id="password" placeholder="clave de acceso" 
+                            value={this.state.clave}  
+                            onChange = {this.handleOnChange('clave')}/>
                         </FormGroup>
                     </Col>
                 </Row>
                 <FormGroup>
-                    <Label for="exampleAddress">Direccion</Label>
-                    <Input type="text" name="address" id="exampleAddress" placeholder="1234 Main St" />
+                    <Label for="direccion">Direccion *</Label>
+                    <Input type="text" name="direccion" id="direccion" placeholder="Ej: Cra 28 N 23-B4" 
+                    value={this.state.direccion}  
+                    onChange = {this.handleOnChange('direccion')}/>
                 </FormGroup>
-                <Row form>
+                <Row form>                  
                     <Col md={6}>
                         <FormGroup>
-                            <Label for="exampleCity">City</Label>
-                            <Input type="text" name="city" id="exampleCity" />
-                        </FormGroup>
-                    </Col>
-                    <Col md={4}>
-                        <FormGroup>
-                            <Label for="exampleState">State</Label>
-                            <Input type="text" name="state" id="exampleState" />
-                        </FormGroup>
-                    </Col>
-                    <Col md={2}>
-                        <FormGroup>
-                            <Label for="exampleZip">Zip</Label>
-                            <Input type="text" name="zip" id="exampleZip" />
-                        </FormGroup>
-                    </Col>
-
-                    <Col md={6}>
-                        <FormGroup>
-                            <Label for="exampleDate">Date</Label>
+                            <Label for="exampleDate">Fecha de nacimiento</Label>
                             <Input
                                 type="date"
                                 name="date"
-                                id="exampleDate"
+                                id="fechaN"
                                 placeholder="date placeholder"
+                                value={this.state.nacimiento} 
+                                onChange = {this.handleOnChange('nacimiento')}
                             />
                         </FormGroup>
                     </Col>
                     <Col md={6}>
                         <FormGroup>
-                            <Label for="exampleDate">Date</Label>
+                            <Label for="exampleDate">Fecha cumpleaños</Label>
                             <Input
                                 type="date"
                                 name="date"
-                                id="exampleDate"
+                                id="fechaC"
                                 placeholder="date placeholder"
+                                value={this.state.cumpleanios} 
+                                onChange = {this.handleOnChange('cumpleanios')}
                             />
                         </FormGroup>
                     </Col>
                 </Row>
-                <Button>Sign in</Button>
+                <div className="center">
+                    <Button color="danger" onClick={this.enviar}>
+                        {this.props.textoBoton}
+                    </Button>
+                </div>
             </Form>
         );
     }
 }
 
-export default  Registro;
+export default Registro;

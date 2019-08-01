@@ -13,18 +13,16 @@ body{
   position: relative;
   background: #eee!important;
   font-family: 'Roboto', sans-serif!important;
+
 }
-header{
-  background: #ff4040; 
-  height: 100px;
-}
+
 main{
   margin:0 auto;
   padding: 30px;
   height: 100%;
   max-width: 100%;
   background: #fff;
-  text-align: center
+  text-align: center;
 }
 
 .formulario{
@@ -50,6 +48,12 @@ footer{
   text-align: center;
   padding: 10px;
 }
+
+
+.categorias{
+  max-width: 900px;
+  margin: 0 auto;
+}
 :root {
   --primary: #dc3545;
   --secondary: #6c757d;
@@ -58,8 +62,6 @@ footer{
   --info: #dc3545;
  
 }
-
-
 
 #header {
   padding-top: 15px;
@@ -74,8 +76,6 @@ footer{
 .header-logo .logo img {
   display: block;
 }
-
-
 
 .header-search {
   padding: 15px 0px;
@@ -522,4 +522,11 @@ textarea.input {
   visibility: visible;
 }
 
-
+.ingresarCliente{
+  text-align: center;
+  font-size: 15px;
+}
+.ingresarCliente .fa-user{
+  position: relative;
+  color:#fff
+}
