@@ -2,9 +2,7 @@ import Producto from '../models/producto';
 //import { on } from 'cluster';
 // este es un metodo asincrono ya que toma tiempo para crearse, por ende, en funcion se le indica con "async" y en la constante con await, para esperar a su creacion antes de hacer el send
 export async function crearProducto(req, res) {
-    //console.log(req.body);
-    //aber aber
-    const { nombre, imagen_url, empresa_fabricante, descripcion, precio_unitario, descuento, iva, unidades_disponibles, detalles } = req.body;
+    const { nombre, imagen_url, empresa_fabricante, descripcion, precio_unitario, descuento, iva, unidades_disponibles, detalles, id_subcategoria } = req.body;
     try {
         let nuevoProducto = await Producto.create({
             nombre,
@@ -15,9 +13,10 @@ export async function crearProducto(req, res) {
             descuento,
             iva,
             unidades_disponibles,
-            detalles
+            detalles,
+            id_subcategoria
         }, {
-                fields: ['nombre', 'imagen_url', 'empresa_fabricante', 'descripcion', 'precio_unitario', 'descuento', 'iva', 'unidades_disponibles', 'detalles']
+                fields: ['nombre', 'imagen_url', 'empresa_fabricante', 'descripcion', 'precio_unitario', 'descuento', 'iva', 'unidades_disponibles', 'detalles', 'id_subcategoria']
             });
 
         if (nuevoProducto) {
@@ -95,31 +94,40 @@ export async function deleteOnProducto(req, res) {
 
 export async function updateProductos(req, res) {
     const { codigo_producto } = req.params;
-    const { nombre, imagen_url, empresa_fabricante, descripcion, precio_unitario, descuento, iva, unidades_disponibles, detalles } = req.body;
-    const productos = await Producto.findAll({
-        attributes: ['codigo_producto', 'nombre', 'imagen_url', 'empresa_fabricante', 'descripcion', 'precio_unitario', 'descuento', 'iva', 'unidades_disponibles', 'detalles'],
-        where: {
-            codigo_producto
+    try {
+        const { nombre, imagen_url, empresa_fabricante, descripcion, precio_unitario, descuento, iva, unidades_disponibles, detalles, id_subcategoria } = req.body;
+        const productos = await Producto.findAll({
+            attributes: ['codigo_producto', 'nombre', 'imagen_url', 'empresa_fabricante', 'descripcion', 'precio_unitario', 'descuento', 'iva', 'unidades_disponibles', 'detalles', 'id_subcategoria'],
+            where: {
+                codigo_producto
+            }
+        });
+        if (productos.length > 0) {
+            productos.forEach(async onep => {
+                await onep.update({
+                    nombre,
+                    imagen_url,
+                    empresa_fabricante,
+                    descripcion,
+                    precio_unitario,
+                    descuento,
+                    iva,
+                    unidades_disponibles,
+                    detalles,
+                    id_subcategoria
+                });
+            })
         }
-    });
-    if (productos.length > 0) {
-        productos.forEach(async onep => {
-            await onep.update({
-                nombre,
-                imagen_url,
-                empresa_fabricante,
-                descripcion,
-                precio_unitario,
-                descuento,
-                iva,
-                unidades_disponibles,
-                detalles
-            });
-        })
-    }
 
-    return res.json({
-        message : "Proyecto actualizado con exito",
-        data: productos
-    })
+        return res.json({
+            message: "Proyecto actualizado con exito",
+            data: productos
+        })
+    } catch (e) {
+        console.log(e);
+        res.status(506).json({
+            message: "Algo salio mal 503",
+            data: {}
+        });
+    }
 }

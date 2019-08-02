@@ -9,17 +9,25 @@ import Regitro from './componentes/registroClient'
 import Example from './componentes/usuario'
 import { Fade } from 'reactstrap';
 import Categoria from './componentes/categorias'
-
+import Arituclo from './componentes/articulo'
 
 //En esta parte renderizamos lo prinipal
 class App extends Component {
     constructor(props){
         super(props)
         this.state = {
-            clienteLogueado: false,
+            clienteLogueado: true,
             adminLogueado: true
-        }
+        };
+        this.handleChangeAdminLog = this.handleChangeAdminLog.bind(this)
     }
+
+    handleChangeAdminLog(valor){
+        this.setState({
+            adminLogueado: valor
+        })
+    }
+
 render(){
     
     const propiedades={
@@ -36,7 +44,7 @@ render(){
     };
 
     const propiedades2={
-        tipo: "cc",
+        tipo: "CC",
         numero: "12151518",
         nombre: "Esneider Manzano",
         apellidos: "Aranago",
@@ -61,7 +69,7 @@ render(){
                 <Route exact path="/vs-admin" render={() =>
                     this.state.adminLogueado ?
                     <Redirect to="/admin"/> :
-                    <LoginAdmin/>
+                    <LoginAdmin login={this.handleChangeAdminLog}/>
                     }>
                 </Route>
 
@@ -90,7 +98,7 @@ render(){
                     <Redirect to="/" /> : 
                     (<div>
                     <Fade in={true} className="mt-3">    
-                    <Regitro {...propiedades2}
+                    <Regitro {...propiedades}
                     login={this.state.clienteLogueado} 
                     />
                     </Fade>
@@ -108,6 +116,12 @@ render(){
                 <Route path="/categorias" render={() => 
                     this.state.adminLogueado ? (<div>                                    
                     <Categoria {...this.props} />                   
+                    </div>) : <Redirect to="/" />}>
+                </Route>
+
+                <Route path="/productos" render={() => 
+                    this.state.adminLogueado ? (<div>                                    
+                    <Arituclo {...this.props} />                   
                     </div>) : <Redirect to="/" />}>
                 </Route>
                 

@@ -1,5 +1,5 @@
-import Cliente from '../modelos/cliente'
-import Usuario from '../modelos/usuario'
+import Cliente from '../models/cliente';
+import Usuario from '../models/usuario';
 
 //Sirve para crear todos los clientes
 export async function createCliente(req, res) {
@@ -36,17 +36,23 @@ export async function updateCliente(req, res) {
 
 //Esta funcion obtiene cliente segun id
 export async function getOneCliente(req, res) {
-    const { id_cliente } = req.body;
-    const cliente = await Cliente.findOne({
-        where: {
-            id_cliente: id_cliente
-        }
-    });
-    //Si no encontro retorna falso
-    if (cliente) {
-        res.send(cliente)
-    } else {
-        res.send({ encontrado: 'false' })
+    const { id_cliente } = req.params;
+    try {
+        const usuario = await Cliente.findOne({
+            attributes: ['id_cliente','estado', 'clave', 'nick', 'tarjeta'],
+            where: {
+                id_cliente
+            }
+        });
+        return res.json({
+            data: usuario
+        });
+    } catch (e) {
+        console.log(e);
+        res.status(502).json({
+            message: "Algo salio mal 502",
+            data: {}
+        });
     }
 }
 
@@ -72,6 +78,7 @@ export async function deleteCliente(req, res) {
 export async function logCliente(req, res) {
     const { nick, clave } = req.body;
     const cliente = await Cliente.findOne({
+        attributes: ['nick', 'clave'],
         where: {
             nick: nick,
             clave: clave
@@ -79,7 +86,7 @@ export async function logCliente(req, res) {
     });
     //Si no encontro retorna falso
     if (cliente) {
-        res.send(admin)
+        res.send(cliente)
     } else {
         res.send({ encontrado: 'false' })
     }

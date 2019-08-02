@@ -32,6 +32,9 @@ const Producto = sequelize.define('producto',{
     },
     detalles:{
         type: Sequelize.TEXT
+    },
+    id_subcategoria:{
+        type: Sequelize.INTEGER
     }
 },{
     timestamps: false,

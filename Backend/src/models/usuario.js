@@ -1,5 +1,5 @@
-import Sequelize from 'sequelize'
-import { sequelize } from '../db'
+import Sequelize from 'sequelize';
+import { sequelize } from '../database/database';
 
 //Asi se especifica un modelo de tabla usando el ORM
 const Usuario = sequelize.define('usuario', {

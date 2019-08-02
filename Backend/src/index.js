@@ -1,9 +1,8 @@
 import app from './app';
 
 async function main(){
-    await app.listen(4001);
+    await app.listen(4000);
     console.log('Server on port 5000');
 };
 
 main();
-

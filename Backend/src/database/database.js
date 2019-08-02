@@ -1,9 +1,9 @@
 import Sequelize from 'sequelize';
 
 export const sequelize = new Sequelize(
-    'FaztCode', //database
+    'postgres', //database
     'postgres', //user
-    '1996', //pass
+    'loquendo', //pass
     {
         host: 'localhost',
         dialect: 'postgres',

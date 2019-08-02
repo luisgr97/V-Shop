@@ -25,20 +25,20 @@ class LoginClient extends Component {
         this.setState({ [input]: e.target.value });
     }
 
-    enviar() {
+    enviarSolicitud() {
       const mensaje = {
-        password: this.state.password,
-        nick: this.state.nick
+        nick: this.state.identificador,
+        clave: this.state.contrasena
+        
       }
-  
       //Axios se encarga de hacer solicitudes de forma sencilla
-      axios.post('http://localhost:5000/login', mensaje)
+      axios.post('http://localhost:4000/cliente/login', mensaje)
       .then((response) => {
         alert(JSON.stringify(response.data))
       })
     }
 
-    enviarSolicitud() {
+    enviar() {
         /*
             let esConductor = (JSON.parse(this.state.conductor));
             if(this.state.identificador.match("^[0-9]+$")!=null){
@@ -121,8 +121,8 @@ class LoginClient extends Component {
                 <div id="espacio" />
                 <div className="card card-1">
                     <div className="card-heading">
-                        <div id="mundo" />
-                        <div id="taxi" />
+                        {/*<div id="mundo" />
+                        <div id="taxi" />*/}
                     </div>
                     <div id="formularioLogin">
                         <h2>Iniciar Sesión</h2>
@@ -139,7 +139,7 @@ class LoginClient extends Component {
                         <FormGroup>
                         <i className="fa fa-lock"></i>
                             <Input type="password" name="password"
-                                onChange={this.handleOnchange('identificador')}
+                                onChange={this.handleOnchange('contrasena')}
                                 placeholder="contrasena" />
 
                         </FormGroup>

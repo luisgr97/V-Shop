@@ -86,8 +86,7 @@ export async function deleteOnCategoria(req, res) {
 }
 
 export async function updateCategorias(req, res) {
-    const { id_categoria } = req.params;
-    const { nombre } = req.body;
+    const { id_categoria, nombre } = req.body;
     const categorias = await Categoria.findAll({
         attributes: ['id_categoria', 'nombre'],
         where: {

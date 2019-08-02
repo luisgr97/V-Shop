@@ -31,14 +31,15 @@ class LoginAdmin extends Component {
   //Funcion ejemplo para hacer solicitud al servidor
   enviar() {
     const mensaje = {
-      clave: this.state.password,
-      nick: this.state.nick
+      nick: this.state.nick,
+      clave: this.state.password
+      
     }
 
     //Axios se encarga de hacer solicitudes de forma sencilla
-    axios.post('http://localhost:5000/admins/login', mensaje)
+    axios.post('http://localhost:4000/admins/login', mensaje)
     .then((response) => {
-      alert(JSON.stringify(response.data))
+      this.props.login(response.data);
     })
   }
 
@@ -61,7 +62,7 @@ class LoginAdmin extends Component {
             <br/>
           <FormGroup>
           <Label>Contraseña de acceso</Label>
-            <Input type="email" name="email" id="exampleEmail" onChange = {this.onChange('password')} />                                   
+            <Input type="password" name="email" id="exampleEmail" onChange = {this.onChange('password')} />                                   
           </FormGroup>
           <FormGroup>
           <CustomInput type="checkbox" id="exampleCustomCheckbox" label="Recordar" />            

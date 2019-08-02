@@ -1,5 +1,5 @@
-import Gerente from '../modelos/gerente'
-import Usuario from '../modelos/usuario'
+import Gerente from '../models/gerente';
+import Usuario from '../models/usuario';
 
 //Sirve para crear todos los gerentes
 export async function createGerente(req, res) {
@@ -13,7 +13,6 @@ export async function createGerente(req, res) {
         res.json({ message: 'error', e });
     }
 }
-
 
 //Sirve para actualizar todos los gerentes
 export async function updateGerente(req, res) {

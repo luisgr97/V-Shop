@@ -10,6 +10,6 @@ router.get('/',getCategorias);
 // /api/categorias/:id_categoria
 router.get('/:id_categoria',getOneCategoria);
 router.delete('/:id_categoria',deleteOnCategoria);
-router.put('/:id_categoria',updateCategorias);
+router.put('/update',updateCategorias);
 
 export default router;

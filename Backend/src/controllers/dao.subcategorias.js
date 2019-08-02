@@ -84,7 +84,7 @@ export async function deleteOnSubCategoria(req, res) {
 
 export async function updateSubCategorias(req, res) {
     const { id_subcategoria } = req.params;
-    const { nombre,id_categoria } = req.body;
+    const { nombre/*,id_categoria */ } = req.body;
     const subcategorias = await SubCategoria.findAll({
         attributes: ['id_subcategoria', 'nombre','id_categoria'],
         where: {
@@ -94,8 +94,8 @@ export async function updateSubCategorias(req, res) {
     if (subcategorias.length > 0) {
         subcategorias.forEach(async onesc => {
             await onesc.update({
-                nombre,
-                id_categoria
+                nombre/*,
+                id_categoria*/
             });
         })
     }

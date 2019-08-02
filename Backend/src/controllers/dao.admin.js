@@ -1,20 +1,26 @@
-import Administrador from '../modelos/administrador'
-import Usuario from '../modelos/usuario'
+import Administrador from '../models/administrador';
+import Usuario from '../models/usuario';
 
 
 //Esta funcion obtiene Admin segun id
 export async function getOneAdmin(req, res) {
-    const { id } = req.body;
-    const admin = await Admin.findOne({
-        where: {
-            id: id
-        }
-    });
-    //Si no encontro retorna falso
-    if (admin) {
-        res.send(admin)
-    } else {
-        res.send({ encontrado: 'false' })
+    const { id_adm } = req.params;
+    try {
+        const usuario = await Administrador.findOne({
+            attributes: ['id_adm','estado', 'clave', 'nick', 'id_usuario'],
+            where: {
+                id_adm
+            }
+        });
+        return res.json({
+            data: usuario
+        });
+    } catch (e) {
+        console.log(e);
+        res.status(502).json({
+            message: "Algo salio mal 502",
+            data: {}
+        });
     }
 }
 
@@ -22,24 +28,34 @@ export async function getOneAdmin(req, res) {
 //Esta funcion obtiene admin segun clave y nick
 export async function logAdmin(req, res) {
     const { nick, clave } = req.body;
-    const admin = await Administrador.findOne({
-        where: {
-            nick: nick,
-            clave: clave
+    try {
+        const admin = await Administrador.findOne({
+            attributes: ['id_adm', 'estado', 'clave', 'nick', 'id_usuario'],
+            where: {
+                nick: nick,
+                clave: clave
+            }
+        });
+        if(admin){
+            return res.send(true);
+        }else{
+            return res.send(false);
         }
-    });
-    //Si no encontro retorna falso
-    if (admin) {
-        res.send(admin)
-    } else {
-        res.send({ encontrado: 'false' })
+    } catch (e) {
+        console.log(e);
+        res.json({
+            message:"Error 201",
+            data: {}
+        });
     }
 }
 
 //Sirve para obtener todos los admins
 export async function getAdmins(req, res) {
     console.log(req.body)
-    const admins = await Administrador.findAll();
+    const admins = await Administrador.findAll({
+        attributes: ['id_usuario','nick', 'clave', 'estado']
+    });
     res.send(admins)
 }
 

@@ -58,16 +58,16 @@ class Registro extends React.Component {
                 <Row form>
                     <Col md={3}>
                         <FormGroup check inline>
-                            <CustomInput type="radio" id="cc" name="customRadio" label="CC" value="cc"
-                            checked={this.state.tipo === 'cc'}
+                            <CustomInput type="radio" id="cc" name="customRadio" label="CC" value="CC"
+                            checked={this.state.tipo === 'CC'}
                             onChange={this.handleRadioChange}
                            />
                         </FormGroup>
                     </Col>
                     <Col md={3}>
                         <FormGroup check inline>
-                            <CustomInput type="radio" id="ti" name="customRadio" label="TI" value="ti"                       
-                            checked={this.state.tipo === 'ti'}
+                            <CustomInput type="radio" id="ti" name="customRadio" label="TI" value="TI"                       
+                            checked={this.state.tipo === 'TI'}
                             onChange={this.handleRadioChange}/>
 
                         </FormGroup>

@@ -3,9 +3,9 @@ Los modelos representan una tabla de la
 base de datos, esto es necesario para el
 funcionamiento del ORM 
 */
-import Sequelize from 'sequelize'
-import { sequelize } from '../db'
-import Usuario from './usuario'
+import Sequelize from 'sequelize';
+import { sequelize } from '../database/database';
+import Usuario from './usuario';
 
 //Asi se especifica un modelo de tabla usando el ORM
 const Cliente = sequelize.define('cliente', {
