@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { Button, FormGroup, Input } from 'reactstrap';
+
+import logo from '../logo.png'
+
 import '../estilos/loginClient.css'
 
 class LoginClient extends Component {
@@ -119,11 +122,14 @@ class LoginClient extends Component {
         }
         return (
             <div>
-                <div id="espacio" />
+              <div id="espacio" />
+              <div className="header-logo-login">
+                <Link className="logo" to={"/"} ><img src={logo} alt=""/></Link>                
+              </div>
+
+                
                 <div className="card card-1">
                     <div className="card-heading">
-                        {/*<div id="mundo" />
-                        <div id="taxi" />*/}
                     </div>
                     <div id="formularioLogin">
                         <h2>Iniciar Sesión</h2>

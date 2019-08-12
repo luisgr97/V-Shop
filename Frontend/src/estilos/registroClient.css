@@ -5,5 +5,8 @@
     background: #fff;
     margin:0 auto;
     padding: 30px;
-    margin-top: 6vh;
+}
+
+.registro span{
+    text-align: center
 }

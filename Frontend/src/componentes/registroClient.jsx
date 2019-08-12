@@ -1,5 +1,9 @@
 import React from 'react';
 import { Col, Row, Button, Form, FormGroup, Label, Input, CustomInput } from 'reactstrap';
+import { Link } from 'react-router-dom'
+
+import logo from '../logo.png'
+
 import '../estilos/registroClient.css'
 import axios from 'axios'
 
@@ -54,7 +58,13 @@ class Registro extends React.Component {
 
     render() {
         return (
-            <Form className="registro">
+            <div>
+<div id="espacio" />
+                <div className="header-logo-login">
+                <Link className="logo" to={"/"} ><img src={logo} alt=""/></Link>                
+              </div>
+
+            <Form className="registro">                
                 <Row form>
                     <Col md={3}>
                         <FormGroup check inline>
@@ -152,7 +162,10 @@ class Registro extends React.Component {
                         {this.props.textoBoton}
                     </Button>
                 </div>
+                <br />
+                <span className="mensajito">¿Ya tiene cuenta? <Link to={"/cliente"} >inicia sesión</Link></span>
             </Form>
+            </div>
         );
     }
 }

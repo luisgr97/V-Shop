@@ -16,7 +16,7 @@ class App extends Component {
     constructor(props){
         super(props)
         this.state = {
-            clienteLogueado: true,
+            clienteLogueado: false,
             adminLogueado: true
         };
         this.handleChangeAdminLog = this.handleChangeAdminLog.bind(this)
