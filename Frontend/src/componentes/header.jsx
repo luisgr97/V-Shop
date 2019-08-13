@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../logo.png'
+import logo from '../logo2a.png'
 import {Link} from 'react-router-dom'
 import {Button} from 'reactstrap'
 //Header simple

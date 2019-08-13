@@ -2,7 +2,7 @@ import React from 'react';
 import { Col, Row, Button, Form, FormGroup, Label, Input, CustomInput } from 'reactstrap';
 import { Link } from 'react-router-dom'
 
-import logo from '../logo.png'
+import logo from '../logo1a.png'
 
 import '../estilos/registroClient.css'
 import axios from 'axios'
