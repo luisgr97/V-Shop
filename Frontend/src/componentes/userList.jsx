@@ -27,12 +27,13 @@ export default class Example extends React.Component {
     return (
       <Dropdown isOpen={this.state.dropdownOpen} toggle={e => this.dropdownToggle(e)} id="clienteOpciones">
         <DropdownToggle caret nav>       
-            Some Actions   
+            Mi cuenta
         </DropdownToggle>
-        <DropdownMenu>
-          <DropdownItem tag="a">Action</DropdownItem>
-          <DropdownItem tag="a">Another Action</DropdownItem>
-          <DropdownItem tag="a">Something else here</DropdownItem>
+        <DropdownMenu right>
+          <DropdownItem tag="a">Mis compras</DropdownItem>
+          <DropdownItem tag="a">Mis comentarios</DropdownItem>
+          <DropdownItem tag="a">Configurar Cuenta</DropdownItem>
+          <DropdownItem tag="a">Cerrar sesion</DropdownItem>
         </DropdownMenu>
       </Dropdown>
     );

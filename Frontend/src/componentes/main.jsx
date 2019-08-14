@@ -1,6 +1,5 @@
 /* Por el momento solo se tiene el login como ejemplo */
 import React from 'react'
-import Header from './header'
 import Footer from './footer'
 import Producto from './producto'
 /*
@@ -22,7 +21,6 @@ const Main = (props) => {
     const arreglo = [1,2,3,4,5,6,7,8,9,0]
     return (
       <div>
-      <Header/>
         <main>
         {listaProductos(arreglo)}
       </main>

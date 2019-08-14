@@ -6,7 +6,6 @@ import Dashboard from './dashboard'
 import Header from './componentes/header'
 import LoginCliente from './componentes/loginClient'
 import Regitro from './componentes/registroClient'
-import Example from './componentes/usuario'
 import { Fade } from 'reactstrap';
 import Categoria from './componentes/categorias'
 import Arituclo from './componentes/articulo'
@@ -25,6 +24,7 @@ const BlackLogo = () =>{
         </div>
     )
 }
+
 //En esta parte renderizamos lo prinipal
 class App extends Component {
     constructor(props){
@@ -90,7 +90,8 @@ render(){
                 <Route exact path="/" render={() =>(
                     <div>
                     <Fade in={true}>
-                    <Main login={this.state.clienteLogueado} />
+                        <Header logueado={this.state.clienteLogueado} />
+                        <Main login={this.state.clienteLogueado} />
                     </Fade>
                     </div>
                 )} >
@@ -119,16 +120,6 @@ render(){
                         />
                         </Fade>
                     )}>
-                </Route>
-
-                <Route exact path="/usuario" render={() => 
-                    this.state.clienteLogueado ?                     
-                    (<Fade in={true} className="mt-3">                            
-                        <Example {...propiedades}
-                        login={this.state.clienteLogueado} 
-                        />
-                        </Fade>
-                    ) : <Redirect to="/cliente" /> }>
                 </Route>
 
                 <Route path="/config" render={() => 
