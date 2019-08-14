@@ -36,14 +36,8 @@ const Header = (props) => {
                         
                         <div className="carrito">                                
                             <i className="fa fa-shopping-cart"></i>
-                            <div className="qty">3</div>                            
-                            {
-                                props.logueado?
-                                <Cart/> :
-                                <Link to="/cliente">
-                                <span>Carrito</span>
-                                </Link>
-                            }                           
+                            <div className="qty">3</div>                                                        
+                                <Cart/>                          
                         </div>                            
 
                         <div className="ingresarCliente">
@@ -52,7 +46,7 @@ const Header = (props) => {
                                 props.logueado?
                                 <Example/> :
                                 <Link to="/cliente">
-                                    <span>Ingresar</span>
+                                    Ingresar
                                 </Link>
                             }                                                      
                         </div>
