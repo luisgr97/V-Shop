@@ -1,26 +1,4 @@
-body {
-    margin: 0;
-    padding: 0;
-    background: #000;
-}
-
-.header-logo-login {
-   text-align: center
-
-}
-  
-.header-logo-login .logo img {
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 50px;
-}
-
-#espacio {
-    position: relative;
-    padding-bottom: 30px;
-}
-
-.card-1 {
+.bloque-login {
     -webkit-box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
     -moz-box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
     box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
@@ -28,13 +6,13 @@ body {
     display: table;
 }
 
-.card-1 .card-heading {
+.bloque-login .card-heading {
     background: #344955;
     width: 50%;
     display: table-cell;
 }
 
-.card-1 .card-heading #mundo {
+.bloque-login .card-heading #mundo {
     height: 335px;
     width: 335px;
     background: url("../imagenes/mundo.png") top center/cover no-repeat;
@@ -48,7 +26,7 @@ body {
     animation: spin 15s infinite linear;
 }
 
-.card-1 .card-heading #taxi {
+.bloque-login .card-heading #taxi {
     height: 76px;
     width: 167px;
     background: url("../imagenes/taxi.png") top center/cover no-repeat;
@@ -59,7 +37,7 @@ body {
     animation: 3s latido infinite;
 }
 
-.card-1 .card-heading #mundo {
+.bloque-login .card-heading #mundo {
     height: 335px;
     width: 335px;
     background: url("../imagenes/mundo.png") top center/cover no-repeat;
@@ -73,7 +51,7 @@ body {
     animation: spin 15s infinite linear;
 }
 
-.card-1 .card-heading #taxi {
+.bloque-login .card-heading #taxi {
     height: 76px;
     width: 167px;
     background: url("../imagenes/taxi.png") top center/cover no-repeat;
@@ -84,7 +62,7 @@ body {
     animation: 3s latido infinite;
 }
 
-.card {
+.bloque-login {
     max-width: 90%;
     overflow: hidden;
     margin: 0 auto;
@@ -118,9 +96,11 @@ body {
 #formularioLogin {
     margin: 0 auto;
     position: relative;
-    max-width: 30px!important;
-    text-align: center;
+    max-width: 300px!important;
     background: #fff;
+}
+#formularioLogin h3{
+    text-align: center;
 }
 
 #formularioLogin {
@@ -136,11 +116,12 @@ body {
 }
 
 .form-group i {
-    position: absolute;
-    left: 13px;
-    top: 13px;
+    position: relative;
+    left: 15px;
+    top: 30px;
     font-size: 15px;
-    color:#344955
+    color:#344955;
+    padding: 0
 }
 
 .btn-danger {

@@ -1,6 +1,7 @@
 import React from 'react'
 import logo from '../logo2a.png'
 import {Link} from 'react-router-dom'
+import Example from './usuario'
 import {Button} from 'reactstrap'
 //Header simple
 const Header = (props) => {
@@ -10,9 +11,7 @@ const Header = (props) => {
             <div className="row">
                 <div className="col-md-3">
                     <div className="header-logo">
-                        <a href="#" className="logo">
-                            <img src={logo} alt=""/>
-                        </a>
+                    <Link className="logo" to={"/"} ><img src={logo} alt=""/></Link> 
                     </div>
                 </div>
 
@@ -76,9 +75,10 @@ const Header = (props) => {
 
                         <div className="ingresarCliente">
                             <i className="fa fa-user"></i>
-                            <Link to="/cliente">
+                            <Example/>
+                            {/*<Link to="/cliente">
                                 <span>Ingresar</span>
-                                </Link>
+    </Link>*/}
                         </div>
                         
                         <div className="menu-toggle">

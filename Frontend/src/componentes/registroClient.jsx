@@ -2,7 +2,6 @@ import React from 'react';
 import { Col, Row, Button, Form, FormGroup, Label, Input, CustomInput } from 'reactstrap';
 import { Link } from 'react-router-dom'
 
-import logo from '../logo1a.png'
 
 import '../estilos/registroClient.css'
 import axios from 'axios'
@@ -50,20 +49,14 @@ class Registro extends React.Component {
         }
     
         //Axios se encarga de hacer solicitudes de forma sencilla
-        axios.post('http://localhost:5000/usuario/create', mensaje)
+        axios.post('http://localhost:4000/usuario/create', mensaje)
         .then((response) => {
           alert(JSON.stringify(response.data))
         })
     }
 
     render() {
-        return (
-            <div>
-<div id="espacio" />
-                <div className="header-logo-login">
-                <Link className="logo" to={"/"} ><img src={logo} alt=""/></Link>                
-              </div>
-
+        return (            
             <Form className="registro">                
                 <Row form>
                     <Col md={3}>
@@ -163,9 +156,10 @@ class Registro extends React.Component {
                     </Button>
                 </div>
                 <br />
-                <span className="mensajito">¿Ya tiene cuenta? <Link to={"/cliente"} >inicia sesión</Link></span>
+                <div className="mensajito">
+                    <span>¿Ya tiene cuenta? <Link to={"/cliente"} >inicia sesión</Link></span>
+                </div>
             </Form>
-            </div>
         );
     }
 }

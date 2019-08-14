@@ -1,17 +1,10 @@
 /*Puros estilos*/
 
-/* latin */
-@font-face {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu4mxK.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
+
 
 body{
   position: relative;
-  background: #eee!important;
+  background: #eee;
   font-family: 'Roboto', sans-serif!important;
 
 }
@@ -77,6 +70,19 @@ footer{
   display: block;
 }
 
+
+.header-logo-black {
+  text-align: center
+
+}
+ 
+.header-logo-black .logo img {
+   margin-left: auto;
+   margin-right: auto;
+   margin-top: 3vh;
+   margin-bottom: 2vh;
+}
+
 .header-search {
   padding: 15px 0px;
 }
@@ -103,6 +109,7 @@ footer{
   font-weight: 700;
   border: none;
   border-radius: 0px 40px 40px 0px;
+  margin-top: 1px;
 }
 
 
@@ -529,4 +536,17 @@ textarea.input {
 .ingresarCliente .fa-user{
   position: relative;
   color:#fff
+}
+
+.mt-3, .my-3 {
+  margin-top: 0rem !important;
+}
+
+#clienteOpciones a.nav-link{  
+  color: #fff;
+  font-size: 12px;
+  padding: 0rem 0rem;
+}
+.dropdown.show .dropdown-menu[x-placement="bottom-start"]{
+  transform: translate3d(-50px, 20px, 0) !important;
 }

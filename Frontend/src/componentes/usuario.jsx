@@ -1,31 +1,40 @@
 import React from 'react';
-import { Nav, NavItem, NavLink } from 'reactstrap';
+import {
+
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+  
+} from "reactstrap";
 
 export default class Example extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      isOpen: false
+    }
+    this.dropdownToggle = this.dropdownToggle.bind(this)
+  }
+
+  dropdownToggle(e) {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen
+    });
+  }
+
   render() {
     return (
-      <div>
-        <p>List Based</p>
-        <Nav vertical>
-          <NavItem>
-            <NavLink href="#">Link</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#">Link</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#">Another Link</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink disabled href="#">Disabled Link</NavLink>
-          </NavItem>
-        </Nav>
-        <hr />
-        <p>Link based</p>
-        <Nav vertical>
-          <NavLink href="#">Link</NavLink> <NavLink href="#">Link</NavLink> <NavLink href="#">Another Link</NavLink> <NavLink disabled href="#">Disabled Link</NavLink>
-        </Nav>
-      </div>
+      <Dropdown isOpen={this.state.dropdownOpen} toggle={e => this.dropdownToggle(e)} id="clienteOpciones">
+        <DropdownToggle caret nav>       
+            Some Actions   
+        </DropdownToggle>
+        <DropdownMenu>
+          <DropdownItem tag="a">Action</DropdownItem>
+          <DropdownItem tag="a">Another Action</DropdownItem>
+          <DropdownItem tag="a">Something else here</DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
     );
   }
 }

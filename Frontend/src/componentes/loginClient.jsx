@@ -121,29 +121,20 @@ class LoginClient extends Component {
 
         }
         return (
-            <div>
-              <div id="espacio" />
-              <div className="header-logo-login">
-                <Link className="logo" to={"/"} ><img src={logo} alt=""/></Link>                
-              </div>
-
-                
-                <div className="card card-1">
+            <div>                
+                <div className="bloque-login">
                     <div className="card-heading">
                     </div>
                     <div id="formularioLogin">
-                        <h2>Iniciar Sesión</h2>
+                        <h3>Iniciar Sesión</h3>
                         <br />
                         <FormGroup>
-                        <i className="fa fa-user"></i>
+                        <i className="fa fa-user"/>
                             <Input type="email" name="email"
                                 onChange={this.handleOnchange('identificador')}
                                 placeholder="Usuario" 
                                 />
 
-                        </FormGroup>
-                        <br />
-                        <FormGroup>
                         <i className="fa fa-lock"></i>
                             <Input type="password" name="password"
                                 onChange={this.handleOnchange('contrasena')}

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Main from './componentes/main'
-import { BrowserRouter, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter, Route, Redirect, Link } from 'react-router-dom'
 import LoginAdmin from './componentes/loginAdmin'
 import Dashboard from './dashboard'
 import Header from './componentes/header'
@@ -11,12 +11,26 @@ import { Fade } from 'reactstrap';
 import Categoria from './componentes/categorias'
 import Arituclo from './componentes/articulo'
 
+
+//import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+import logo from './logo1a.png'
+
+
+const BlackLogo = () =>{
+    return(
+        <div className="header-logo-black">
+            <Link className="logo" to={"/"} ><img src={logo} alt=""/></Link>                
+        </div>
+    )
+}
 //En esta parte renderizamos lo prinipal
 class App extends Component {
     constructor(props){
         super(props)
         this.state = {
-            clienteLogueado: false,
+            clienteLogueado: true,
             adminLogueado: true
         };
         this.handleChangeAdminLog = this.handleChangeAdminLog.bind(this)
@@ -62,7 +76,7 @@ render(){
             <BrowserRouter>
                 <Route path="/admin" render={props => 
                 this.state.adminLogueado ? 
-                < Dashboard {...props}/> :
+               <Dashboard {...props}/> :
                 <Redirect to="/vs-admin"/>} 
                 />
 
@@ -86,26 +100,37 @@ render(){
                     this.state.clienteLogueado ? 
                     <Redirect to="/"/> :
                     (<div>
-                    <Fade in={true} className="mt-3">                
-                    <LoginCliente login={this.state.clienteLogueado}/>
-                    </Fade>
+                        <BlackLogo/> 
+                        <Fade in={true} className="mt-3">                
+                        <LoginCliente login={this.state.clienteLogueado}/>
+                        </Fade>
                     </div>
                     )}>
                 </Route>
 
-                <Route path="/registro" render={() => 
+                <Route exact path="/registro" render={() => 
                     this.state.clienteLogueado ? 
                     <Redirect to="/" /> : 
-                    (<div>
-                    <Fade in={true} className="mt-3">    
-                    <Regitro {...propiedades}
-                    login={this.state.clienteLogueado} 
-                    />
-                    </Fade>
-                    </div>
+                    (<Fade in={true} className="mt-3" id="registro"> 
+                        <BlackLogo/>
+                           
+                        <Regitro {...propiedades}
+                        login={this.state.clienteLogueado} 
+                        />
+                        </Fade>
                     )}>
                 </Route>
-                
+
+                <Route exact path="/usuario" render={() => 
+                    this.state.clienteLogueado ?                     
+                    (<Fade in={true} className="mt-3">                            
+                        <Example {...propiedades}
+                        login={this.state.clienteLogueado} 
+                        />
+                        </Fade>
+                    ) : <Redirect to="/cliente" /> }>
+                </Route>
+
                 <Route path="/config" render={() => 
                     this.state.clienteLogueado ? (<div>                                    
                     <Header {...this.props} />

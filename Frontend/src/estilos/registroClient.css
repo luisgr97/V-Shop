@@ -7,6 +7,14 @@
     padding: 30px;
 }
 
-.registro span{
+.registro .mensajito{
     text-align: center
 }
+
+#registro{
+    background: url("https://4.bp.blogspot.com/-SQybeBqjj8c/UhyvJSp53UI/AAAAAAAADWQ/W0zgupDt-xg/s1600/Official-Windows-8-1-RTM-Wallpaper.jpg");
+    min-height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
