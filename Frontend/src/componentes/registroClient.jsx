@@ -21,7 +21,7 @@ class Registro extends React.Component {
             cumpleanios: props.cumpleanios
         };
         this.handleOnChange = this.handleOnChange.bind(this) 
-        this.enviar = this.enviar.bind(this);
+        this.enviar = this.enviar.bind(this)
 
     }
 
@@ -34,7 +34,7 @@ class Registro extends React.Component {
         tipo: changeEvent.target.value
     });
     }
-
+    
     enviar() {
         const mensaje = {
             documento: this.state.tipo,
@@ -157,7 +157,7 @@ class Registro extends React.Component {
                 </div>
                 <br />
                 <div className="mensajito">
-                    <span>¿Ya tiene cuenta? <Link to={"/cliente"} >inicia sesión</Link></span>
+                    <span>¿Ya tiene cuenta? <Link to={"/login"} >inicia sesión</Link></span>
                 </div>
             </Form>
         );

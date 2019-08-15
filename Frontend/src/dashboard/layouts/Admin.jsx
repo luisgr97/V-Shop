@@ -77,7 +77,7 @@ class Dashboard extends React.Component {
           <Switch>
             {routes.map((prop, key) => {
               return (
-                <Route
+                <Route 
                   path={prop.layout + prop.path}
                   component={prop.component}
                   key={key}

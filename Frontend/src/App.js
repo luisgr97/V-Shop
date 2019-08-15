@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Main from './componentes/main'
-import { BrowserRouter, Route, Redirect, Link } from 'react-router-dom'
+import { BrowserRouter, Route, Redirect, Link, Switch } from 'react-router-dom'
 import LoginAdmin from './componentes/loginAdmin'
 import Dashboard from './dashboard'
 import Header from './componentes/header'
@@ -31,14 +31,22 @@ class App extends Component {
         super(props)
         this.state = {
             clienteLogueado: false,
-            adminLogueado: true
+            adminLogueado: true,
+            number: 2
         };
         this.handleChangeAdminLog = this.handleChangeAdminLog.bind(this)
+        this.handleChangeNumber = this.handleChangeNumber.bind(this)
     }
 
     handleChangeAdminLog(valor){
         this.setState({
             adminLogueado: valor
+        })
+    }
+
+    handleChangeNumber(valor){
+        this.setState({
+            number: valor
         })
     }
 
@@ -69,35 +77,26 @@ render(){
         cumpleanios: "1995-10-18",
         textoBoton: "ACTUALIZAR"
     };
-
+//<Main login={this.state.clienteLogueado} />
     return (
         //En react, para dar estilos CSS usamos className en lugar de class
         <div className="App" >
             <BrowserRouter>
+            <Switch>
                 <Route path="/admin" render={props => 
-                this.state.adminLogueado ? 
-               <Dashboard {...props}/> :
-                <Redirect to="/vs-admin"/>} 
+                    this.state.adminLogueado ? 
+                    <Dashboard {...props}/> :
+                    <Redirect to="/vs-admin"/>} 
                 />
 
-                <Route exact path="/vs-admin" render={() =>
+                <Route  path="/vs-admin" render={() =>
                     this.state.adminLogueado ?
                     <Redirect to="/admin"/> :
                     <LoginAdmin login={this.handleChangeAdminLog}/>
                     }>
                 </Route>
-
-                <Route exact path="/" render={() =>(
-                    <div>
-                    <Fade in={true}>
-                        <Header logueado={this.state.clienteLogueado} />
-                        <Main login={this.state.clienteLogueado} />
-                    </Fade>
-                    </div>
-                )} >
-                </Route>
-
-                <Route path="/cliente" render={() => 
+            
+                <Route path="/login" render={() => 
                     this.state.clienteLogueado ? 
                     <Redirect to="/"/> :
                     (<div>
@@ -109,7 +108,7 @@ render(){
                     )}>
                 </Route>
 
-                <Route exact path="/registro" render={() => 
+                <Route path="/registro" render={() => 
                     this.state.clienteLogueado ? 
                     <Redirect to="/" /> : 
                     (<Fade in={true} className="mt-3" id="registro"> 
@@ -122,12 +121,6 @@ render(){
                     )}>
                 </Route>
 
-                <Route path="/config" render={() => 
-                    this.state.clienteLogueado ? (<div>                                    
-                    <Header {...this.props} />
-                    <Regitro {...propiedades2}/>
-                    </div>) : <Redirect to="/" />}>
-                </Route>
 
                 <Route path="/categorias" render={() => 
                     this.state.adminLogueado ? (<div>                                    
@@ -140,8 +133,28 @@ render(){
                     <Arituclo {...this.props} />                   
                     </div>) : <Redirect to="/" />}>
                 </Route>
-                
 
+                <Route exact path="/"  render={() =>(
+                    <div>
+                    <Fade in={true}>   
+                    <Header number={this.state.number}  logueado={this.state.clienteLogueado} />                                      
+                    </Fade>
+                    </div>
+                )} >
+                </Route>
+
+                <Route path="/data" render={() => 
+                    this.state.clienteLogueado ? (<div>  
+                    <Header 
+                    number={this.state.number} 
+                    logueado={this.state.clienteLogueado} 
+                    />                                                       
+                    <Regitro {...propiedades2}
+                    changeNumber = {this.handleChangeNumber}/>
+                    </div>) : <Redirect to="/" />}>
+                </Route>
+               
+                </Switch>
             </BrowserRouter>
         </div>
     );

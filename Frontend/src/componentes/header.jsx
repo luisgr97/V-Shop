@@ -32,20 +32,14 @@ const Header = (props) => {
                 </div>
 
                 <div className="col-md-3 clearfix">
-                    <div className="header-ctn">
-                        
-                        <div className="carrito">                                
-                            <i className="fa fa-shopping-cart"></i>
-                            <div className="qty">3</div>                                                        
-                                <Cart/>                          
-                        </div>                            
-
+                    <div className="header-ctn">                                                                              
+                        <Cart number={props.number}/>                                                                       
                         <div className="ingresarCliente">
                             <i className="fa fa-user"></i>
                             {
                                 props.logueado?
                                 <Example/> :
-                                <Link to="/cliente">
+                                <Link to="/login">
                                     Ingresar
                                 </Link>
                             }                                                      

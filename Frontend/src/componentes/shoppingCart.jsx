@@ -14,7 +14,8 @@ export default class Example extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      isOpen: false
+      isOpen: false,
+      number: 0
     }
     this.dropdownToggle = this.dropdownToggle.bind(this)
   }
@@ -28,6 +29,10 @@ export default class Example extends React.Component {
 
   render() {
     return (
+      <div className="carrito">                                
+                            <i className="fa fa-shopping-cart"></i>
+                            <div className="qty">{this.props.number}</div>                                                        
+                             
       <Dropdown isOpen={this.state.dropdownOpen} toggle={e => this.dropdownToggle(e)} id="clienteOpciones">
         <DropdownToggle caret nav>       
             Carrito
@@ -78,7 +83,7 @@ export default class Example extends React.Component {
             </div>
         </DropdownMenu>
       </Dropdown>
-
+                        </div> 
 
 
 
