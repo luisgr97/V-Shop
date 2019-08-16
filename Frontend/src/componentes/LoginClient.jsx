@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { Button, FormGroup, Input } from 'reactstrap';
 
-import logo from '../logo1a.png'
-
 import '../estilos/loginClient.css'
 
 class LoginClient extends Component {

@@ -1,10 +1,8 @@
 import React from 'react'
 import logo from '../logo2a.png'
 import {Link} from 'react-router-dom'
-import Example from './userList'
-import Cart from './shoppingCart'
-import {Button} from 'reactstrap'
-import producto from '../product01.png'
+import Example from './UserList'
+import Cart from './ShoppingCart'
 
 const Header = (props) => {
     return(

@@ -1,7 +1,7 @@
 /* Por el momento solo se tiene el login como ejemplo */
 import React from 'react'
-import Footer from './footer'
-import Producto from './producto'
+import Footer from './Footer'
+import Producto from './Producto'
 /*
 Los componentes con estado deben ser clases
 vea un ejemplo de componente sin estado en el
