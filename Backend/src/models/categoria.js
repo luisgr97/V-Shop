@@ -12,10 +12,11 @@ const Categoria = sequelize.define('categoria',{
     }
 },{
     timestamps: false,
-    freezeTableName: true
+    freezeTableName: true,
+    underscored: true
 });
 
-Categoria.hasMany(SubCategoria,{foreingkey: 'id_categoria', sourcekey:'id_categoria'});
-SubCategoria.belongsTo(Categoria,{foreingkey: 'id_categoria', sourcekey:'id_categoria'});
+Categoria.hasMany(SubCategoria, { foreignKey: 'id_categoria'});
 
 export default Categoria;
+

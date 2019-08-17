@@ -64,7 +64,7 @@ class Categorias extends Component {
 
     componentDidMount(){
         this.getCategorias()
-        this.getSubCategorias()
+       // this.getSubCategorias()
     }
 
     /*

@@ -1,5 +1,6 @@
 import Sequelize from 'sequelize';
 import {sequelize} from '../database/database';
+import Categoria from './categoria';
 
 const SubCategoria = sequelize.define('subcategoria',{
     id_subcategoria: {
@@ -10,11 +11,14 @@ const SubCategoria = sequelize.define('subcategoria',{
         type: Sequelize.STRING(30)
     },
     id_categoria: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: 'categoria',
+        referencesKey: 'id_categoria'
     }
 },{
-    timestamps: false,
-    freezeTableName: true
+    timestamps: false,    
+    underscored: true
 });
+
 
 export default SubCategoria;

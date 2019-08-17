@@ -8,8 +8,9 @@ import Dashboard from './dashboard'
 import Header from './componentes/Header'
 import LoginCliente from './componentes/LoginClient'
 import Regitro from './componentes/Registro'
-/*
+
 import Categoria from './componentes/Categorias'
+/*
 import Arituclo from './componentes/Articulo'
 */
 import Cliente from './componentes/Cliente'
@@ -60,12 +61,12 @@ render(){
         numero: "",
         nombre: "",
         apellidos: "",
-        correo: "",
-        clave: "",
+        telefono: "",
         direccion: "",
+        correo: "",
+        clave: "",        
         nacimiento: "",
-        cumpleanios: "",
-        textoBoton: "REGISTRARME"
+        nick: "",
     };
 
     const propiedades2={
@@ -73,12 +74,12 @@ render(){
         numero: "12151518",
         nombre: "Esneider Manzano",
         apellidos: "Aranago",
-        correo: "esneider.manzano@correounivalle.edu.co",
-        clave: "stefierrote",
+        telefono: "4455971",
         direccion: "Cra 28 C # 54 - 123",
+        correo: "esneider.manzano@correounivalle.edu.co",
+        clave: "stefierrote",       
         nacimiento: "1995-10-18",
-        cumpleanios: "1995-10-18",
-        textoBoton: "ACTUALIZAR"
+        nick: "loquendomanzano",
     };
 //<Main login={this.state.clienteLogueado} />
     return (
@@ -137,13 +138,13 @@ render(){
                     )}>
                 </Route>
 
-                {/*
+                
                 <Route path="/categorias" render={() => 
                     this.state.adminLogueado ? (<div>                                    
                     <Categoria {...this.props} />                   
                     </div>) : <Redirect to="/" />}>
                 </Route>
-
+{/*
                 <Route path="/productos" render={() => 
                     this.state.adminLogueado ? (<div>                                    
                     <Arituclo {...this.props} />                   

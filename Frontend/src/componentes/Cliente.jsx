@@ -10,25 +10,31 @@ const propiedades2={
   numero: "12151518",
   nombre: "Esneider Manzano",
   apellidos: "Aranago",
-  correo: "esneider.manzano@correounivalle.edu.co",
-  clave: "stefierrote",
+  telefono: "4455971",
   direccion: "Cra 28 C # 54 - 123",
+  correo: "esneider.manzano@correounivalle.edu.co",
+  clave: "stefierrote",       
   nacimiento: "1995-10-18",
-  cumpleanios: "1995-10-18",
+  nick: "loquendomanzano",
   textoBoton: "ACTUALIZAR"
-}; 
+};
 
 function Topics ({ match }) {
   return (
     <Container>
-      <div id="espacio"/>
+      <div className="espacio"/>
       <Row>
         <Col xs="3">
           <Sidebar/>
         </Col>
         <Col xs="9">
           {clientRoutes.map((ruta) => (
-              <Route key={ruta.id} path={`/cliente/${ruta.id}`} render={()=>(<ruta.component {...propiedades2}/>)}/>
+              <Route key={ruta.id} 
+              path={`/cliente/${ruta.id}`} 
+              render={()=>(
+                <ruta.component noRegistro={true} 
+                {...propiedades2}/>
+              )}/>
           ))}
         </Col>
       </Row>

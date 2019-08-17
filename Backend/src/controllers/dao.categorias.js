@@ -26,7 +26,13 @@ export async function createCategoria(req, res) {
 
 export async function getCategorias(req, res) {
     try {
-        const categorias = await Categoria.findAll();
+        const categorias = await Categoria.findAll({
+            subQuery: false,
+             include: [{
+                model: SubCategoria,
+                attributes:['id_subcategoria','nombre','id_categoria']
+            }]}
+        );
         return res.json({
             data: categorias
         });
