@@ -1,6 +1,6 @@
 import React from 'react'
-import Datos from '../componentes/RegistroClient'
-
+import Datos from '../componentes/Registro'
+import Sidebar from '../componentes/Sidebar'
 
 function Topic ({ match }) {
 
@@ -14,17 +14,17 @@ function Topic ({ match }) {
   
   const clientRoutes = [
   {
-    name: 'React Router',
+    name: 'Actualizar datos',
     id: 'data',
     component: Datos
   },
   {
-    name: 'React.js',
+    name: 'Mis compras',
     id: 'reactjs',
     component: Topic
   },
   {
-    name: 'Functional Programming',
+    name: 'Comentarios',
     id: 'functional-programming',
     component: Topic
   }

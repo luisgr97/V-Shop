@@ -1,6 +1,7 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
-
+import { Route, Redirect } from 'react-router-dom'
+import Sidebar from './Sidebar'
+import { Container, Row, Col } from 'reactstrap';
 
 import clientRoutes from '../rutas/cliente'
 
@@ -19,11 +20,22 @@ const propiedades2={
 
 function Topics ({ match }) {
   return (
-    <div>     
-        {clientRoutes.map((ruta) => (
-            <Route key={ruta.id} path={`/cliente/${ruta.id}`} render={()=>(<ruta.component {...propiedades2}/>)}/>
-        ))}
-    </div>
+    <Container>
+      <div id="espacio"/>
+      <Row>
+        <Col xs="3">
+          <Sidebar/>
+        </Col>
+        <Col xs="9">
+          {clientRoutes.map((ruta) => (
+              <Route key={ruta.id} path={`/cliente/${ruta.id}`} render={()=>(<ruta.component {...propiedades2}/>)}/>
+          ))}
+        </Col>
+      </Row>
+      <Redirect to="/cliente/data"/>
+
+    </Container>
+    
   )
 }
 

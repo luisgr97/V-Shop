@@ -7,7 +7,7 @@ import LoginAdmin from './componentes/LoginAdmin'
 import Dashboard from './dashboard'
 import Header from './componentes/Header'
 import LoginCliente from './componentes/LoginClient'
-import Regitro from './componentes/RegistroClient'
+import Regitro from './componentes/Registro'
 /*
 import Categoria from './componentes/Categorias'
 import Arituclo from './componentes/Articulo'
@@ -127,10 +127,12 @@ render(){
                     this.state.clienteLogueado ? 
                     <Redirect to="/" /> : 
                     (<Fade in={true} className="mt-3" id="registro"> 
-                        <BlackLogo/>                           
+                        <BlackLogo/> 
+                        <div id="registro-container">                    
                         <Regitro {...propiedades}
                         login={this.state.clienteLogueado} 
                         />
+                        </div>
                         </Fade>
                     )}>
                 </Route>

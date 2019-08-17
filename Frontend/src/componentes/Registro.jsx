@@ -58,7 +58,7 @@ class Registro extends React.Component {
     render() {
         return (            
             <Form className="registro">                
-                <Row form>
+                <Row form >
                     <Col md={3}>
                         <FormGroup check inline>
                             <CustomInput type="radio" id="cc" name="customRadio" label="CC" value="CC"

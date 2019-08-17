@@ -30,14 +30,19 @@ export default class Example extends React.Component {
       <div>
       <Dropdown isOpen={this.state.dropdownOpen} toggle={e => this.dropdownToggle(e)} id="clienteOpciones">
         <DropdownToggle caret nav>       
-            Mi cuenta
+            Estemen
         </DropdownToggle>
         <DropdownMenu right>
+          {/*
           {clientRoutes.map(({name, id}) => (
               <Link key={id} className="client-item" to={`/cliente/${id}`}><DropdownItem >
                 {name}</DropdownItem></Link>
           )
           )}  
+          */}
+          <Link className="client-item" to={`/cliente/${clientRoutes[0].id}`}>
+            <DropdownItem >Mi cuenta</DropdownItem>
+          </Link>
           <DropdownItem>Cerrar Sesión</DropdownItem>        
         </DropdownMenu>        
       </Dropdown>

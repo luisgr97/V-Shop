@@ -1,6 +1,9 @@
 
-.registro{
+#registro-container{
     max-width: 700px;
+    margin:0 auto;
+}
+.registro{
     position: relative;
     background: #fff;
     margin:0 auto;
