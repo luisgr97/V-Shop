@@ -1,7 +1,7 @@
 import React from 'react'
 import Datos from '../componentes/Registro'
 import Sidebar from '../componentes/Sidebar'
-
+import Comments from '../componentes/Comments'
 function Topic ({ match }) {
 
     return (
@@ -25,8 +25,8 @@ function Topic ({ match }) {
   },
   {
     name: 'Comentarios',
-    id: 'functional-programming',
-    component: Topic
+    id: 'comentarios',
+    component: Comments
   }
 ]
 

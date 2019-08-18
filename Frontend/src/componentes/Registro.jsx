@@ -3,7 +3,7 @@ import { Col, Row, Button, Form, FormGroup, Label, Input, CustomInput } from 're
 import { Link } from 'react-router-dom'
 
 
-import '../estilos/registroClient.css'
+import '../estilos/registro.css'
 import axios from 'axios'
 
 class Registro extends React.Component {
@@ -26,6 +26,9 @@ class Registro extends React.Component {
 
     }
 
+    componentWillMount(){
+        console.log("Se renderizo una sola vez")
+    }
     handleOnChange = input => e =>{ 
         this.setState({ [input]: e.target.value});
       }  
@@ -59,23 +62,26 @@ class Registro extends React.Component {
     render() {
         return (            
             <Form className="registro">                
-                <Row form >
-                    <Col md={3}>
+                <Row form >                
+                    <Col md={6}>
+                    <Label for="numero">Tipo de documento *</Label>
+                    <br/><br/>
+                    <div className="center">
                         <FormGroup check inline>
                             <CustomInput type="radio" id="cc" name="customRadio" label="CC" value="CC"
                                 checked={this.state.tipo === 'CC'}
                                 onChange={this.handleRadioChange}
                             />
                         </FormGroup>
-                    </Col>
-                    <Col md={3}>
+                        
                         <FormGroup check inline>
                             <CustomInput type="radio" id="ti" name="customRadio" label="TI" value="TI"                       
                                 checked={this.state.tipo === 'TI'}
                                 onChange={this.handleRadioChange}
                             />
 
-                        </FormGroup>
+                        </FormGroup>   
+                        </div>                 
                     </Col>                    
                     <Col md={6}>
                         <FormGroup>

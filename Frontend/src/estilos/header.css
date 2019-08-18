@@ -1,0 +1,134 @@
+
+#header {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: #15161D;
+  }
+  
+  .header-logo {
+    float: left;
+  }
+  
+  .header-logo .logo img {
+    display: block;
+  }
+  
+
+  .header-search {
+    padding: 15px 0px;
+  }
+  
+  .header-search form {
+    position: relative;
+  }
+  .header-search form .input-select {
+    margin-right: -1px;
+    border-radius: 40px 0px 0px 40px;
+  }
+  
+  .header-search form .input {
+    width: calc(100% - 260px);
+    margin-right: -0px;
+  }
+    
+
+.header-search form .search-btn {
+    height: 40px;
+    width: 100px;
+    background: #D10024;
+    color: #FFF;
+    font-weight: 700;
+    border: none;
+    border-radius: 0px 40px 40px 0px;
+    margin-top: 1px;
+  }
+
+  /* Cuadrar enlace de ingresar*/
+.header-ctn>div>a {
+    display: block;
+    position: relative;
+    width: 90px;
+    text-align: center;
+    color: #FFF;
+  }
+  
+  .header-ctn>div>a {
+    font-size: 12px;
+  }
+
+
+/*----------------------------*\
+	Inputs
+\*----------------------------*/
+
+/*-- Text input --*/
+
+.input {
+    height: 40px;
+    padding: 0px 15px;
+    border: 1px solid #E4E7ED;
+    background-color: #FFF;
+    width: 100%;
+  }
+  
+  textarea.input {
+    padding: 15px;
+    min-height: 90px;
+  }
+  
+  
+  /*-- Select input --*/
+  
+  .input-select {
+    padding: 0px 15px;
+    background: #FFF;
+    border: 1px solid #E4E7ED;
+    height: 40px;
+  }
+  
+  .ingresarCliente, .carrito{
+    text-align: center;
+    font-size: 18px;
+  }
+  
+  
+  .ingresarCliente .fa-user, .carrito .fa-shopping-cart{
+    position: relative;
+    color:#fff
+  }
+
+    
+.clienteOpciones a.nav-link{  
+    color: #fff;
+    font-size: 12px;
+    padding: 0rem 0rem;
+  }
+
+  .clienteOpciones .dropdown-menu .dropdown-item, .dropdown-item a{
+    transition: 0.2s all;
+    text-align: center;
+    padding-right: 10px;
+    padding-left: 10px;
+    color: #393939;
+  }
+
+  .clienteOpciones a:hover{
+    text-decoration: none
+  }
+  
+  .clienteOpciones .client-item:first-child button{
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+  
+  .clienteOpciones .dropdown-menu .dropdown-item:hover, .dropdown-menu .dropdown-item:focus {
+    background-color: #D10024;
+    cursor: pointer;
+  }
+  
+  /*  Acomodar el contador del carrito */
+.header-ctn>div>a {
+    width: 60px;
+  }

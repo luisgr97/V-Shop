@@ -19,13 +19,14 @@ const propiedades2={
   textoBoton: "ACTUALIZAR"
 };
 
-function Topics ({ match }) {
+function Topics (props) {
+ const {location} = props
   return (
     <Container>
       <div className="espacio"/>
       <Row>
         <Col xs="3">
-          <Sidebar/>
+          <Sidebar pathname = {location.pathname}/>
         </Col>
         <Col xs="9">
           {clientRoutes.map((ruta) => (

@@ -28,7 +28,9 @@ export default class Example extends React.Component {
   render() {
     return (
       <div>
-      <Dropdown isOpen={this.state.dropdownOpen} toggle={e => this.dropdownToggle(e)} id="clienteOpciones">
+      <Dropdown isOpen={this.state.dropdownOpen} 
+      toggle={e => this.dropdownToggle(e)} 
+      className="clienteOpciones">
         <DropdownToggle caret nav>       
             Estemen
         </DropdownToggle>

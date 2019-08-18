@@ -7,10 +7,19 @@ Los componentes con estado deben ser clases
 vea un ejemplo de componente sin estado en el
 footer o header
 */
+import imagen from '../product01.png'
 
-
+const product={
+  nombre: "XBOX ONE",
+  descripcion: "COnsola para jugar bien bacano",
+  marca: "SONY",
+  precio: "1000000",
+  imagen: imagen,
+  categoria: "Consolas",
+  descuento: 0
+};
 const listaProductos = (arreglo) => (
-  arreglo.map(indice => (<Producto key={indice}/>))
+  arreglo.map(indice => (<Producto key={indice} {...product}/>))
 );
 
 

@@ -1,3 +1,6 @@
+/*=========================================================
+	REGISTRO DE USUARIO
+===========================================================*/
 
 #registro-container{
     max-width: 700px;
@@ -22,3 +25,8 @@
 }
 
 .registro .form-group{margin-top:10px;}
+
+.form-check-inline{
+    margin-left: 40px;
+    margin-right: 40px;
+}

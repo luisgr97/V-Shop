@@ -8,6 +8,7 @@ import {
 } from "reactstrap";
 import producto from '../product01.png'
 
+import '../estilos/cartList.css'
 
 export default class Example extends React.Component {
   constructor(props){
@@ -32,7 +33,9 @@ export default class Example extends React.Component {
                             <i className="fa fa-shopping-cart"></i>
                             <div className="qty">{this.props.number}</div>                                                        
                              
-      <Dropdown isOpen={this.state.dropdownOpen} toggle={e => this.dropdownToggle(e)} id="clienteOpciones">
+      <Dropdown isOpen={this.state.dropdownOpen} 
+      toggle={e => this.dropdownToggle(e)} 
+      className="clienteOpciones">
         <DropdownToggle caret nav>       
             Carrito
         </DropdownToggle>

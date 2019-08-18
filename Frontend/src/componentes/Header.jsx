@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom'
 import Example from './UserList'
 import Cart from './ShoppingCart'
 
+import '../estilos/header.css'
+
 const Header = (props) => {
     return(
         <div id="header">

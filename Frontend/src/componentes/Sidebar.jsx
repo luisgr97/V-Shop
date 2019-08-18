@@ -65,17 +65,16 @@ var routes = [
 
   
 const Sidebar = (props) => {
-
+  
         return (
             <div>            
             <ListGroup>
             {clientRoutes.map(({name, id}) => (
                 <Link key={id} className="client-item" to={`/cliente/${id}`}>
-                    <ListGroupItem tag="a" href="#" action>{name}</ListGroupItem>
+                    <ListGroupItem  active={props.pathname.indexOf(id) > -1} action>{name}</ListGroupItem>
                 </Link>
           )
-          )} 
-              <ListGroupItem active tag="a" href="#" action>Cras justo odio</ListGroupItem>              
+          )}                            
             </ListGroup>            
           </div>
                 );

@@ -86,18 +86,7 @@ render(){
         //En react, para dar estilos CSS usamos className en lugar de class
         <div className="App" >
             <BrowserRouter>
-            <Switch>
-
-                <Route exact path="/"  render={() =>(
-                    <div>
-                        <Fade in={true}>   
-                        <Header number={this.state.number}  
-                        logueado={this.state.clienteLogueado} />  
-                        <Main login={this.state.clienteLogueado} />                                    
-                        </Fade>
-                    </div>
-                )} >
-                </Route>
+            <Switch>                
 
                 <Route path="/admin" render={props => 
                     this.state.adminLogueado ? 
@@ -137,8 +126,8 @@ render(){
                         </Fade>
                     )}>
                 </Route>
-
                 
+
                 <Route path="/categorias" render={() => 
                     this.state.adminLogueado ? (<div>                                    
                     <Categoria {...this.props} />                   
@@ -152,19 +141,32 @@ render(){
                 </Route>
 
                     */}
-                <Route path="/cliente" render={() => 
-                    this.state.clienteLogueado ? 
-                    (<div>    
-                        <Header number={this.state.number}  
-                        logueado={this.state.clienteLogueado} />                                                                               
-                        <Cliente {...propiedades2}
-                        changeNumber = {this.handleChangeNumber}/>
-                    </div>) : <Redirect to="/login" />}>
-                </Route>             
-            
-               <Route render={() => (<h1>Pagina no encontrada</h1>)} />
-
                 </Switch>
+                    <Header number={this.state.number}  
+                        logueado={this.state.clienteLogueado}                         
+                    />  
+                <Switch>
+                    <Route exact path="/"  render={() =>(
+                        <div>
+                            <Fade in={true}>                               
+                            <Main login={this.state.clienteLogueado} />                                    
+                            </Fade>
+                        </div>
+                    )} >
+                    </Route>
+
+                    <Route path="/cliente" render={({location}) => 
+                        this.state.clienteLogueado ? 
+                        (<div>                                                                                                            
+                            <Cliente {...propiedades2}
+                            location = {location}
+                            changeNumber = {this.handleChangeNumber}/>
+                        </div>) : <Redirect to="/login" />}>
+                    </Route>             
+                
+                    <Route render={() => (<h1>Pagina no encontrada</h1>)} />
+
+               </Switch>
             </BrowserRouter>
         </div>
     );
