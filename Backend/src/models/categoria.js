@@ -7,16 +7,18 @@ const Categoria = sequelize.define('categoria',{
         type: Sequelize.INTEGER,
         primaryKey: true
     },
-    nombre:{
+    nombre_categoria:{
         type: Sequelize.STRING(30)
+    },
+    linkimagen:{
+        type: Sequelize.STRING(100)
     }
 },{
     timestamps: false,
-    freezeTableName: true,
-    underscored: true
+    freezeTableName: true
 });
 
-Categoria.hasMany(SubCategoria, { foreignKey: 'id_categoria'});
+Categoria.hasMany(SubCategoria,{foreingkey: 'id_categoria', sourcekey:'id_categoria'});
+SubCategoria.belongsTo(Categoria,{foreingkey: 'id_categoria', sourcekey:'id_categoria'});
 
 export default Categoria;
-

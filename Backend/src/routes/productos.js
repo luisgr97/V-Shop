@@ -1,14 +1,20 @@
 import { Router } from 'express';
-import { crearProducto, getProductos, getOnProducto, deleteOnProducto, updateProductos } from '../controllers/dao.productos'; //funcion con los controladores para productos
+import { crearProducto, getProductos, getOnProducto, deleteOnProducto, updateProductos, getOnProductoBySubcategoria } from '../controllers/dao.productos'; //funcion con los controladores para productos
 const router = Router();
 
-// ruta inicial: /api/produtos/ endpoint
-//Manejador de peticion, se puede declarar aqui, pero para mayor orden, usamos controllers
-router.post('/',crearProducto);
-router.get('/',getProductos);
+/*CRUD category*/
+//Create category, requires body, return categoty || error
+router.post('/create', crearProducto);
+//Get all categorys, return categotys || null
+router.get('/get', getProductos);
+//Get one category, requires parameter id_categoria, return categoty || null
+router.get('/get/:id_producto', getOnProducto);
+//Update category, requires parameter id_categoria, return 1 || 0
+router.put('/update/:id_producto', updateProductos);
+//Delete category, requires parameter id_categoria, return 1 || 0
+router.delete('/delete/:id_producto', deleteOnProducto);
 
-// ruta inicial: /api/produtos/:id_producto endpoint
-router.get('/:codigo_producto',getOnProducto);
-router.delete('/:codigo_producto',deleteOnProducto);
-router.put('/:codigo_producto',updateProductos);
+/*functions*/
+router.get('/get/by-subcategory/:id_subcategoria',getOnProductoBySubcategoria);
+
 export default router;

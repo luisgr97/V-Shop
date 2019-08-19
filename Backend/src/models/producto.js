@@ -1,37 +1,25 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../database/database';
+import Imagenes from './imagen';
+import Comentario from './comentario';
+import Inventario_catalogo_productos from './inventario_catalogo_productos';
 
 const Producto = sequelize.define('producto',{
-    codigo_producto:{
+    id_producto:{
         type: Sequelize.INTEGER,
         primaryKey: true
     },
-    nombre:{
-        type: Sequelize.STRING(30)
-    },
-    imagen_url:{
-        type: Sequelize.STRING(100)
-    },
-    empresa_fabricante:{
-        type: Sequelize.STRING(30)
+    nombre_producto:{
+        type: Sequelize.STRING(20)
     },
     descripcion:{
-        type: Sequelize.TEXT
+        type: Sequelize.STRING(100)
     },
-    precio_unitario:{
+    marca:{
+        type: Sequelize.STRING(20)
+    },
+    precio:{
         type: Sequelize.FLOAT
-    },
-    descuento:{
-        type: Sequelize.FLOAT
-    },
-    iva:{
-        type: Sequelize.FLOAT
-    },
-    unidades_disponibles:{
-        type: Sequelize.INTEGER
-    },
-    detalles:{
-        type: Sequelize.TEXT
     },
     id_subcategoria:{
         type: Sequelize.INTEGER
@@ -40,5 +28,14 @@ const Producto = sequelize.define('producto',{
     timestamps: false,
     freezeTableName: true
 });
+
+Producto.hasMany(Imagenes,{foreingkey: 'id_producto', sourcekey:'id_producto'});
+Imagenes.belongsTo(Producto,{foreingkey: 'id_producto', sourcekey:'id_producto'});
+
+Producto.hasMany(Comentario,{foreingkey: 'id_producto', sourcekey:'id_producto'});
+Comentario.belongsTo(Producto,{foreingkey: 'id_producto', sourcekey:'id_producto'});
+
+Producto.belongsTo(Inventario_catalogo_productos,{foreingkey: 'id_producto', sourcekey:'id_producto'});
+Inventario_catalogo_productos.hasMany(Producto,{foreingkey: 'id_producto', sourcekey:'id_producto'});
 
 export default Producto;

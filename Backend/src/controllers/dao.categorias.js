@@ -1,16 +1,15 @@
 import Categoria from '../models/categoria';
-import SubCategoria from '../models/subcategoria';
 
+//Create category
 export async function createCategoria(req, res) {
-    const { nombre } = req.body;
-    //console.log(nombre);
+    const { nombre_categoria, linkimagen } = req.body;
     try {
-        let categoria = await Categoria.create({
-            nombre
-        }, {
-                fields: ['nombre']
-            });
-
+        const categoria = await Categoria.create({
+            nombre_categoria,
+            linkimagen
+        },{
+            fields: ['nombre_categoria','linkimagen']
+        });
         return res.json({
             message: "Categoria creada con exito",
             data: categoria
@@ -19,33 +18,27 @@ export async function createCategoria(req, res) {
         console.log(e);
         res.status(400).json({
             message: "Ups! algo salio mal 400",
-            data: categoria
+            data: {}
         });
     }
 }
 
+//Get all categorys
 export async function getCategorias(req, res) {
     try {
-        const categorias = await Categoria.findAll({
-            subQuery: false,
-             include: [{
-                model: SubCategoria,
-                attributes:['id_subcategoria','nombre','id_categoria']
-            }]}
-        );
-        return res.json({
-            data: categorias
-        });
+        const categorias = await Categoria.findAll();
+        return res.json(categorias);
     } catch (e) {
-        console.log(e)
+        console.log(e);
         res.status(401).json({
             message: "error 401",
             data: {}
-        })
+        });
     }
 }
 
-export async function getOneCategoria(req,res){
+//Get on category by id
+export async function getOneCategoria(req, res){
     const {id_categoria} = req.params;
     try{
         const categoria = await Categoria.findOne({
@@ -53,9 +46,7 @@ export async function getOneCategoria(req,res){
                 id_categoria
             }
         });
-        return res.json({
-            data: categoria
-        });
+        return res.json(categoria);
     }catch(e){
         console.log(e);
         res.status(402).json({
@@ -65,50 +56,45 @@ export async function getOneCategoria(req,res){
     }
 }
 
-export async function deleteOnCategoria(req, res) {
+//Delete one category
+export async function updateCategorias(req, res) {
     const { id_categoria } = req.params;
-    try {
-        const numRowDeleteSub = await SubCategoria.destroy({
-            where:{
-                id_categoria
-            }
-        });
-        const numRowDelete = await Categoria.destroy({
+    const { nombre_categoria, linkimagen } = req.body;
+    try{
+        const updatecategorias = await Categoria.update({
+            nombre_categoria,
+            linkimagen
+        },{
             where: {
                 id_categoria
             }
+            
         });
-        return res.json({
-            message: "Categoria eliminada",
-            count: numRowDelete
-        });
-    } catch (e) {
+        return res.json(updatecategorias);
+    }catch (e){
         console.log(e);
-        res.status(403).json({
+        res.status(402).json({
             message: "error 403",
             data: {}
         });
     }
 }
 
-export async function updateCategorias(req, res) {
-    const { id_categoria, nombre } = req.body;
-    const categorias = await Categoria.findAll({
-        attributes: ['id_categoria', 'nombre'],
-        where: {
-            id_categoria
-        }
-    });
-    if (categorias.length > 0) {
-        categorias.forEach(async onec => {
-            await onec.update({
-                nombre
-            });
-        })
+export async function deleteOnCategoria(req, res) {
+    const { id_categoria } = req.params;
+    try {
+        const numRowDelete = await Categoria.destroy({
+            where: {
+                id_categoria
+            }
+        });
+        return res.json(numRowDelete);
+    } catch (e) {
+        console.log(e);
+        res.status(403).json({
+            message: "error 404",
+            data: {}
+        });
     }
-
-    return res.json({
-        message : "Categoria actualizada con exito",
-        data: categorias
-    })
 }
+
