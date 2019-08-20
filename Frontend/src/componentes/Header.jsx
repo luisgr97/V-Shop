@@ -7,7 +7,7 @@ import Cart from './ShoppingCart'
 import '../estilos/header.css'
 
 const Header = (props) => {
-    return(
+    return(        
         <div id="header">
         <div className="container">
             <div className="row">

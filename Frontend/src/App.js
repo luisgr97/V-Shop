@@ -141,14 +141,13 @@ render(){
                 </Route>
 
                     */}
-                </Switch>
-                    <Header number={this.state.number}  
-                        logueado={this.state.clienteLogueado}                         
-                    />  
-                <Switch>
+        
                     <Route exact path="/"  render={() =>(
                         <div>
-                            <Fade in={true}>                               
+                            <Header number={this.state.number}  
+                                logueado={this.state.clienteLogueado}                         
+                            />
+                            <Fade in={true}>                                                           
                             <Main login={this.state.clienteLogueado} />                                    
                             </Fade>
                         </div>
@@ -157,7 +156,10 @@ render(){
 
                     <Route path="/cliente" render={({location}) => 
                         this.state.clienteLogueado ? 
-                        (<div>                                                                                                            
+                        (<div> 
+                            <Header number={this.state.number}  
+                                logueado={this.state.clienteLogueado}                         
+                             />                                                                                                           
                             <Cliente {...propiedades2}
                             location = {location}
                             changeNumber = {this.handleChangeNumber}/>
@@ -165,8 +167,7 @@ render(){
                     </Route>             
                 
                     <Route render={() => (<h1>Pagina no encontrada</h1>)} />
-
-               </Switch>
+                    </Switch>
             </BrowserRouter>
         </div>
     );

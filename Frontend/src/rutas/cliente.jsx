@@ -2,6 +2,8 @@ import React from 'react'
 import Datos from '../componentes/Registro'
 import Sidebar from '../componentes/Sidebar'
 import Comments from '../componentes/Comments'
+import Purchase from '../componentes/ClientPurchase'
+
 function Topic ({ match }) {
 
     return (
@@ -21,7 +23,7 @@ function Topic ({ match }) {
   {
     name: 'Mis compras',
     id: 'reactjs',
-    component: Topic
+    component: Purchase
   },
   {
     name: 'Comentarios',

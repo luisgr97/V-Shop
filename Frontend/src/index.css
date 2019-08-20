@@ -151,13 +151,53 @@ margin-left: 0px;
   margin-top: 0rem !important;
 }
 
+/*Ajuste para el sidebar*/
+.list-group-item.active {
+  background-color: #D10024;
+  border-color: #D10024;
+  transition: 0.2s all;
 
+}
 
+#sidebar a, #sidebar a li{
+  transition: 0.2s all;
 
+}
+#sidebar a li:hover{
+  text-decoration: none;
+  padding: 0.75rem 1.8rem;
+}
+#sidebar a:hover{
+  text-decoration: none;
+}
 
+#sidebar #close-acount{
+  transition: 0.2s all;
+  cursor: pointer;
+}
+#sidebar #close-acount:hover{
+  background: #2B2D42;
+}
+#sidebar #close-acount > span{
+  transition: 0.2s all
+}
+#sidebar #close-acount:hover > span{
+padding-left: 25px;
+color:#fff;
+}
 
+#sidebar #close-acount > i{
+  color:#fff;
+  position: absolute;
+  top:15px;
+  visibility: hidden;
+}
+#sidebar #close-acount:hover> i{
+  visibility: visible;
 
-
-
-
-
+}
+.custom-control-input:checked ~ .custom-control-label::before {
+  color: #fff;
+  border-color: #D10024;
+  background-color: #D10024;
+}
