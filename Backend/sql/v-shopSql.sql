@@ -1,4 +1,4 @@
---NOMBRE: V-ShopBD
+    --NOMBRE: V-ShopBD
 --AUTOR: Luis Alberto Gómez
 --PROPOSITO: Basé de datos para el proyecto.
 --TABLAS: 15 --> [rol, usuario, categoria, subcategoria, producto, comentario, descuento, catalogo_productos, sede, catalogo, factura, 
@@ -187,6 +187,15 @@ CREATE TABLE inventario_catalogo_productos
     FOREIGN KEY (id_catalogo) REFERENCES catalogo(id_catalogo) ON DELETE CASCADE,
     PRIMARY KEY(id_catalogo, id_producto)
 );
+
+
+INSERT INTO inventario_catalogo_productos (id_producto,
+                                           cantidad_en_inventario,
+                                           id_descuento,
+                                           id_catalogo) VALUES
+                                          (1, 50,1,1),
+                                          (2, 50,1,1);
+
 --------------------------------------------------------------------------------------------------------------------
 DROP TABLE IF EXISTS factura CASCADE;
 --tabla para las facturas.
@@ -200,6 +209,14 @@ CREATE TABLE factura
     FOREIGN KEY (id_cliente) REFERENCES usuario(id_usuario) ON DELETE CASCADE,
     FOREIGN KEY (id_catalogo) REFERENCES catalogo(id_catalogo) ON DELETE CASCADE
 );
+
+INSERT INTO factura (fecha, id_cliente,id_catalogo, total) VALUES
+                                          ('2019/01/19', 4,1,800),
+                                          ('2019/02/19', 5,1,800),
+                                          ('2019/03/19', 6,1,800),
+                                          ('2019/04/19', 7,1,800),
+                                          ('2019/05/19', 8,1,800);
+
 --------------------------------------------------------------------------------------------------------------
 DROP TABLE IF EXISTS detalle_factura CASCADE;
 --tabla para mostrar la informacion de la compra: producto,cantidad,descuento.
@@ -214,6 +231,13 @@ CREATE TABLE detalle_factura
     FOREIGN KEY (id_factura) REFERENCES factura(id_factura) ON DELETE CASCADE,
     PRIMARY KEY(num_detalle,id_factura)--cada atributo detalle es unico, y depende de la factura.
     );
+
+    INSERT INTO detalle_factura (id_factura,id_producto, cantidad_comprada, precio_actual) VALUES
+                                          (1,1,1,300),
+                                          (1,2,1,500),
+                                          (2,1,1,300),
+                                          (2,2,1,300),
+                                          (3,1,1,300);
 ---------------------------------------------------------------------------------------------------------------
 DROP TABLE IF EXISTS pago CASCADE;
 --tabla para manejar la información de los pagos.
@@ -224,11 +248,16 @@ CREATE TABLE pago
     modo_de_pago VARCHAR(30) NOT NULL,
 	banco_entidad VARCHAR(50) NOT NULL,
     numero_tarjeta_cuenta INTEGER NOT NULL,
-    monto_del_pago MONEY NOT NULL,
+    monto_del_pago FLOAT NOT NULL,
     cuotas INTEGER NOT NULL,
     FOREIGN KEY (id_factura) REFERENCES factura(id_factura) ON DELETE CASCADE,
     PRIMARY KEY(num_pago,id_factura)
 );
+
+  INSERT INTO pago (id_factura,modo_de_pago, banco_entidad,
+  numero_tarjeta_cuenta, monto_del_pago, cuotas) VALUES
+                                          (1,'Contado','BBVA',1231254758, 800, 1),
+                                          (2,'DIFERIDO','COLPATRIA',1216754758, 800, 3);
 
 --Bloque insert para los productos: 100 Registros. 7 en 3 subcategorias y 5 en 1 y 6 en la otra. por categoria.
 --INSERT INTO producto (nombre_producto, linkimagen, descripcion, marca, precio, id_subcategoria) VALUES ()
