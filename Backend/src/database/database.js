@@ -4,7 +4,7 @@ export const sequelize = new Sequelize(
     //'FaztCode', //database
     'Mvshop', //database
     'postgres', //user
-    '1996', //pass
+    ' ', //pass
     {
         host: 'localhost',
         dialect: 'postgres',

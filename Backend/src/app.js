@@ -11,6 +11,9 @@ import comentariosRoutes from './routes/comentarios';
 import descuentosRoutes from './routes/descuentos';
 import catalogosRoutes from './routes/catalogos';
 import inventarioRoutes from './routes/inventario_catalogo_productosC';
+import facturaRoutes from './routes/factura';  
+import detalle_facturaRoutes from './routes/detalle_factura' ;
+import pagRoutes from './routes/pago'
 
 //initialization
 const app = express();
@@ -28,6 +31,9 @@ app.use('/api/productos/comentarios',comentariosRoutes);
 app.use('/api/descuentos',descuentosRoutes);
 app.use('/api/categorias',categoriasRoutes);
 app.use('/api/subcategorias',subcategoriasRoutes);
+app.use('/api/factura',facturaRoutes);
+app.use('/api/factura/detalle_factura',detalle_facturaRoutes);
+app.use('/api/pago',pagRoutes)
 app.use('/usuario',usersRoutes);
 
 
