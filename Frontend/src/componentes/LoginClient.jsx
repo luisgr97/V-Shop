@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { Button, FormGroup, Input } from 'reactstrap';
+import Loading from './Loading';
 
 import '../estilos/loginClient.css'
 
@@ -10,10 +11,9 @@ class LoginClient extends Component {
         super(props);
         //console.log(props)
         this.state = {
-            identificador: "",
-            contrasena: "",
-            conductor: "true",
-            showPassword: true,
+            nick: "",
+            clave: "",
+            loading: false
         };
         this.handleOnchange = this.handleOnchange.bind(this);
         this.enviarSolicitud = this.enviarSolicitud.bind(this)
@@ -27,15 +27,23 @@ class LoginClient extends Component {
     }
 
     enviarSolicitud() {
+      this.setState({
+        loading: true
+      })
       const mensaje = {
-        nick: this.state.identificador,
-        clave: this.state.contrasena
+        nick: this.state.nick,
+        clave: this.state.clave
         
       }
       //Axios se encarga de hacer solicitudes de forma sencilla
-      axios.post('http://localhost:4000/cliente/login', mensaje)
+      axios.post('http://localhost:4000/usuario/login', mensaje)
       .then((response) => {
-        alert(JSON.stringify(response.data))
+        this.setState({
+          loading: false
+        })
+        if(response.data){
+          this.props.login(0)
+        }        
       })
     }
 
@@ -43,10 +51,10 @@ class LoginClient extends Component {
     enviar() {
         /*
             let esConductor = (JSON.parse(this.state.conductor));
-            if(this.state.identificador.match("^[0-9]+$")!=null){
+            if(this.state.nick.match("^[0-9]+$")!=null){
               if(this.state.contrasena !== ""){
                 const input = {
-                  identificador: this.state.identificador, 
+                  nick: this.state.nick, 
                   contrasena: this.state.contrasena,
                   conductor: false
                 };
@@ -69,7 +77,7 @@ class LoginClient extends Component {
                   this.setState({closedProgress: true})
                   console.log('Exito:', JSON.stringify(response))
         
-                  if (response.identificador) {
+                  if (response.nick) {
                     if(response.contrasena){
                       if(esConductor){
                         if(response.ocupado){
@@ -114,10 +122,6 @@ class LoginClient extends Component {
     }
 
     render() {
-        if (this.props.autenticado) {
-            console.log("Esta logeado")
-
-        }
         return (
             <div>                
                 <div className="bloque-login">
@@ -125,23 +129,27 @@ class LoginClient extends Component {
                     </div>
                     <div id="formularioLogin">
                         <h3>Iniciar Sesión</h3>
+                        {this.state.loading?
+                         <Loading/> : null
+                        }
+                         
                         <br />
                         <FormGroup>
                         <i className="fa fa-user"/>
                             <Input type="email" name="email"
-                                onChange={this.handleOnchange('identificador')}
+                                onChange={this.handleOnchange('nick')}
                                 placeholder="Usuario" 
                                 />
 
                         <i className="fa fa-lock"></i>
                             <Input type="password" name="password"
-                                onChange={this.handleOnchange('contrasena')}
+                                onChange={this.handleOnchange('clave')}
                                 placeholder="contrasena" />
 
                         </FormGroup>
                         <br />
                         <Button color="danger" block onClick={this.enviarSolicitud}>INGRESAR</Button>{' '}
-
+                       
                         <br /><br />
                         <span className="mensajito">¿Aun sin cuenta? <Link to={"/registro"} >registrare aqui</Link></span>
                     </div>

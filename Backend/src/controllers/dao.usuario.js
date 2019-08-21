@@ -148,6 +148,7 @@ export async function deleteUsuario(req, res) {
 //Esta funcion obtiene admin segun clave y nick
 export async function logUsuario(req, res) {
     const { nick, clave } = req.body;
+    console.log(nick, " ", clave)
     try {
         const usuario = await Usuario.findOne({
             attributes: ['tipo_usuario'],

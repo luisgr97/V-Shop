@@ -45,7 +45,7 @@ export default class Example extends React.Component {
           <Link className="client-item" to={`/cliente/${clientRoutes[0].id}`}>
             <DropdownItem >Mi cuenta</DropdownItem>
           </Link>
-          <DropdownItem>Cerrar Sesión</DropdownItem>        
+          <DropdownItem onClick={() => this.props.login(0)}>Cerrar Sesión</DropdownItem>        
         </DropdownMenu>        
       </Dropdown>
       

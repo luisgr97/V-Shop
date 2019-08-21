@@ -16,7 +16,7 @@ router.delete('/delete/:id_usuario', deleteUsuario);
 
 /*functions*/
 //get login; requires nick and pass; return tipo_usuarios || null
-router.get('/login', logUsuario);
+router.post('/login', logUsuario);
 //check existing nick
 router.get('/check-nick/:nick', checkNick);
 

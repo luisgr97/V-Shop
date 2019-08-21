@@ -14,6 +14,7 @@ import inventarioRoutes from './routes/inventario_catalogo_productosC';
 import facturaRoutes from './routes/factura';  
 import detalle_facturaRoutes from './routes/detalle_factura' ;
 import pagRoutes from './routes/pago'
+import cors from 'cors'
 
 //initialization
 const app = express();
@@ -21,7 +22,7 @@ const app = express();
 //middlewares
 app.use(morgan('dev'));
 app.use(json());
-
+app.use(cors())
 //routes
 app.use('/api/catalogos',catalogosRoutes);
 app.use('/api/catalogos/inventario',inventarioRoutes);

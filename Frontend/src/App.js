@@ -34,18 +34,48 @@ class App extends Component {
     constructor(props){
         super(props)
         this.state = {
-            clienteLogueado: true,
+            clienteLogueado: false,
             adminLogueado: true,
             number: 2
         };
-        this.handleChangeAdminLog = this.handleChangeAdminLog.bind(this)
+        this.handleChangeLoggin = this.handleChangeLoggin.bind(this)
         this.handleChangeNumber = this.handleChangeNumber.bind(this)
     }
 
-    handleChangeAdminLog(valor){
-        this.setState({
-            adminLogueado: valor
-        })
+    componentWillMount(){
+        if(localStorage.getItem('token-login')){            
+            this.setState({
+                clienteLogueado: JSON.parse(localStorage.getItem('token-login')).cliente
+              })
+              
+        }else{
+            this.setState({
+                clienteLogueado: false,
+                adminLogueado: false
+              })
+        }
+    }
+
+    handleChangeLoggin(valor){
+        let cliente, admin;
+        if(valor==0){
+            cliente = !this.state.clienteLogueado
+            admin = this.state.adminLogueado
+            this.setState({
+                clienteLogueado: !this.state.clienteLogueado
+            })
+        }else if(valor==1){
+            cliente = this.state.clienteLogueado
+            admin = !this.state.adminLogueado
+            this.setState({
+                adminLogueado: !this.state.adminLogueado
+            })
+        }     
+        const token = {
+            cliente,
+            admin
+        }
+        localStorage.setItem('token-login', JSON.stringify(token))  
     }
 
     handleChangeNumber(valor){
@@ -107,7 +137,7 @@ render(){
                     (<div>
                         <BlackLogo/> 
                         <Fade in={true} className="mt-3">                
-                        <LoginCliente login={this.state.clienteLogueado}/>
+                        <LoginCliente login={this.handleChangeLoggin}/>
                         </Fade>
                     </div>
                     )}>
@@ -144,7 +174,8 @@ render(){
         
                     <Route exact path="/"  render={() =>(
                         <div>
-                            <Header number={this.state.number}  
+                            <Header number={this.state.number}
+                                login={this.handleChangeLoggin}                                 
                                 logueado={this.state.clienteLogueado}                         
                             />
                             <Fade in={true}>                                                           
@@ -157,7 +188,8 @@ render(){
                     <Route path="/cliente" render={({location}) => 
                         this.state.clienteLogueado ? 
                         (<div> 
-                            <Header number={this.state.number}  
+                            <Header number={this.state.number} 
+                                login={this.handleChangeLoggin} 
                                 logueado={this.state.clienteLogueado}                         
                              />                                                                                                           
                             <Cliente {...propiedades2}

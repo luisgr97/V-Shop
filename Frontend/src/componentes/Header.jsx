@@ -1,7 +1,7 @@
 import React from 'react'
 import logo from '../logo2a.png'
 import {Link} from 'react-router-dom'
-import Example from './UserList'
+import UserList from './UserList'
 import Cart from './ShoppingCart'
 
 import '../estilos/header.css'
@@ -38,7 +38,7 @@ const Header = (props) => {
                             <i className="fa fa-user"></i>
                             {
                                 props.logueado?
-                                <Example/> :
+                                <UserList login={props.login}/> :
                                 <Link to="/login">
                                     Ingresar
                                 </Link>
