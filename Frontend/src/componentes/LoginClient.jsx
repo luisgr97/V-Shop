@@ -156,7 +156,7 @@ class LoginClient extends Component {
                         </FormGroup>
                         <br />
                         <Button color="danger" block onClick={this.enviarSolicitud}>INGRESAR</Button>{' '}                       
-                        <br />
+                        <br /><br />
                         <div className="center">
                           <span>¿Aun sin cuenta? <Link to={"/registro"} >registrare aqui</Link>
                           </span>

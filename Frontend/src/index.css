@@ -3,7 +3,7 @@
 ===========================================================*/
 body{
   position: relative;
-  background: #eee;
+  background: #fff;
   font-family: 'Roboto', sans-serif!important;
 }
 
@@ -197,16 +197,23 @@ color:#fff;
   visibility: visible;
 
 }
+
+/*Estilos para los radiobotones*/
 .custom-control-input:checked ~ .custom-control-label::before {
   color: #fff;
-  border-color: #D10024;
+  border-color: rgba(209, 0, 36, 0.5);
   background-color: #D10024;
+}
+.custom-radio .custom-control-input:disabled:checked ~ .custom-control-label::before {
+  background-color: rgba(209, 0, 36, 0.7);
+
 }
 /*Loading*/
 .gooey {
   position: absolute;
   left: 50%;
   width: 142px;
+  top: 50vh;
   height: 40px;
   margin: 0 0 0 -71px;
   background: white;

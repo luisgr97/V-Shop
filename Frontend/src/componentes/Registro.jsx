@@ -9,19 +9,19 @@ import '../estilos/registro.css'
 
 class Registro extends React.Component {
     constructor(props){
-        super(props)        
+        super(props)      
         this.state={
-            tipo: props.tipo,
-            numero: props.numero,
-            nombre: props.nombre,
-            apellidos: props.apellidos,
-            telefono: props.telefono,
-            direccion: props.direccion,
-            correo: props.correo,
-            clave: props.clave,
+            tipo: props.datos.tipo_documento,
+            numero: props.datos.numero_documento,
+            nombre: props.datos.nombres,
+            apellidos: props.datos.apellidos,
+            telefono: props.datos.telefono,
+            direccion: props.datos.direccion,
+            nacimiento: props.datos.fecha_de_nacimiento,
+            correo: props.datos.correo,           
+            nick: props.datos.nick,
+            clave: props.datos.clave,
             clave2: "",            
-            nacimiento: props.nacimiento,
-            nick: props.nick,
             redirect: false
         };
         this.handleOnChange = this.handleOnChange.bind(this) 
@@ -59,13 +59,13 @@ class Registro extends React.Component {
         }
         if(this.props.noRegistro){
             // Si es una actualizacion
-            axios.put('http://localhost:4000/usuario/update', mensaje)
+            axios.put('http://localhost:4000/usuario/update/' + this.props.idCliente, mensaje)
             .then((response) => {
             alert(JSON.stringify(response.data))
             console.log("se actualizo con exito")
             })
             .catch(err=>{
-                alert("Intentelo mas tarde")
+                alert("Intentelo mas tarde registro")
             })
         }else{
             // Si es una creacion
@@ -75,13 +75,15 @@ class Registro extends React.Component {
                 this.setState({ redirect:true })
             })
             .catch(err=>{
-                alert("Intentelo mas tarde")
+                alert("Intentelo mas tarde registro")
             })
         }
        
     }
 
     render() {
+        const actualizar = this.props.noRegistro
+
         if(this.state.redirect){
             return(<Redirect to="/login"/>)
         }
@@ -96,6 +98,11 @@ class Registro extends React.Component {
                             <CustomInput type="radio" id="cc" name="customRadio" label="CC" value="CC"
                                 checked={this.state.tipo === 'CC'}
                                 onChange={this.handleRadioChange}
+                                disabled={
+                                    actualizar?
+                                    this.state.tipo==='CC'? true : false :
+                                    false
+                                }
                             />
                         </FormGroup>
                         
@@ -103,6 +110,11 @@ class Registro extends React.Component {
                             <CustomInput type="radio" id="ti" name="customRadio" label="TI" value="TI"                       
                                 checked={this.state.tipo === 'TI'}
                                 onChange={this.handleRadioChange}
+                                disabled={
+                                    actualizar?
+                                    this.state.tipo==='CC'? true : false :
+                                    false
+                                }
                             />
                         </FormGroup>   
 
@@ -114,7 +126,7 @@ class Registro extends React.Component {
                             <Input type="text" id="numero" placeholder="Su identificacion..." 
                                 value={this.state.numero}  
                                 onChange = {this.handleOnChange('numero')} 
-                                disabled={this.props.noRegistro}
+                                disabled={actualizar}
                             />
                         </FormGroup>
                     </Col>
@@ -144,7 +156,7 @@ class Registro extends React.Component {
                             <Input type="text" id="apodo" placeholder="nick de usuario" 
                                 value={this.state.nick}  
                                 onChange = {this.handleOnChange('nick')}
-                                disabled={this.props.noRegistro}
+                                disabled={actualizar}
                             />
                         </FormGroup>
                     </Col>
@@ -209,7 +221,7 @@ class Registro extends React.Component {
                                 placeholder="date placeholder"
                                 value={this.state.nacimiento} 
                                 onChange = {this.handleOnChange('nacimiento')}
-                                disabled={this.props.noRegistro}
+                                disabled={actualizar}
                             />
                         </FormGroup>
                     </Col>
@@ -219,13 +231,13 @@ class Registro extends React.Component {
                 <div>                         
                     <div className="center">
                         <Button color="danger" onClick={this.enviar}>
-                        {this.props.noRegistro ?
+                        {actualizar ?
                         'ACTUALIZAR': 'REGISTRARME'}
                         </Button>
                     </div>
                                             
                 </div>
-                {this.props.noRegistro ?
+                {actualizar ?
                 null : 
                 <div className="mensajito">
                     <br/>

@@ -95,16 +95,16 @@ class App extends Component {
 render(){
     
     const propiedades={
-        tipo: "CC",
-        numero: "",
-        nombre: "",
+        tipo_documento: "CC",
+        numero_documento: "",
+        nombres: "",
         apellidos: "",
         telefono: "",
         direccion: "",
-        correo: "",
-        clave: "",        
-        nacimiento: "",
+        fecha_de_nacimiento: "",
+        correo: "",           
         nick: "",
+        clave: "",
     };
 
     const propiedades2={
@@ -145,7 +145,7 @@ render(){
                     (<Fade in={true} className="mt-3" id="registro"> 
                         <BlackLogo/> 
                         <div id="registro-container">                    
-                            <Regitro {...propiedades2}
+                            <Regitro datos={propiedades}
                             login={this.state.clienteLogueado} 
                             />
                         </div>
