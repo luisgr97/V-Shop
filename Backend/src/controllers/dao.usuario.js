@@ -60,6 +60,16 @@ export async function getOneUsuario(req, res) {
     const { id_usuario } = req.params;
     try {
         const usuario = await Usuario.findOne({
+            attributes: ['tipo_documento', 
+            'numero_documento', 
+            'nombres', 
+            'apellidos', 
+            'telefono', 
+            'direccion', 
+            'fecha_de_nacimiento', 
+            'correo', 
+            'nick'
+            ],
             where: {
                 id_usuario
             }
@@ -151,16 +161,20 @@ export async function logUsuario(req, res) {
     console.log(nick, " ", clave)
     try {
         const usuario = await Usuario.findOne({
-            attributes: ['tipo_usuario'],
+            attributes: ['id_usuario', 'nick'],
             where: {
                 nick: nick,
                 clave: clave
             }
         });
-        if(usuario){
-            return res.send(usuario);
+        if(usuario){            
+            return res.json({
+                find: true, 
+                nick: usuario.nick, 
+                id_usuario: usuario.id_usuario
+                });
         }else{
-            return res.json(null);
+            return res.json({find:false});
         }
     } catch (e) {
         console.log(e);
@@ -176,7 +190,7 @@ export async function checkNick(req, res) {
     try {
         const usuario = await Usuario.findOne({
             where: {
-                nick: nick
+                nick
             }
         });
         if(usuario){

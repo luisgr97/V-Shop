@@ -1,10 +1,11 @@
 import React from 'react';
+import axios from 'axios'
+
 import { Col, Row, Button, Form, FormGroup, Label, Input, CustomInput } from 'reactstrap';
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 
 import '../estilos/registro.css'
-import axios from 'axios'
 
 class Registro extends React.Component {
     constructor(props){
@@ -17,9 +18,11 @@ class Registro extends React.Component {
             telefono: props.telefono,
             direccion: props.direccion,
             correo: props.correo,
-            clave: props.clave,            
+            clave: props.clave,
+            clave2: "",            
             nacimiento: props.nacimiento,
-            nick: props.nick
+            nick: props.nick,
+            redirect: false
         };
         this.handleOnChange = this.handleOnChange.bind(this) 
         this.enviar = this.enviar.bind(this)
@@ -41,25 +44,47 @@ class Registro extends React.Component {
     
     enviar() {
         const mensaje = {
-            documento: this.state.tipo,
-            numero: this.state.numero,
-            nombre: this.state.nombre,
-            apellidos: this.state.apellidos,            
+            tipo_documento: this.state.tipo,
+            numero_documento: this.state.numero,
+            nombres: this.state.nombre,
+            apellidos: this.state.apellidos,   
+            telefono: this.state.telefono,    
+            direccion: this.state.direccion,  
+            fecha_de_nacimiento: this.state.nacimiento,   
+            correo: this.state.correo,
+            estado: 1,
             clave: this.state.clave,
-            direccion: this.state.direccion,
-            nacimiento: this.state.nacimiento,
-            cumpleanios: this.state.cumpleanios,
-            correo: this.state.correo
+            nick: this.state.nick,
+            tipo_usuario: "Cliente",
         }
-    
-        //Axios se encarga de hacer solicitudes de forma sencilla
-        axios.post('http://localhost:4000/usuario/create', mensaje)
-        .then((response) => {
-          alert(JSON.stringify(response.data))
-        })
+        if(this.props.noRegistro){
+            // Si es una actualizacion
+            axios.put('http://localhost:4000/usuario/update', mensaje)
+            .then((response) => {
+            alert(JSON.stringify(response.data))
+            console.log("se actualizo con exito")
+            })
+            .catch(err=>{
+                alert("Intentelo mas tarde")
+            })
+        }else{
+            // Si es una creacion
+            axios.post('http://localhost:4000/usuario/create', mensaje)
+            .then((response) => {
+            alert(JSON.stringify(response.data))
+                this.setState({ redirect:true })
+            })
+            .catch(err=>{
+                alert("Intentelo mas tarde")
+            })
+        }
+       
     }
 
     render() {
+        if(this.state.redirect){
+            return(<Redirect to="/login"/>)
+        }
         return (            
             <Form className="registro">                
                 <Row form >                
@@ -79,8 +104,8 @@ class Registro extends React.Component {
                                 checked={this.state.tipo === 'TI'}
                                 onChange={this.handleRadioChange}
                             />
-
                         </FormGroup>   
+
                         </div>                 
                     </Col>                    
                     <Col md={6}>
@@ -137,6 +162,7 @@ class Registro extends React.Component {
                             <Label for="password">Contraseña *</Label>
                             <Input type="password" name="password" id="password" placeholder="clave de acceso" 
                                 value={this.state.clave}  
+                                valid={this.state.clave.length>5}
                                 onChange = {this.handleOnChange('clave')}
                             />
                         </FormGroup>
@@ -144,9 +170,14 @@ class Registro extends React.Component {
                     <Col md={6}>
                         <FormGroup>
                             <Label for="password">Confirmar Contraseña *</Label>
-                            <Input type="password" name="password2" id="password2" placeholder="repetir clave" 
-                                value={this.state.clave}  
-                                onChange = {this.handleOnChange('clave')}
+                            <Input type="password" name="password2" id="password2" placeholder="repetir clave"                             
+                            valid={this.state.clave.length>5?
+                                this.state.clave==this.state.clave2?
+                                true: false :
+                                false
+                                }                            
+                                invalid={this.state.clave!=this.state.clave2} 
+                                onChange={this.handleOnChange('clave2')}
                             />
                         </FormGroup>
                     </Col>
@@ -185,27 +216,22 @@ class Registro extends React.Component {
                     
                 </Row>
                 <br />
-                {this.props.noRegistro ?
-                    <div>                         
-                        <div className="center">
-                            <Button color="danger" onClick={this.enviar}>
-                                ACTUALIZAR
-                            </Button>
-                        </div>
-                                               
-                    </div> :
-                    <div>
-                        <div className="center">
-                            <Button color="danger" onClick={this.enviar}>
-                                REGISTRARME
-                            </Button>
-                        </div>
-                        <br />
-                        <div className="mensajito">
-                            <span>¿Ya tiene cuenta? <Link to={"/login"} >inicia sesión</Link></span>
-                        </div>
+                <div>                         
+                    <div className="center">
+                        <Button color="danger" onClick={this.enviar}>
+                        {this.props.noRegistro ?
+                        'ACTUALIZAR': 'REGISTRARME'}
+                        </Button>
                     </div>
-                }               
+                                            
+                </div>
+                {this.props.noRegistro ?
+                null : 
+                <div className="mensajito">
+                    <br/>
+                    <span>¿Ya tiene cuenta? <Link to={"/login"} >inicia sesión</Link></span>
+                </div>}
+                                
             </Form>
         );
     }

@@ -1,5 +1,6 @@
 import express, { json } from 'express';
 import morgan from 'morgan';
+import cors from 'cors'
 
 //Importing routers
 import productoRoutes from './routes/productos';
@@ -14,7 +15,6 @@ import inventarioRoutes from './routes/inventario_catalogo_productosC';
 import facturaRoutes from './routes/factura';  
 import detalle_facturaRoutes from './routes/detalle_factura' ;
 import pagRoutes from './routes/pago'
-import cors from 'cors'
 
 //initialization
 const app = express();

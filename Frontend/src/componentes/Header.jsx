@@ -38,7 +38,9 @@ const Header = (props) => {
                             <i className="fa fa-user"></i>
                             {
                                 props.logueado?
-                                <UserList login={props.login}/> :
+                                <UserList name={props.nombre} 
+                                    login={props.login}
+                                /> :
                                 <Link to="/login">
                                     Ingresar
                                 </Link>

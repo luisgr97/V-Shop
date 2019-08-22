@@ -1,34 +1,15 @@
-import React from 'react'
-import Datos from '../componentes/Registro'
-import Sidebar from '../componentes/Sidebar'
-import Comments from '../componentes/Comments'
-import Purchase from '../componentes/ClientPurchase'
-
-function Topic ({ match }) {
-
-    return (
-      <div>
-        <h2>Eucaritia</h2>
-        <hr />
-      </div>
-    )
-  }
-  
-  const clientRoutes = [
+const clientRoutes = [
   {
     name: 'Actualizar datos',
-    id: 'data',
-    component: Datos
+    id: 'data'
   },
   {
     name: 'Mis compras',
-    id: 'reactjs',
-    component: Purchase
+    id: 'reactjs'
   },
   {
     name: 'Comentarios',
-    id: 'comentarios',
-    component: Comments
+    id: 'comentarios'
   }
 ]
 

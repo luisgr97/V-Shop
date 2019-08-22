@@ -147,8 +147,9 @@ margin-left: 0px;
 
 
 /*  Espacio en el top de registro cliente*/
-.mt-3, .my-3 {
+.mt-3 {
   margin-top: 0rem !important;
+  margin-bottom: 0rem !important
 }
 
 /*Ajuste para el sidebar*/

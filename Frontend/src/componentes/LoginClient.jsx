@@ -38,13 +38,20 @@ class LoginClient extends Component {
       //Axios se encarga de hacer solicitudes de forma sencilla
       axios.post('http://localhost:4000/usuario/login', mensaje)
       .then((response) => {
-        this.setState({
-          loading: false
-        })
-        if(response.data){
-          this.props.login(0)
-        }        
+        this.setState({ loading: false })
+        console.log(response.data)
+
+        if(response.data.find){
+          this.props.login(0, response.data)
+        }else{
+          console.log("Usuario invalido")
+        }      
+      })      
+      .catch(err=>{
+        alert("Intentelo mas tarde")
+        this.setState({ loading: false })
       })
+      
     }
 
     
@@ -148,10 +155,12 @@ class LoginClient extends Component {
 
                         </FormGroup>
                         <br />
-                        <Button color="danger" block onClick={this.enviarSolicitud}>INGRESAR</Button>{' '}
-                       
-                        <br /><br />
-                        <span className="mensajito">¿Aun sin cuenta? <Link to={"/registro"} >registrare aqui</Link></span>
+                        <Button color="danger" block onClick={this.enviarSolicitud}>INGRESAR</Button>{' '}                       
+                        <br />
+                        <div className="center">
+                          <span>¿Aun sin cuenta? <Link to={"/registro"} >registrare aqui</Link>
+                          </span>
+                          </div>
                     </div>
                 </div>
             </div>

@@ -32,7 +32,7 @@ export default class Example extends React.Component {
       toggle={e => this.dropdownToggle(e)} 
       className="clienteOpciones">
         <DropdownToggle caret nav>       
-            Estemen
+            {this.props.name}
         </DropdownToggle>
         <DropdownMenu right>
           {/*
@@ -45,7 +45,7 @@ export default class Example extends React.Component {
           <Link className="client-item" to={`/cliente/${clientRoutes[0].id}`}>
             <DropdownItem >Mi cuenta</DropdownItem>
           </Link>
-          <DropdownItem onClick={() => this.props.login(0)}>Cerrar Sesión</DropdownItem>        
+          <DropdownItem onClick={() => this.props.login(0, null)}>Cerrar Sesión</DropdownItem>        
         </DropdownMenu>        
       </Dropdown>
       
