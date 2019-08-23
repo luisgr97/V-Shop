@@ -1,4 +1,5 @@
 import Categoria from '../models/categoria';
+import SubCategoria from '../models/subcategoria';
 
 //Create category made join
 export async function createCategoria(req, res) {
@@ -98,3 +99,20 @@ export async function deleteOnCategoria(req, res) {
     }
 }
 
+export async function getJoinSubCategoria(req, res){
+    const {id_categoria} = req.params;
+    try{
+        const categoria = await Categoria.findAll({
+            include: [{
+                model: SubCategoria,
+            }]
+        });
+        return res.json(categoria);
+    }catch(e){
+        console.log(e);
+        res.status(408).json({
+            message: "error 402 no funca",
+            data: {}
+        });
+    }
+}

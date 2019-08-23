@@ -29,13 +29,13 @@ const Producto = sequelize.define('producto',{
     freezeTableName: true
 });
 
-Producto.hasMany(Imagenes,{foreingkey: 'id_producto', sourcekey:'id_producto'});
-Imagenes.belongsTo(Producto,{foreingkey: 'id_producto', sourcekey:'id_producto'});
+Producto.hasMany(Imagenes,{foreignKey: 'id_producto', sourcekey:'id_producto'});
+Imagenes.belongsTo(Producto,{foreignKey: 'id_producto', sourcekey:'id_producto'});
 
-Producto.hasMany(Comentario,{foreingkey: 'id_producto', sourcekey:'id_producto'});
-Comentario.belongsTo(Producto,{foreingkey: 'id_producto', sourcekey:'id_producto'});
+Producto.hasMany(Comentario,{foreignKey: 'id_producto', sourcekey:'id_producto'});
+Comentario.belongsTo(Producto,{foreignKey: 'id_producto', sourcekey:'id_producto'});
 
-Producto.belongsTo(Inventario_catalogo_productos,{foreingkey: 'id_producto', sourcekey:'id_producto'});
-Inventario_catalogo_productos.hasMany(Producto,{foreingkey: 'id_producto', sourcekey:'id_producto'});
+Producto.belongsTo(Inventario_catalogo_productos,{foreignKey: 'id_producto', sourcekey:'id_producto'});
+Inventario_catalogo_productos.hasMany(Producto,{foreignKey: 'id_producto', sourcekey:'id_producto'});
 
 export default Producto;

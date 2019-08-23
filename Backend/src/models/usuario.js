@@ -49,8 +49,8 @@ const Usuario = sequelize.define('usuario', {
     timestamps: false
 });
 
-Usuario.hasOne(Catalogo,{foreingkey: 'id_gerente', sourcekey:'id_usuario'});
-Catalogo.belongsTo(Usuario,{foreingkey: 'id_gerente', sourcekey:'id_usuario'});
+Usuario.hasOne(Catalogo,{foreignKey: 'id_gerente', sourcekey:'id_usuario'});
+//Catalogo.belongsTo(Usuario,{foreingkey: 'id_gerente', sourcekey:'id_usuario'});
 
 
 export default Usuario;

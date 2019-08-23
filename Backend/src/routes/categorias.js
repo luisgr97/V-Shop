@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createCategoria, getCategorias, getOneCategoria, deleteOnCategoria, updateCategorias } from '../controllers/dao.categorias';
+import { createCategoria, getCategorias, getOneCategoria, deleteOnCategoria, updateCategorias, getJoinSubCategoria } from '../controllers/dao.categorias';
 
 const router = Router();
 
@@ -14,5 +14,7 @@ router.get('/get/:id_categoria', getOneCategoria);
 router.put('/update/:id_categoria', updateCategorias);
 //Delete category, requires parameter id_categoria, return 1 || 0
 router.delete('/delete/:id_categoria', deleteOnCategoria);
+//get categorias con subcategorias anidadas
+router.get('/getJoinSubCategoria', getJoinSubCategoria);
 
 export default router;
