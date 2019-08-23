@@ -1,6 +1,6 @@
 import Categoria from '../models/categoria';
 
-//Create category
+//Create category made join
 export async function createCategoria(req, res) {
     const { nombre_categoria, linkimagen } = req.body;
     try {
