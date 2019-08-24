@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../logo2a.png'
+import logo from '../imagenes/logo-white.png'
 import {Link} from 'react-router-dom'
 import UserList from './UserList'
 import Cart from './ShoppingCart'

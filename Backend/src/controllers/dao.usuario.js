@@ -1,4 +1,5 @@
 import Usuario from '../models/usuario';
+import Comentario from '../models/comentario';
 
 //create user
 export async function createUsuario(req, res) {
@@ -202,6 +203,25 @@ export async function checkNick(req, res) {
         console.log(e);
         res.json({
             message:"Error 506",
+            data: {}
+        });
+    }
+}
+
+export async function getJoinComentario(req, res){
+    const {id_usuario} = req.params;
+    try{
+        const user = await Usuario.findAll({
+            where: {id_usuario},
+            include: [{
+                model:  Comentario,
+            }]
+        });
+        return res.json(user);
+    }catch(e){
+        console.log(e);
+        res.status(408).json({
+            message: "error 402 no funca",
             data: {}
         });
     }

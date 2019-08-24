@@ -4,7 +4,6 @@ import axios from 'axios'
 import { Col, Row, Button, Form, FormGroup, Label, Input, CustomInput } from 'reactstrap';
 import { Link, Redirect } from 'react-router-dom'
 
-
 import '../estilos/registro.css'
 
 class Registro extends React.Component {
@@ -57,7 +56,7 @@ class Registro extends React.Component {
             nick: this.state.nick,
             tipo_usuario: "Cliente",
         }
-        if(this.props.noRegistro){
+        if(this.props.actualizar){
             // Si es una actualizacion
             axios.put('http://localhost:4000/usuario/update/' + this.props.idCliente, mensaje)
             .then((response) => {
@@ -82,7 +81,7 @@ class Registro extends React.Component {
     }
 
     render() {
-        const actualizar = this.props.noRegistro
+        const actualizar = this.props.actualizar
 
         if(this.state.redirect){
             return(<Redirect to="/login"/>)

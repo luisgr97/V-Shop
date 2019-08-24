@@ -8,7 +8,7 @@ import {
   
 } from "reactstrap";
 import { Link } from 'react-router-dom'
-import clientRoutes from '../rutas/cliente'
+import clientRoutes from './cliente/rutas'
 
 export default class Example extends React.Component {
   constructor(props){
@@ -35,13 +35,7 @@ export default class Example extends React.Component {
             {this.props.name}
         </DropdownToggle>
         <DropdownMenu right>
-          {/*
-          {clientRoutes.map(({name, id}) => (
-              <Link key={id} className="client-item" to={`/cliente/${id}`}><DropdownItem >
-                {name}</DropdownItem></Link>
-          )
-          )}  
-          */}
+ 
           <Link className="client-item" to={`/cliente/${clientRoutes[0].id}`}>
             <DropdownItem >Mi cuenta</DropdownItem>
           </Link>

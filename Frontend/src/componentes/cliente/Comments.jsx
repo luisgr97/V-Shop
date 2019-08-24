@@ -2,7 +2,7 @@ import React from 'react'
 import { Container, Row, Col } from 'reactstrap';
 import {Link} from 'react-router-dom'
 
-import '../estilos/comments.css'
+import '../../estilos/comments.css'
 
 const ComentarioBox =(props) =>{
     return(
