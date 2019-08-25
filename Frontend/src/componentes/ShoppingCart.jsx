@@ -7,7 +7,6 @@ import {
   UncontrolledDropdown
   
 } from "reactstrap";
-import producto from '../product01.png'
 import imagen from '../product01.png'
 import {Link} from 'react-router-dom'
 

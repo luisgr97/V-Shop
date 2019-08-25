@@ -1,24 +1,19 @@
 import React, {Component} from 'react';
 import { BrowserRouter, Route, Redirect, Link, Switch } from 'react-router-dom'
-import { Fade } from 'reactstrap';
 import jwt from 'jsonwebtoken'
 
-import Main from './componentes/Main'
-import LoginAdmin from './componentes/LoginAdmin'
-import Dashboard from './dashboard'
 import Header from './componentes/Header'
+import Main from './componentes/Main'
 import LoginCliente from './componentes/LoginClient'
+import LoginAdmin from './componentes/LoginAdmin'
 import Regitro from './componentes/Registro'
-import Categoria from './componentes/Categorias'
-/*
-import Arituclo from './componentes/Articulo'
-*/
-import Cliente from './componentes/Cliente'
+import Admin from './componentes/manager/Dashboard'
+import Cliente from './componentes/cliente/Dashboard'
 
-//import 'bootstrap/dist/css/bootstrap.min.css';
+import { Fade } from 'reactstrap';
 
-
-import logo from './logo1a.png'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import logo from './imagenes/logo-black.png'
 
 
 const BlackLogo = () =>{
@@ -37,7 +32,7 @@ class App extends Component {
             clienteLogueado: false,
             nombreCliente: "",
             idCliente: "",
-            adminLogueado: false,
+            adminLogueado: true,
             number: 2
         };
         this.handleChangeLoggin = this.handleChangeLoggin.bind(this)
@@ -125,19 +120,24 @@ render(){
         <div className="App" >
             <BrowserRouter>
             <Switch>                
-
+{/*
                 <Route path="/admin" render={props => 
                     this.state.adminLogueado ? 
-                    <Dashboard {...props}/> :
+                    <Dashboard {...props} /> :
                     <Redirect to="/vs-admin"/>} 
                 />
+                */}
+                <Route path="/manager" render={props => 
+                    this.state.adminLogueado ? 
+                    <Admin {...props}/> :
+                    <Redirect to="/vs-admin"/>
+                }/>
 
                 <Route  path="/vs-admin" render={() =>
                     this.state.adminLogueado ?
                     <Redirect to="/admin"/> :
                     <LoginAdmin login={this.handleChangeAdminLog}/>
-                    }>
-                </Route>                       
+                }/>
 
                 <Route path="/registro" render={() => 
                     this.state.clienteLogueado ? 
@@ -145,31 +145,25 @@ render(){
                     (<Fade in={true} className="mt-3" id="registro"> 
                         <BlackLogo/> 
                         <div id="registro-container">                    
-                            <Regitro datos={propiedades}
-                            login={this.state.clienteLogueado} 
+                            <Regitro actualizar={false}
+                            datos={propiedades}                             
                             />
                         </div>
-                        </Fade>
-                    )}>
-                </Route>
+                    </Fade>
+                )}/>
+                
                 
                 <Route path="/login" render={() => 
                     this.state.clienteLogueado ? 
                     <Redirect to="/"/> :
                     (<div>
                         <Fade in={true} className="mt-3" id="login">
-                        <BlackLogo/>                                         
-                        <LoginCliente login={this.handleChangeLoggin}/>
+                            <BlackLogo/>                                         
+                            <LoginCliente login={this.handleChangeLoggin}/>
                         </Fade>
                     </div>
-                    )}>
-                </Route>
+                )}/>
 
-                <Route path="/categorias" render={() => 
-                    this.state.adminLogueado ? (<div>                                    
-                    <Categoria {...this.props} />                   
-                    </div>) : <Redirect to="/" />}>
-                </Route>
 {/*
                 <Route path="/productos" render={() => 
                     this.state.adminLogueado ? (<div>                                    
@@ -190,8 +184,7 @@ render(){
                             <Main login={this.state.clienteLogueado} />                                    
                             </Fade>
                         </div>
-                    )} >
-                    </Route>
+                    )}/>
 
                     <Route path="/cliente" render={({location}) => 
                         this.state.clienteLogueado ? 
@@ -204,8 +197,8 @@ render(){
                             <Cliente idCliente={this.state.idCliente}                                
                                 location = {location}
                             />
-                        </div>) : <Redirect to="/login" />}>
-                    </Route>             
+                        </div>) : <Redirect to="/login" />
+                    }/>
                 
                     <Route render={() => (<h1>Pagina no encontrada</h1>)} />
                     </Switch>

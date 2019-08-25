@@ -17,8 +17,14 @@ const Comentario = sequelize.define('comentario',{
     },
     id_producto:{
         type: Sequelize.INTEGER
+    },
+    id_usuario:{
+        type: Sequelize.INTEGER,
+        references: 'usuario',
+        referencesKey: 'id_usuario'
     }
 },{
+    underscored: false,
     timestamps: false,
     freezeTableName: true
 });

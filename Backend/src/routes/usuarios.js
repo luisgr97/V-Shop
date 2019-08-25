@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { logUsuario, createUsuario, deleteUsuario, getOneUsuario, updateUsuario, listUsuarios, checkNick, getJoinFacturas } from '../controllers/dao.usuario';
+import { logUsuario, createUsuario, deleteUsuario, getOneUsuario, updateUsuario, listUsuarios, checkNick, getJoinFacturas, getJoinComentario } from '../controllers/dao.usuario';
+
 const router = Router();
 
 /*CRUD usuario*/
@@ -9,6 +10,8 @@ router.post('/create', createUsuario);
 router.get('/get', listUsuarios);
 //Get one user, requires parameter id_usuario, return user || null
 router.get('/get/:id_usuario', getOneUsuario);
+//Get one user, requires parameter id_usuario, return user || null
+router.get('/getJoinComentario/:id_usuario', getJoinComentario);
 //Update user, requires id:usuario, return 1 || 0
 router.put('/update/:id_usuario', updateUsuario);
 //Delete user requires id:usuario, return 1 || 0

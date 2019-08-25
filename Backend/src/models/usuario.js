@@ -2,6 +2,7 @@ import Sequelize from 'sequelize';
 import { sequelize } from '../database/database';
 import  Catalogo  from './catalogo';
 import Factura from './factura';
+import Comentario from './comentario';
 
 //Asi se especifica un modelo de tabla usando el ORM
 const Usuario = sequelize.define('usuario', {
@@ -46,12 +47,13 @@ const Usuario = sequelize.define('usuario', {
         type: Sequelize.STRING(50)
     }
 },{
-    freezeTableName: true,
-    timestamps: false
+    underscored: false,
+    timestamps: false,
+    freezeTableName: true
 });
 
 Usuario.hasOne(Catalogo,{foreignKey: 'id_gerente', sourcekey:'id_usuario'});
-
+Usuario.hasMany(Comentario,{foreignKey: 'id_usuario', sourcekey:'id_usuario'});
 Usuario.hasMany(Factura,{foreignKey: 'id_cliente', sourcekey:'id_usuario'});
 
 export default Usuario;

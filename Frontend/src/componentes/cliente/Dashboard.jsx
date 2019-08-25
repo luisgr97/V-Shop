@@ -2,14 +2,14 @@ import React, {Component} from 'react'
 import { Route, Redirect, BrowserRouter } from 'react-router-dom'
 import axios from 'axios'
 
-import Sidebar from './Sidebar'
+import Sidebar from '../Sidebar'
 import { Container, Row, Col } from 'reactstrap';
-import Datos from './Registro'
+import Datos from '../Registro'
 import Comments from './Comments'
 import Purchase from './ClientPurchase'
-import Loading from './Loading'
+import Loading from '../Loading'
 
-import clientRoutes from '../rutas/cliente'
+import clientRoutes from './rutas'
 
 const propiedades2={
   tipo: "CC",
@@ -103,7 +103,7 @@ class Cliente extends Component {
             
             <Route path={`/cliente/${clientRoutes[0].id}`} 
               render={()=>(
-                <Datos noRegistro={true} 
+                <Datos actualizar={true} 
                 idCliente={this.props.idCliente}
                 datos={this.state.cliente}/>
               )}

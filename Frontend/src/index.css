@@ -287,3 +287,126 @@ color:#fff;
     transform: translateX(-31px);
   }
 }
+
+
+
+
+
+
+#admin-zone{
+  margin:auto;
+  position: relative;  
+  max-width: 1400px;
+  max-height: 100%
+}
+
+#admin-sidebar{
+  position: fixed;
+  background: #15161D;
+  width: 260px;
+  height: 100vh;
+  line-height: 3.5;
+  font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif; 
+  overflow: hidden; 
+}
+#admin-sidebar a{
+  color:#c1c1c1;
+}
+#admin-sidebar a:hover{
+text-decoration: none
+}
+
+#admin-sidebar, #admin-main{
+  -webkit-transition: all .3s ease-in-out;
+  -moz-transition: all .3s ease-in-out;
+  -o-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+
+
+#admin-main{
+  background: #eee;
+  position: absolute;
+  padding: 30px;
+  width: calc(100% - 260px);
+  right: 0;
+}
+
+#admin-sidebar .nav-link {
+  padding-left:30px;
+  transition: 0.4s all;
+  border-left:5px solid #15161D
+
+}
+
+#admin-sidebar .nav-link:hover{
+  padding-left: 40px;
+  border-left:5px solid #D10024
+}
+.nav-pills .nav-link {
+  border-radius: 0rem;
+}
+
+#admin-sidebar .nav-item i{
+  position: absolute;
+  margin-top:10px;
+  color: #c1c1c1;
+  font-size: 22px;
+  padding-left:0px!important
+}
+
+#admin-sidebar .nav-item span{
+  padding-left:40px!important
+}
+
+.nav-pills .nav-link.active {
+  background-color: #15161D;
+  border-left: 5px solid #D10024!important
+}
+
+
+.nav-pills .nav-link.active:hover, .nav-pills .show > .nav-link:hover {
+  background-color: #15161D;
+  border-left: 5px solid #D10024
+}
+
+
+#admin-sidebar .nav-item a{
+  color:#c1c1c1;
+  padding: 0px;
+  padding-left: 30px
+}
+
+#admin-sidebar img{
+  margin-left: auto;
+  margin-right: auto;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+#linea {
+  height: 1px;
+  background: #6c757d;
+  max-width: 90%;
+  margin-left:5%
+}
+
+@media screen and (max-width: 1400px) {
+  #admin-sidebar{
+    left:0px
+  }
+}
+
+@media screen and (max-width: 900px) {
+  #admin-sidebar{
+    left:-270px
+  }
+  
+  #admin-main{
+    background: #eee;
+    position: absolute;
+    padding: 30px;
+    width: 100%;
+  }
+  
+}
