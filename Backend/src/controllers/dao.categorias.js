@@ -1,5 +1,6 @@
 import Categoria from '../models/categoria';
 import SubCategoria from '../models/subcategoria';
+import Producto from '../models/producto';
 
 //Create category made join
 export async function createCategoria(req, res) {
@@ -100,11 +101,10 @@ export async function deleteOnCategoria(req, res) {
 }
 
 export async function getJoinSubCategoria(req, res){
-    const {id_categoria} = req.params;
     try{
         const categoria = await Categoria.findAll({
             include: [{
-                model: SubCategoria,
+                model: SubCategoria
             }]
         });
         return res.json(categoria);

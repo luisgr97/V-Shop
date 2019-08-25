@@ -1,7 +1,6 @@
 import Sequelize from 'sequelize';
 import {sequelize} from '../database/database';
 import  Producto  from './producto';
-import Categoria from './categoria';
 
 const SubCategoria = sequelize.define('subcategoria',{
     id_subcategoria: {
@@ -15,13 +14,9 @@ const SubCategoria = sequelize.define('subcategoria',{
         type: Sequelize.STRING(100)
     },
     id_categoria: {
-        type: Sequelize.INTEGER,
-        //references:{
-          //  model: Categoria,
-            //key: 'id_categoria'
+        type: Sequelize.INTEGER/*,
         references: 'categoria',
-        referencesKey: 'id_categoria'
-        //}
+        referencesKey: 'id_categoria'*/
     }
 },{
     underscored: false,

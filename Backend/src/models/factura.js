@@ -28,7 +28,8 @@ const Factura = sequelize.define('factura',{
 //Factura.belongsTo(Detalle_factura,{foreingkey: 'id_factura', sourcekey:'id_factura'});
 //Inventario_catalogo_productos.hasMany(Factura,{foreingkey: 'id_factura', sourcekey:'id_factura'});
 
-Factura.belongsTo(Pago,{foreignKey: 'id_factura', sourcekey:'id_factura'});
-Pago.hasMany(Factura,{foreignKey: 'id_factura', sourcekey:'id_factura'});
+Factura.hasMany(Detalle_factura,{foreignKey: 'id_factura', sourcekey:'id_factura'});
+//Factura.belongsTo(Pago,{foreignKey: 'id_factura', sourcekey:'id_factura'});
+//Pago.hasMany(Factura,{foreignKey: 'id_factura', sourcekey:'id_factura'});
 
 export default Factura;

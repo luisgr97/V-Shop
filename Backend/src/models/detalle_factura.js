@@ -24,5 +24,4 @@ const Detalle_factura = sequelize.define('detalle_factura',{
     freezeTableName: true
 });
 
-
 export default Detalle_factura;

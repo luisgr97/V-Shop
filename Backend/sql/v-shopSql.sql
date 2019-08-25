@@ -212,10 +212,10 @@ CREATE TABLE factura
 
 INSERT INTO factura (fecha, id_cliente,id_catalogo, total) VALUES
                                           ('2019/01/19', 4,1,800),
-                                          ('2019/02/19', 5,1,800),
-                                          ('2019/03/19', 6,1,800),
-                                          ('2019/04/19', 7,1,800),
-                                          ('2019/05/19', 8,1,800);
+                                          ('2019/02/19', 5,1,1200),
+                                          ('2019/03/19', 6,1,2800),
+                                          ('2019/04/19', 7,1,4500),
+                                          ('2019/05/19', 8,1,3800);
 
 --------------------------------------------------------------------------------------------------------------
 DROP TABLE IF EXISTS detalle_factura CASCADE;
@@ -230,7 +230,7 @@ CREATE TABLE detalle_factura
     FOREIGN KEY (id_producto) REFERENCES producto(id_producto) ON DELETE CASCADE,
     FOREIGN KEY (id_factura) REFERENCES factura(id_factura) ON DELETE CASCADE,
     PRIMARY KEY(num_detalle,id_factura)--cada atributo detalle es unico, y depende de la factura.
-    );
+);
 
     INSERT INTO detalle_factura (id_factura,id_producto, cantidad_comprada, precio_actual) VALUES
                                           (1,1,1,300),

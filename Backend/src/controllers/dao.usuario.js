@@ -1,4 +1,7 @@
 import Usuario from '../models/usuario';
+import Factura from '../models/factura';
+import Detalle_factura from '../models/detalle_factura';
+import Producto from '../models/producto';
 
 //create user
 export async function createUsuario(req, res) {
@@ -31,9 +34,9 @@ export async function createUsuario(req, res) {
             clave,
             nick,
             tipo_usuario
-        },{
-            fields: ['tipo_documento', 'numero_documento', 'nombres', 'apellidos', 'telefono', 'direccion', 'fecha_de_nacimiento', 'correo', 'estado', 'clave', 'nick', 'tipo_usuario']
-        });
+        }, {
+                fields: ['tipo_documento', 'numero_documento', 'nombres', 'apellidos', 'telefono', 'direccion', 'fecha_de_nacimiento', 'correo', 'estado', 'clave', 'nick', 'tipo_usuario']
+            });
         return res.json({
             message: "Usuario creado con exito",
             data: usuario
@@ -50,7 +53,7 @@ export async function createUsuario(req, res) {
 //get all users
 export async function listUsuarios(req, res) {
     const usuario = await Usuario.findAll({
-        attributes: ['id_usuario','tipo_documento', 'numero_documento', 'nombres', 'apellidos', 'telefono', 'direccion', 'fecha_de_nacimiento', 'correo', 'estado', 'clave', 'nick', 'tipo_usuario']
+        attributes: ['id_usuario', 'tipo_documento', 'numero_documento', 'nombres', 'apellidos', 'telefono', 'direccion', 'fecha_de_nacimiento', 'correo', 'estado', 'clave', 'nick', 'tipo_usuario']
     });
     res.send(usuario)
 }
@@ -60,15 +63,15 @@ export async function getOneUsuario(req, res) {
     const { id_usuario } = req.params;
     try {
         const usuario = await Usuario.findOne({
-            attributes: ['tipo_documento', 
-            'numero_documento', 
-            'nombres', 
-            'apellidos', 
-            'telefono', 
-            'direccion', 
-            'fecha_de_nacimiento', 
-            'correo', 
-            'nick'
+            attributes: ['tipo_documento',
+                'numero_documento',
+                'nombres',
+                'apellidos',
+                'telefono',
+                'direccion',
+                'fecha_de_nacimiento',
+                'correo',
+                'nick'
             ],
             where: {
                 id_usuario
@@ -118,9 +121,9 @@ export async function updateUsuario(req, res) {
             clave,
             nick,
             tipo_usuario
-        },{
-            where: { id_usuario: id_usuario }
-        });
+        }, {
+                where: { id_usuario: id_usuario }
+            });
         if (updateUsuario) {
             res.json(updateUsuario);
         }
@@ -140,9 +143,9 @@ export async function deleteUsuario(req, res) {
         const estado = "0";
         const updateUsuario = await Usuario.update({
             estado
-        },{
-            where: { id_usuario: id_usuario }
-        });
+        }, {
+                where: { id_usuario: id_usuario }
+            });
         if (updateUsuario) {
             res.json(updateUsuario);
         }
@@ -167,19 +170,19 @@ export async function logUsuario(req, res) {
                 clave: clave
             }
         });
-        if(usuario){            
+        if (usuario) {
             return res.json({
-                find: true, 
-                nick: usuario.nick, 
+                find: true,
+                nick: usuario.nick,
                 id_usuario: usuario.id_usuario
-                });
-        }else{
-            return res.json({find:false});
+            });
+        } else {
+            return res.json({ find: false });
         }
     } catch (e) {
         console.log(e);
         res.json({
-            message:"Error 505",
+            message: "Error 505",
             data: {}
         });
     }
@@ -193,15 +196,57 @@ export async function checkNick(req, res) {
                 nick
             }
         });
-        if(usuario){
+        if (usuario) {
             return res.send(true);
-        }else{
+        } else {
             return res.json(false);
         }
     } catch (e) {
         console.log(e);
         res.json({
-            message:"Error 506",
+            message: "Error 506",
+            data: {}
+        });
+    }
+}
+
+export async function getJoinFacturas(req, res) {
+    const { id_usuario } = req.params;
+    try {
+        const usuario = await Usuario.findOne({
+            attributes: ['tipo_documento',
+                'numero_documento',
+                'nombres',
+                'apellidos',
+                'telefono',
+                'direccion',
+                'fecha_de_nacimiento',
+                'correo',
+                'nick'
+            ],
+            include: [{
+                model: Factura,
+                attributes: ['id_factura', 'fecha', 'total'],
+                include: [{
+                    model: Detalle_factura,
+                    attributes: ['num_detalle', 'cantidad_comprada', 'precio_actual'],
+                    include: [{
+                        model: Producto,
+                        attributes: ['id_producto', 'nombre_producto']
+                    }]
+                }]
+            }],
+            where: {
+                id_usuario
+            }
+        });
+        return res.json({
+            data: usuario
+        });
+    } catch (e) {
+        console.log(e);
+        res.status(502).json({
+            message: "Algo salio mal 503",
             data: {}
         });
     }

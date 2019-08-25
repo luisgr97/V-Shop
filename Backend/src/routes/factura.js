@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { crearFactura, getFacturas, getOnFactura, deleteOnFactura, updateFactura } from '../controllers/dao.factura';
+import { crearFactura, getFacturas, getOnFactura, deleteOnFactura, updateFactura, getJoinDetalles } from '../controllers/dao.factura';
 const router = Router();
 
 /*CRUD Factura*/
@@ -13,6 +13,8 @@ router.get('/get/:id_factura', getOnFactura);
 router.put('/update/:id_factura', updateFactura);
 //Delete category, requires parameter id_categoria, return 1 || 0
 router.delete('/delete/:id_factura', deleteOnFactura);
+//getFacturasConDetalles
+router.get('/getJoinDetalles', getJoinDetalles);
 
 /*functions*/
 //router.get('/get/by-producto/:id_producto',getOnByProducto);

@@ -1,4 +1,6 @@
 import Factura from '../models/factura'
+import Detalle_factura from '../models/detalle_factura';
+import Producto from '../models/producto';
 
 export async function crearFactura(req, res) {
     const { fecha, id_cliente, id_catalogo, total } = req.body;
@@ -92,6 +94,29 @@ export async function updateFactura(req, res) {
         console.log(e);
         res.status(204).json({
             message: "Algo salio mal 204",
+            data: {}
+        });
+    }
+}
+
+export async function getJoinDetalles(req, res) {
+    try {
+        const factura = await Factura.findAll({
+            attributes: ['id_factura','fecha','total'],
+            include:[{
+                model: Detalle_factura,
+                attributes: ['num_detalle','cantidad_comprada', 'precio_actual'],
+                include:[{
+                    model: Producto,
+                    attributes: ['id_producto','nombre_producto']
+                }]
+            }]
+        });
+        return res.json(factura);
+    } catch (e) {
+        console.log(e);
+        res.status(201).json({
+            message: 'Algo salio mal 201',
             data: {}
         });
     }
