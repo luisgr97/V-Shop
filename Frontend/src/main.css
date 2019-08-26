@@ -20,6 +20,7 @@ Licensed under the MIT license - http://opensource.org/licenses/MIT
 
 Copyright (c) 2015 Daniel Eden
 */
+
 .animated {
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -275,7 +276,7 @@ Copyright (c) 2015 Daniel Eden
    
 textarea.form-control {
   max-width: 100%;
-  max-height: 80px;
+  min-height: 100px;
   padding: 10px 10px 0 0;
   resize: none;
   border: none;
@@ -449,3 +450,8 @@ body {
 
   .alert.alert-with-icon {
     padding-left: 65px; }
+
+
+    .modal show, .modal-open, .modal-dialog, .modal-content{
+      transition: 0.5s all ease-in-out!important;
+    }
