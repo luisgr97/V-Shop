@@ -22,7 +22,7 @@ const app = express();
 //middlewares
 app.use(morgan('dev'));
 app.use(json());
-app.use(cors())
+app.use(cors());
 //routes
 app.use('/api/catalogos',catalogosRoutes);
 app.use('/api/catalogos/inventario',inventarioRoutes);
