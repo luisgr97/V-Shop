@@ -1,8 +1,8 @@
 import React from 'react'
-import { UncontrolledCollapse, Button } from 'reactstrap';
+import { UncontrolledCollapse } from 'reactstrap';
 import { ListGroup, ListGroupItem } from 'reactstrap';
 
-import '../../estilos/clientPurchase.css'
+import '../../estilos/client-purchases.css'
 
 const Factura = (props) =>{
     return(

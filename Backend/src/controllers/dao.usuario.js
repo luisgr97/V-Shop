@@ -101,33 +101,52 @@ export async function updateUsuario(req, res) {
             apellidos,
             telefono,
             direccion,
-            fecha_de_nacimiento,
             correo,
-            estado,
-            clave,
-            nick,
-            tipo_usuario
+            clave
         } = req.body;
-
-        const updateUsuario = await Usuario.update({
-            tipo_documento,
-            numero_documento,
-            nombres,
-            apellidos,
-            telefono,
-            direccion,
-            fecha_de_nacimiento,
-            correo,
-            estado,
-            clave,
-            nick,
-            tipo_usuario
-        }, {
-                where: { id_usuario: id_usuario }
-            });
-        if (updateUsuario) {
-            res.json(updateUsuario);
-        }
+    
+        //creamos una exp regular para validar el formato de correo.
+        var cadena_correo = "^[a-z]+@[a-z]+\.[a-z]{2,4}$"; 
+        var exp_reg_correo = new RegExp(cadena_correo);
+       
+        //creamos una exp regular para validar el formato de texto.
+        var cadena_text = "[A-Za-z ñ]+"; 
+        var exp_reg_text = new RegExp(cadena_text);
+      
+        if ((numero_documento.length==10)&&
+            (telefono.length==10))
+            { if (correo.match(exp_reg_correo)){
+                  if ((nombres.match(exp_reg_text))&&
+                      (apellidos.match(exp_reg_text))
+                     ){
+                    if (direccion){
+                        if (clave){
+                            const updateUsuario = await Usuario.update({
+                                tipo_documento,
+                                numero_documento,
+                                nombres,
+                                apellidos,
+                                telefono,
+                                direccion,
+                                correo,
+                                clave
+                            }, {
+                                    where: { id_usuario }
+                                });
+                            if (updateUsuario) {
+                                res.json(updateUsuario);
+                            }else {
+                                res.json({message: 'El usuario no se pudo actualizar Correctamente.'});
+                            }
+                        }else {res.json({message: 'El usuario no se pudo actualizar Correctamente, el formato de la clave no es valido'});}
+                    }else {res.json({message: 'El usuario no se pudo actualizar Correctamente, el formato de la direccion no es valido'});}
+                  }else {res.json({message: 'El usuario no se pudo actualizar Correctamente, los nombres y los apillidos no deben contener números ni caracteres especiales'});} 
+              }else {res.json({message: 'El usuario no se pudo actualizar Correctamente, el formato del correo no es valido'});}
+            }else {
+                res.json({message: 'El usuario no se pudo actualizar Correctamente, el telefono y el documento id deben ser números de 10 digitos'});
+            }
+            
+                    
     } catch (e) {
         console.log(e);
         res.status(502).json({
@@ -136,6 +155,7 @@ export async function updateUsuario(req, res) {
         });
     }
 }
+
 
 //delete user: set estate to false
 export async function deleteUsuario(req, res) {
@@ -165,18 +185,24 @@ export async function logUsuario(req, res) {
     console.log(nick, " ", clave)
     try {
         const usuario = await Usuario.findOne({
-            attributes: ['id_usuario', 'nick'],
+            attributes: ['id_usuario', 'nick', 'clave'],
             where: {
-                nick: nick,
-                clave: clave
-            }
+                nick: nick
+                }
         });
         if (usuario) {
-            return res.json({
-                find: true,
-                nick: usuario.nick,
-                id_usuario: usuario.id_usuario
-            });
+            if (usuario.clave == clave){
+                return res.json({
+                    find: true,
+                    nick: usuario.nick,
+                    id_usuario: usuario.id_usuario
+                });   
+            }else {
+               return res.json({
+                   find: true,
+                   message: 'la contraseña es incorrecta'
+               });
+            }            
         } else {
             return res.json({ find: false });
         }

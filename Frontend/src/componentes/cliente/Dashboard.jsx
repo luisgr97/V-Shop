@@ -1,16 +1,16 @@
 import React, {Component} from 'react'
-import { Route, Redirect, BrowserRouter } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import axios from 'axios'
 
-import Sidebar from '../Sidebar'
+import Sidebar from './Sidebar'
 import { Container, Row, Col } from 'reactstrap';
-import Datos from '../Registro'
+import Datos from '../principal/Registro'
 import Comments from './Comments'
 import Purchase from './ClientPurchase'
-import Loading from '../Loading'
+import Loading from '../principal/Loading'
 
 import clientRoutes from './rutas'
-
+/*
 const propiedades2={
   tipo: "CC",
   numero: "12151518",
@@ -36,7 +36,7 @@ const inicial={
   nacimiento: "",
   nick: "",
 };
-
+*/
 class Cliente extends Component {
   constructor(props){
     super(props)
@@ -78,60 +78,48 @@ class Cliente extends Component {
     const {location} = this.props
     const datos = this.state.cliente
     console.log("Estos son los datos",datos)
-    /*    
-    {clientRoutes.map((ruta) => (
-      <Route key={ruta.id} 
-      path={`/cliente/${ruta.id}`} 
-      render={()=>(
-        <ruta.component noRegistro={true} 
-        {...this.state.cliente}/>
-      )}/>
-  ))}*/
-  if(this.state.loading){
-    return(
-      <Loading />
-    )
-  }else{
-    return (
-      <Container>
-        <div className="espacio"/>
-        <Row>
-          <Col xs="3">
-            <Sidebar pathname = {location.pathname}/>
-          </Col>
-          <Col xs="9">
-            
-            <Route path={`/cliente/${clientRoutes[0].id}`} 
-              render={()=>(
-                <Datos actualizar={true} 
-                idCliente={this.props.idCliente}
-                datos={this.state.cliente}/>
-              )}
-            />
 
-            <Route path={`/cliente/${clientRoutes[1].id}`} 
-              render={()=>(
-                <Purchase />
-              )}
-            />
-
-            <Route path={`/cliente/${clientRoutes[2].id}`} 
-              render={()=>(
-                <Comments />
-              )}
-            />
+    if(this.state.loading){
+      return(
+        <Loading />
+      )
+    }else{
+      return (
+        <Container>
+          <div className="espacio"/>
+          <Row>
+            <Col xs="3">
+              <Sidebar pathname = {location.pathname}/>
+            </Col>
+            <Col xs="9">
               
+              <Route path={`/cliente/${clientRoutes[0].id}`} 
+                render={()=>(
+                  <Datos actualizar={true} 
+                  idCliente={this.props.idCliente}
+                  datos={this.state.cliente}
+                  mensaje={"ACTUALIZAR"}/>
+              )}/>
 
-          </Col>
-        </Row>
-        <Redirect to="/cliente/data"/>
+              <Route path={`/cliente/${clientRoutes[1].id}`} 
+                render={()=>(
+                  <Purchase />
+              )}/>
 
-      </Container>
-      
-    )
-      }
-}
+              <Route path={`/cliente/${clientRoutes[2].id}`} 
+                render={()=>(
+                  <Comments />
+              )}/>
+                
+            </Col>
+          </Row>
+          <Redirect to="/cliente/data"/>
+
+        </Container>      
+      )
+    }
   }
+}
  
 
 

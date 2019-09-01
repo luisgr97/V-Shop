@@ -1,20 +1,25 @@
 import React, {Component} from 'react';
-import { BrowserRouter, Route, Redirect, Link, Switch } from 'react-router-dom'
 import jwt from 'jsonwebtoken'
 
-import Header from './componentes/Header'
-import Main from './componentes/Main'
-import LoginCliente from './componentes/LoginClient'
-import LoginAdmin from './componentes/LoginAdmin'
-import Regitro from './componentes/Registro'
-import Admin from './componentes/manager/Dashboard'
-import Cliente from './componentes/cliente/Dashboard'
-
+import { BrowserRouter, Route, Redirect, Link, Switch } from 'react-router-dom'
 import { Fade } from 'reactstrap';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import logo from './imagenes/logo-black.png'
+import Admon from './componentes/admon/Dashboard'
+import LoginAdmon from './componentes/admon/LoginAdmon'
+import Cliente from './componentes/cliente/Dashboard'
+import LoginCliente from './componentes/cliente/LoginClient'
 
+import Header from './componentes/principal/Header'
+import Main from './componentes/principal/Main'
+import Regitro from './componentes/principal/Registro'
+import ProductPage from './componentes/principal/ProductPage'
+
+import logo from './imagenes/logo-black.png'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+//import Modal from './componentes/Modal'
+//import DB from './dashboard/index'
 
 const BlackLogo = () =>{
     return(
@@ -30,9 +35,17 @@ class App extends Component {
         super(props)
         this.state = {
             clienteLogueado: false,
-            nombreCliente: "",
             idCliente: "",
+            nickCliente: "",   
+
             adminLogueado: true,
+            idAdmin: "",
+            nickAdmin: "",
+
+            managerLogueado: true,
+            idManager: "",
+            nickManager: "",
+
             number: 2
         };
         this.handleChangeLoggin = this.handleChangeLoggin.bind(this)
@@ -46,7 +59,7 @@ class App extends Component {
             const id = jwt.verify(token, 'tugfaide').id_usuario    
             this.setState({
                 clienteLogueado: true,
-                nombreCliente: nombre,
+                nickCliente: nombre,
                 idCliente: id
               })              
         }else{
@@ -57,12 +70,12 @@ class App extends Component {
     }
 
     handleChangeLoggin(valor, usuario){
-        if(valor==0){
+        if(valor===0){
             if(this.state.clienteLogueado){
                 localStorage.removeItem('token-login')
                 this.setState({
                     clienteLogueado:false,
-                    nombreCliente: "",
+                    nickCliente: "",
                     idCliente: ""
                 })
             }else{
@@ -70,15 +83,23 @@ class App extends Component {
                 localStorage.setItem('token-login', jwt.sign(token, 'tugfaide'))  
                 this.setState({
                     clienteLogueado: true,
-                    nombreCliente: usuario.nick,
+                    nickCliente: usuario.nick,
                     idCliente: usuario.id_usuario
                 })
             }           
-        }else if(valor==1){
+        }else if(valor===1){
             this.setState({
-                adminLogueado: !this.state.adminLogueado
+                adminLogueado: !this.state.adminLogueado,
+                idAdmin: usuario.id_usuario,
+                nickAdmin: usuario.nick
             })
-        }             
+        }else{
+            this.setState({
+                managerLogueado: !this.state.managerLogueado,
+                idManager: usuario.id_usuario,
+                nickManager: usuario.nick
+            })
+        }         
     }
 
     handleChangeNumber(valor){
@@ -101,7 +122,7 @@ render(){
         nick: "",
         clave: "",
     };
-
+/*
     const propiedades2={
         tipo: "CC",
         numero: "12151518",
@@ -114,94 +135,115 @@ render(){
         nacimiento: "1995-10-18",
         nick: "loquendomanzano",
     };
+    */
 //<Main login={this.state.clienteLogueado} />
     return (
         //En react, para dar estilos CSS usamos className en lugar de class
         <div className="App" >
             <BrowserRouter>
-            <Switch>                
-{/*
-                <Route path="/admin" render={props => 
-                    this.state.adminLogueado ? 
-                    <Dashboard {...props} /> :
-                    <Redirect to="/vs-admin"/>} 
-                />
-                */}
-                <Route path="/manager" render={props => 
-                    this.state.adminLogueado ? 
-                    <Admin {...props}/> :
-                    <Redirect to="/vs-admin"/>
-                }/>
-
-                <Route  path="/vs-admin" render={() =>
-                    this.state.adminLogueado ?
-                    <Redirect to="/admin"/> :
-                    <LoginAdmin login={this.handleChangeAdminLog}/>
-                }/>
-
-                <Route path="/registro" render={() => 
-                    this.state.clienteLogueado ? 
-                    <Redirect to="/" /> : 
-                    (<Fade in={true} className="mt-3" id="registro"> 
-                        <BlackLogo/> 
-                        <div id="registro-container">                    
-                            <Regitro actualizar={false}
-                            datos={propiedades}                             
-                            />
-                        </div>
-                    </Fade>
-                )}/>
-                
-                
-                <Route path="/login" render={() => 
-                    this.state.clienteLogueado ? 
-                    <Redirect to="/"/> :
-                    (<div>
-                        <Fade in={true} className="mt-3" id="login">
-                            <BlackLogo/>                                         
-                            <LoginCliente login={this.handleChangeLoggin}/>
-                        </Fade>
-                    </div>
-                )}/>
-
-{/*
-                <Route path="/productos" render={() => 
-                    this.state.adminLogueado ? (<div>                                    
-                    <Arituclo {...this.props} />                   
-                    </div>) : <Redirect to="/" />}>
-                </Route>
-
+                <Switch>                
+                    {/*
+                    <Route path="/admin" render={props => 
+                        this.state.adminLogueado ? 
+                        <Dashboard {...props} /> :
+                        <Redirect to="/vs-admin"/>} 
+                    />
                     */}
-        
-                    <Route exact path="/"  render={() =>(
+                    <Route exact path="/" render={() =>(
                         <div>
                             <Header number={this.state.number}
-                                nombre={this.state.nombreCliente}
+                                nombre={this.state.nickCliente}
                                 login={this.handleChangeLoggin}                                 
                                 logueado={this.state.clienteLogueado}                         
                             />
-                            <Fade in={true}>                                                           
+                            <Fade in={true} tag="h5" className="mt-3">                                                           
                             <Main login={this.state.clienteLogueado} />                                    
                             </Fade>
                         </div>
                     )}/>
 
+                    <Route  path="/admin" render={({location}) =>
+                        this.state.adminLogueado ?
+                        <Admon isAdmin={true}
+                            location={location}
+                            userId={this.state.idAdmin}
+                            userNick={this.state.nickAdmin}
+                        /> :
+                        <LoginAdmon login={this.handleChangeLoggin}                            
+                            isAdmin={true}
+                        />
+                    }/>
+
+                    <Route path="/manager" render={({location}) => 
+                        this.state.managerLogueado ? 
+                        <Admon isAdmin={false}
+                            location={location}
+                            userId={this.state.idManager}
+                            userNick={this.state.nickManager}
+                        /> :
+                        <LoginAdmon login={this.handleChangeLoggin}                            
+                            isAdmin={false}
+                        />
+                    }/>
+
                     <Route path="/cliente" render={({location}) => 
                         this.state.clienteLogueado ? 
                         (<div> 
                             <Header number={this.state.number} 
-                                nombre={this.state.nombreCliente}
+                                nombre={this.state.nickCliente}
                                 login={this.handleChangeLoggin} 
                                 logueado={this.state.clienteLogueado}                         
-                             />                                                                                                           
+                                />                                                                                                           
                             <Cliente idCliente={this.state.idCliente}                                
                                 location = {location}
                             />
                         </div>) : <Redirect to="/login" />
                     }/>
                 
+                    <Route path="/registro" render={() => 
+                        this.state.clienteLogueado ? 
+                        <Redirect to="/" /> : 
+                        (<Fade in={true} className="mt-3" id="registro"> 
+                            <BlackLogo/> 
+                            <div id="registro-container">                    
+                                <Regitro actualizar={false}
+                                datos={propiedades}
+                                mensaje={"REGISTRARME"}                             
+                                />
+                                
+                            </div>
+                        </Fade>
+                    )}/>
+                    
+                    
+                    <Route path="/login" render={() => 
+                        this.state.clienteLogueado ? 
+                        <Redirect to="/"/> :
+                        (<div>
+                            <Fade in={true} className="mt-3" id="login">
+                                <BlackLogo/>                                         
+                                <LoginCliente login={this.handleChangeLoggin}/>
+                            </Fade>
+                        </div>
+                    )}/>
+
+
+
+                    <Route path="/producto/:id_producto" render={() =>                         
+                        <div>
+                            <Header number={this.state.number}
+                            nombre={this.state.nickCliente}
+                            login={this.handleChangeLoggin}                                 
+                            logueado={this.state.clienteLogueado}                         
+                            />
+                            <Fade in={true} className="mt-3">
+                                <ProductPage/>                                         
+                            </Fade>
+                        </div>
+                    }/>
+                
                     <Route render={() => (<h1>Pagina no encontrada</h1>)} />
-                    </Switch>
+                </Switch>
             </BrowserRouter>
         </div>
     );

@@ -105,6 +105,7 @@
   position: relative;
   margin: 15px 0px 10px;
   height: 20px;
+  font-size: 14px
 }
 
 .product .product-body .product-rating>i {
@@ -214,6 +215,7 @@
   border-radius: 40px;
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
+  font-size: 14px
 }
 
 .product .add-to-cart .add-to-cart-btn>i {
