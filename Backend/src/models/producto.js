@@ -3,7 +3,8 @@ import { sequelize } from '../database/database';
 import Imagenes from './imagen';
 import Comentario from './comentario';
 import Inventario_catalogo_productos from './inventario_catalogo_productos';
-import Detalle_factura from './detalle_factura'
+import Detalle_factura from './detalle_factura';
+//import SubCategoria from './subcategoria';
 
 const Producto = sequelize.define('producto',{
     id_producto:{
@@ -36,10 +37,12 @@ Producto.hasMany(Imagenes,{foreignKey: 'id_producto', sourcekey:'id_producto'});
 Producto.hasMany(Comentario,{foreignKey: 'id_producto', sourcekey:'id_producto'});
 //Comentario.belongsTo(Producto,{foreignKey: 'id_producto', sourcekey:'id_producto'});
 
-Producto.belongsTo(Inventario_catalogo_productos,{foreignKey: 'id_producto', sourcekey:'id_producto'});
-//Inventario_catalogo_productos.hasMany(Producto,{foreignKey: 'id_producto', sourcekey:'id_producto'});
+Producto.hasMany(Inventario_catalogo_productos,{foreignKey: 'id_producto', sourcekey:'id_producto'});
+Inventario_catalogo_productos.hasMany(Producto,{foreignKey: 'id_producto', sourcekey:'id_producto'});
 
-//Producto.hasMany(Detalle_factura,{foreignKey: 'id_producto', sourcekey:'id_producto'});
+Producto.hasMany(Detalle_factura,{foreignKey: 'id_producto', sourcekey:'id_producto'});
 Detalle_factura.belongsTo(Producto,{foreignKey: 'id_producto', sourcekey:'id_producto'});
+
+//Producto.belongsTo(SubCategoria,{foreignKey: 'id_producto', sourcekey:'id_producto'});
 
 export default Producto;

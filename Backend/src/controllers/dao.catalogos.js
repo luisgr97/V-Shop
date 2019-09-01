@@ -1,4 +1,5 @@
 import Catalogo from '../models/catalogo';
+import SubCategoria from '../models/subcategoria';
 
 // este es un metodo asincrono ya que toma tiempo para crearse, por ende, en funcion se le indica con "async" y en la constante con await, para esperar a su creacion antes de hacer el send
 export async function crear(req, res) {
@@ -23,7 +24,6 @@ export async function crear(req, res) {
         });
     }
 }
-
 
 export async function get(req, res) {
     try {

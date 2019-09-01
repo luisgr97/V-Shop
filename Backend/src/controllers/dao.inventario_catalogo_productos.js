@@ -1,4 +1,6 @@
 import Inventario from '../models/inventario_catalogo_productos';
+import Producto from '../models/producto';
+import SubCategoria from '../models/subcategoria';
 
 // este es un metodo asincrono ya que toma tiempo para crearse, por ende, en funcion se le indica con "async" y en la constante con await, para esperar a su creacion antes de hacer el send
 export async function crear(req, res) {
@@ -127,7 +129,7 @@ export async function updateOnCantidad(req, res) {
 }
 
 export async function getOnByProducto(req, res) {
-    const { id_producto } = req.params;
+    /*const { id_producto } = req.params;
     try {
         const comentarios = await Inventario.findAll({
             attributes: ['id_comentario','comentario', 'calificacion', 'fecha', 'id_producto'],
@@ -140,6 +142,36 @@ export async function getOnByProducto(req, res) {
         console.log(e);
         res.status(605).json({
             message: "Algo salio mal 605",
+            data: {}
+        });
+    }*/
+}
+
+export async function getProductosHomePageByCatalogo(req, res) {
+    const { id_catalogo } = req.params;
+    try {
+        const catalgo = await Inventario.findAll({
+            attributes: ['id_catalogo'],
+            include:[{
+                attributes: ['id_producto','nombre_producto'],
+                model: Producto,
+                include:[{
+                    attributes: ['nombre_subcategoria'],
+                    model: SubCategoria
+                }]
+            }],
+            where: {
+                id_catalogo
+            }
+        });
+        return res.json({
+            message: "Catalogos encontrados",
+            data: catalgo
+        });
+    } catch (e) {
+        console.log(e);
+        res.status(607).json({
+            message: "Algo salio mal 607",
             data: {}
         });
     }

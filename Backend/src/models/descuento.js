@@ -1,5 +1,6 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../database/database';
+import Inventario from '../models/inventario_catalogo_productos';
 
 const Descuento = sequelize.define('descuento',{
     id_descuento:{
@@ -22,5 +23,8 @@ const Descuento = sequelize.define('descuento',{
     timestamps: false,
     freezeTableName: true
 });
+
+Descuento.hasMany(Inventario,{foreignKey: 'id_descuento', sourcekey:'id_descuento'});
+Inventario.belongsTo(Descuento,{foreignKey: 'id_descuento', sourcekey:'id_descuento'});
 
 export default Descuento;

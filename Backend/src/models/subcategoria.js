@@ -14,9 +14,7 @@ const SubCategoria = sequelize.define('subcategoria',{
         type: Sequelize.STRING(100)
     },
     id_categoria: {
-        type: Sequelize.INTEGER/*,
-        references: 'categoria',
-        referencesKey: 'id_categoria'*/
+        type: Sequelize.INTEGER
     }
 },{
     underscored: false,
@@ -25,6 +23,6 @@ const SubCategoria = sequelize.define('subcategoria',{
 });
 
 SubCategoria.hasMany(Producto,{foreignKey: 'id_subcategoria', sourcekey:'id_subcategoria'});
-//Producto.belongsTo(SubCategoria,{foreignKey: 'id_subcategoria', sourcekey:'id_subcategoria'});
+Producto.belongsTo(SubCategoria, {foreignKey: 'id_subcategoria'});
 
 export default SubCategoria;
