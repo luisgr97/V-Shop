@@ -4,7 +4,7 @@ import Producto from '../models/producto';
 export async function crearProducto(req, res) {
     const { nombre_producto, descripcion, marca, precio, id_subcategoria } = req.body;
 
-    var go = false;
+    var failure = false;
     var productoObject = {
         nombre_producto: true,
         descripcion: true,
@@ -15,22 +15,29 @@ export async function crearProducto(req, res) {
 
     if(typeof(precio) != 'number'){
         productoObject.precio = false;
-    }else if(typeof(nombre_producto) != 'string' || nombre_producto === ""){
-        productoObject.nombre_producto = "Ingrese un nombre de producto valido"
-    }else if(typeof(descripcion) != 'string'){
-        productoObject.descripcion = "Ingrese una descripcion valida"
-    }else if(typeof(marca) != 'string'){
-        productoObject.marca = "Ingrese una marca valida"
-    }else if(typeof(id_subcategoria) != 'number'){
-        productoObject.marca = "Escoga una subcategoria valida"
-    }else{
-        go = true;
+        failure = true;
     }
-    if(!go){
+    if(typeof(nombre_producto) != 'string' || nombre_producto == ""){
+        productoObject.nombre_producto = false;
+        failure = true;
+    }
+    if(typeof(descripcion) != 'string' || descripcion == ""){
+        productoObject.descripcion = false;
+        failure = true;
+    }
+    if(typeof(marca) != 'string' || marca == ""){
+        productoObject.marca = false;
+        failure = true;
+    }
+    if(typeof(id_subcategoria) != 'number'){
+        productoObject.marca = false;
+        failure = true;
+    }
+    if(failure){
         return res.json({
-            message: "Validacion Fallida",
-            exito : go
-        })
+            exito: failure,
+            data : productoObject
+        });
     }
     
 
@@ -45,7 +52,7 @@ export async function crearProducto(req, res) {
         });
         return res.json({
             message: "Producto creado con exito",
-            exito  : go
+            exito  : nuevoProducto
         })
     } catch (e) {
         console.log(e);
