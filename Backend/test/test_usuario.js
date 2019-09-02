@@ -61,8 +61,8 @@ describe('## login users', () => {
         chai.request('http://localhost:5000')
             .post('/usuario/login')
             .send({    
-                       nick: '',
-                       clave: ''
+                       nick: 'rifirafe',
+                       clave: 'rapimen'
                      })
             .end(function (err, res) {
                    if (err){
