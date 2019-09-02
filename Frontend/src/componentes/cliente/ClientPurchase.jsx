@@ -5,12 +5,13 @@ import { ListGroup, ListGroupItem } from 'reactstrap';
 import '../../estilos/client-purchases.css'
 
 const Factura = (props) =>{
-    return(
+    console.log("haver", props)
+    return(        
         <div>
-             <ListGroupItem id={`toogler${props.indice}`} action>
-            Factura N°12548
+            <ListGroupItem id={`toogler${props.id_factura}`} action>
+            {`Factura N° ${props.id_factura}`}
             </ListGroupItem>
-        <UncontrolledCollapse toggler={`#toogler${props.indice}`}>
+        <UncontrolledCollapse toggler={`#toogler${props.id_factura}`}>
         <div className="order-details">
             <div className="order-summary">
                 <div className="order-col">
@@ -18,32 +19,31 @@ const Factura = (props) =>{
                     <div><strong>VALOR</strong></div>
                 </div>
                 <div className="order-products">
-                    <div className="order-col">
-                        <div>1x Product Name Goes Here</div>
-                        <div>$980.00</div>
+                    
+                {props.detalle_facturas.map((indice, index) => (
+                        <div className="order-col" key={indice.num_detalle+index}>
+                            <div>{`${indice.cantidad_comprada}x  ${indice.producto.nombre_producto}`}</div>
+                        <div>{indice.precio_actual}</div>
                     </div>
-                    <div className="order-col">
-                        <div>2x Product Name Goes Here</div>
-                        <div>$980.00</div>
-                    </div>
+                    ))}                
                 </div>
                 <div className="order-col">
                     <div><strong>TOTAL PAGADO</strong></div>
-                    <div><strong className="order-total">$2940.00</strong></div>
+                    <div><strong className="order-total">${props.total}</strong></div>
                 </div>
             </div>           
-            {/*<a href="#" className="primary-btn order-submit">Place order</a>*/}
         </div>
         </UncontrolledCollapse>
-        </div>
+        </div>        
     )
 }
-const Purchase = () =>{
+const Purchase = (props) =>{
     const arreglo = [1,2,3,4,5,6]
     return(
         <ListGroup className="listaCompras">
-            {arreglo.map((indice) => (
-                <Factura key={indice} indice={indice}/>
+            {props.bills.map((indice) => (
+                <Factura key={indice.fecha+indice.id_factura} 
+                {...indice}/>
             ))}
         
         </ListGroup>

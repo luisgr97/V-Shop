@@ -18,8 +18,8 @@
 
   .qty {
     position: absolute;
-    right: 130px;
     top: 10px;
+    margin-left: 30px!important;
     width: 20px;
     height: 20px;
     line-height: 20px;

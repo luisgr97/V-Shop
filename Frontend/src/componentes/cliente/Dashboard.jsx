@@ -42,32 +42,21 @@ class Cliente extends Component {
     super(props)
     this.state = {
       cliente: {
-        tipo:"CC",
-        numero: "",
-        nombre: "",
-        apellidos: "",
-        telefono: "",
-        direccion: "",
-        correo: "",
-        clave: "",        
-        nacimiento: "",
-        nick: "",
       },
       loading: true
     }
   };
 
   componentDidMount(){
-    console.log("willmpount1")
-    axios.get('http://localhost:4000/usuario/get/' + this.props.idCliente)
+    axios.get('http://localhost:4000/usuario/getJoinFacturas/' + this.props.idCliente)
     .then((response) => {
+      console.log("Es response",response)
       response.data.data.clave=""
       console.log(response.data.data)
       this.setState({
         cliente:response.data.data,
         loading: false
       })
-      console.log("willmpount2",this.state.cliente)
     })
     .catch(err=>{
         alert("Intentelo mas tarde cliente")
@@ -77,7 +66,6 @@ class Cliente extends Component {
   render(){
     const {location} = this.props
     const datos = this.state.cliente
-    console.log("Estos son los datos",datos)
 
     if(this.state.loading){
       return(
@@ -103,7 +91,7 @@ class Cliente extends Component {
 
               <Route path={`/cliente/${clientRoutes[1].id}`} 
                 render={()=>(
-                  <Purchase />
+                  <Purchase bills={this.state.cliente.facturas}/>
               )}/>
 
               <Route path={`/cliente/${clientRoutes[2].id}`} 

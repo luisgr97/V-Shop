@@ -37,6 +37,7 @@ class LoginClient extends Component {
       //Axios se encarga de hacer solicitudes de forma sencilla
       axios.post('http://localhost:4000/usuario/login', mensaje)
       .then((response) => {
+        console.log(response.data)
         this.setState({ loading: false })
         if(response.data.find){
           this.props.login(0, response.data)
