@@ -37,8 +37,8 @@ Producto.hasMany(Imagenes,{foreignKey: 'id_producto', sourcekey:'id_producto'});
 Producto.hasMany(Comentario,{foreignKey: 'id_producto', sourcekey:'id_producto'});
 //Comentario.belongsTo(Producto,{foreignKey: 'id_producto', sourcekey:'id_producto'});
 
-Producto.hasMany(Inventario_catalogo_productos,{foreignKey: 'id_producto', sourcekey:'id_producto'});
-Inventario_catalogo_productos.hasMany(Producto,{foreignKey: 'id_producto', sourcekey:'id_producto'});
+//Producto.hasMany(Inventario_catalogo_productos,{foreignKey: 'id_producto', sourcekey:'id_producto'});
+Inventario_catalogo_productos.belongsTo(Producto,{foreignKey: 'id_producto', sourcekey:'id_producto'});
 
 Producto.hasMany(Detalle_factura,{foreignKey: 'id_producto', sourcekey:'id_producto'});
 Detalle_factura.belongsTo(Producto,{foreignKey: 'id_producto', sourcekey:'id_producto'});

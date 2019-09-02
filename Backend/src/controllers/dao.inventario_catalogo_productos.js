@@ -1,6 +1,7 @@
 import Inventario from '../models/inventario_catalogo_productos';
 import Producto from '../models/producto';
 import SubCategoria from '../models/subcategoria';
+import Categoria from '../models/categoria';
 
 // este es un metodo asincrono ya que toma tiempo para crearse, por ende, en funcion se le indica con "async" y en la constante con await, para esperar a su creacion antes de hacer el send
 export async function crear(req, res) {
@@ -150,23 +151,27 @@ export async function getOnByProducto(req, res) {
 export async function getProductosHomePageByCatalogo(req, res) {
     const { id_catalogo } = req.params;
     try {
-        const catalgo = await Inventario.findAll({
-            attributes: ['id_catalogo'],
+        const catalogo = await Inventario.findAll({
+        //    attributes: ['id_catalogo'],
             include:[{
-                attributes: ['id_producto','nombre_producto'],
+                attributes: [/*'id_producto',*/'nombre_producto'],
                 model: Producto,
                 include:[{
                     attributes: ['nombre_subcategoria'],
-                    model: SubCategoria
+                    model: SubCategoria,
+                    include:[{
+                        model: Categoria
+                    }]
                 }]
             }],
             where: {
                 id_catalogo
             }
         });
+        //console.log("Datos en catalogo ",catalogo.inventario_catalogo_productos);
         return res.json({
             message: "Catalogos encontrados",
-            data: catalgo
+            data: catalogo
         });
     } catch (e) {
         console.log(e);
