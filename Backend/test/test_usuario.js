@@ -1,7 +1,8 @@
-//import App from '../src/app';
-const App = require('../src/app');
+var App = require('../src/app');
 const chai =  require('chai');
-assert = chai.assert;
+const chaiHttp = require('chai-http');
+chai.use(chaiHttp);
+
 
 before(done => {
     console.log('\n\n-----------------------\n--\n-- START TEST\n--\n-------------------------');
@@ -14,28 +15,61 @@ after(done => {
 });
 
 /* asyn test */
-describe('#Synchronous user crud test', () => {
     describe('## get users', () => {
         it('get "users" record', done => {
-            chai.request(App)
+            chai.request('http://localhost:5000')
                 .get('/usuario/get')
                 .end(function (err, res) {
-                    if (err) done(err);
-                    done();
-                    console.log('status code: %s, users: %s', res.statusCode, res.body.length)
+                       if (err){
+                        done(err);
+                       }else {
+                        done();
+                       }
                 });
         }).timeout(0);
     });
-    
-    describe('## get Users', () => {
-        it('## get users list', done => {
-            chai.request(App)
-                .get('/usuario/get/1')
-                .end(function (err, res) {
-                    if (err) done(err);
+
+
+/* asyn test */
+describe('## update users', () => {
+    it('update "users" record', done => {
+        chai.request('http://localhost:5000')
+            .put('/usuario/update/1')
+            .send({    
+                       tipo_documento: 'CC',
+                       numero_documento: '1245874524',
+                       nombres: 'Esneider',
+                       apellidos: 'Manzano',
+                       telefono: '3124578954',
+                       direccion: 'cr 2B # 70B-89',
+                       correo: 'Correo@gmail.com',
+                       clave: 'Claveupdate'
+                     })
+            .end(function (err, res) {
+                   if (err){
+                    done(err);
+                   }else {
                     done();
-                    console.log('status code: %s, users: %s', res.statusCode, res.body.length)
-                });
-        }).timeout(0);
-    });
+                   }
+            });
+    }).timeout(0);
+});
+
+/* asyn test */
+describe('## login users', () => {
+    it('login "users" record', done => {
+        chai.request('http://localhost:5000')
+            .post('/usuario/login')
+            .send({    
+                       nick: '',
+                       clave: ''
+                     })
+            .end(function (err, res) {
+                   if (err){
+                    done(err);
+                   }else {
+                    done();
+                   }
+            });
+    }).timeout(0);
 });
