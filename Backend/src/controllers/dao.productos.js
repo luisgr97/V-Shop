@@ -56,7 +56,8 @@ export async function crearProducto(req, res) {
         });
         return res.json({
             message: "Producto creado con exito",
-            exito  : true
+            exito  : true,
+            id_producto: nuevoProducto.id_producto
         })
     } catch (e) {
         console.log(e);

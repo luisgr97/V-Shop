@@ -1,12 +1,21 @@
 import Imagenes from '../models/imagen';
 
 export async function addImagen(req, res) {
-    const { id_producto, ruta } = req.body;
-    try {
-        let imagen = await Imagenes.create({
+    const { id_producto } = req.params;
+    console.log("El id de pŕoducto",id_producto)
+    let mensaje = []
+    for(var i = 0; i<req.files.length;i++){
+        mensaje.push({
             id_producto,
-            ruta
-        },{
+            ruta: req.files[i].path.replace('public/', '')
+         })
+    }        
+    console.log(mensaje)
+    
+    try {
+        let imagen = await Imagenes.bulkCreate(
+            mensaje
+        ,{
             fields: ['id_producto', 'ruta']
         });
         return res.json({
@@ -17,9 +26,10 @@ export async function addImagen(req, res) {
         console.log(e);
         res.status(100).json({
             message: "Something goes wrong 100",
-            data: {}
+            error: true
         });
     }
+    
 }
 
 

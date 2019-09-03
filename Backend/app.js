@@ -3,21 +3,22 @@ import morgan from 'morgan';
 import cors from 'cors'
 
 //Importing routers
-import productoRoutes from './routes/productos';
-import categoriasRoutes from './routes/categorias';
-import subcategoriasRoutes from './routes/subcategorias';
-import usersRoutes from './routes/usuarios';
-import imagenesRoutes from './routes/imagenes';
-import comentariosRoutes from './routes/comentarios';
-import descuentosRoutes from './routes/descuentos';
-import catalogosRoutes from './routes/catalogos';
-import inventarioRoutes from './routes/inventario_catalogo_productosC';
-import facturaRoutes from './routes/factura';  
-import detalle_facturaRoutes from './routes/detalle_factura' ;
-import pagRoutes from './routes/pago'
+import productoRoutes from './src/routes/productos';
+import categoriasRoutes from './src/routes/categorias';
+import subcategoriasRoutes from './src/routes/subcategorias';
+import usersRoutes from './src/routes/usuarios';
+import imagenesRoutes from './src/routes/imagenes';
+import comentariosRoutes from './src/routes/comentarios';
+import descuentosRoutes from './src/routes/descuentos';
+import catalogosRoutes from './src/routes/catalogos';
+import inventarioRoutes from './src/routes/inventario_catalogo_productosC';
+import facturaRoutes from './src/routes/factura';  
+import detalle_facturaRoutes from './src/routes/detalle_factura' ;
+import pagRoutes from './src/routes/pago'
 
 //initialization
 const app = express();
+
 
 //middlewares
 app.use(morgan('dev'));
@@ -36,5 +37,7 @@ app.use('/api/factura',facturaRoutes);
 app.use('/api/factura/detalle_factura',detalle_facturaRoutes);
 app.use('/api/pago',pagRoutes)
 app.use('/usuario',usersRoutes);
+
+app.use(express.static(__dirname + '/public'));
 
 export default app;

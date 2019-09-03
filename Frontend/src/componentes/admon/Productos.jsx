@@ -182,6 +182,7 @@ class Articulo extends Component {
         this.onSelect = this.onSelect.bind(this)
         this.toggle = this.toggle.bind(this);
         this.selectFiles = this.selectFiles.bind(this)
+        this.uploadImages = this.uploadImages.bind(this)
 
     }
 
@@ -233,7 +234,8 @@ class Articulo extends Component {
                     if(response.data.failure){
                         console.log(response.data)
                     }else{
-                        console.log(response.data.message)
+                        console.log(response.data.id_producto)
+                        this.uploadImages(response.data.id_producto)
                     }
                 }
                 //alert(JSON.stringify(response.data))
@@ -289,6 +291,16 @@ class Articulo extends Component {
         this.setState({ images, message })
     }
 
+    uploadImages = (idProducto) => {
+        let data  = new FormData(); 
+    	const uploaders = this.state.images.map(image => {
+		    data.append("images", image, image.name);		
+        });
+        axios.post('http://localhost:4000/api/productos/imagenes/add/' + idProducto, data)
+        .then(response => {
+            console.log(response)
+    })
+    }
     render() {
         if(this.state.loading){
             return(
