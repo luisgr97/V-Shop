@@ -5,7 +5,10 @@ import { TabContent, TabPane,
     FormGroup, Label, Input, FormText } from 'reactstrap';
 import axios from 'axios'
 import classnames from 'classnames';
+import Loading from '../principal/Loading'
 
+
+/*
 const categorias = [
     {
       "id_categoria": 1,
@@ -133,7 +136,7 @@ const categorias = [
       ]
     }
   ]
- 
+ */
 const h = [
     {
         nombre: "Camara",
@@ -155,28 +158,28 @@ class Articulo extends Component {
         this.state = {
             loading: true,
             nombre: "",
-            imagenes: [{
-                url: "https://fotos02.diarioinformacion.com/2018/10/26/328x206/dal010dmv003181336.jpg"
-            }            
-            ],
             descripcion: "",
             marca: "",
             precio: "",
+
             modificarProducto: [],
-            categorias: categorias,
+            categorias: [],
+            
             indexTag: 0,
             idSubTag: "",
             activeTab: '1',
+            
             images: [],
         	imageUrls: [],
         }
+        this.getInitialCategorias = this.getInitialCategorias.bind(this)
+        this.crearProducto = this.crearProducto.bind(this)
+
         this.onChange = this.onChange.bind(this) 
-        this.ejemplo = this.ejemplo.bind(this)
-        this.onSelect = this.onSelect.bind(this)
+        this.onChangeParentTag = this.onChangeParentTag.bind(this)
         this.onModifyChange = this.onModifyChange.bind(this)
 
-        this.crearProducto = this.crearProducto.bind(this)
-        this.getSubCategorias = this.getSubCategorias.bind(this)
+        this.onSelect = this.onSelect.bind(this)
         this.toggle = this.toggle.bind(this);
         this.selectFiles = this.selectFiles.bind(this)
 
@@ -185,8 +188,14 @@ class Articulo extends Component {
     getInitialCategorias(){
         axios.get('http://localhost:4000/api/categorias/getJoinSubCategoria')
         .then((response) => {
+            if(response.data.error){
+                console.log("Esto es un error de servidor")
+            }else{
+                console.log("Se metio no encontro")
+            }
             this.setState({
                 categorias: response.data,
+                idSubTag: response.data[0].subcategoria[0].id_subcategoria,
                 loading: false            
             })
         })
@@ -195,19 +204,7 @@ class Articulo extends Component {
     getProductos(){
         axios.get('http://localhost:4000/api/productos')
         .then((response) => {
-            //console.log(response.data.data)
-            console.log(response.data.data)
-            this.setState({
-                subCategorias: response.data.data
-            })
-        })
-    }
-
-    getSubCategorias(){
-        axios.get('http://localhost:4000/api/subcategorias')
-        .then((response) => {
-            //console.log(response.data.data)
-            console.log(response.data.data)
+            //console.log(response.data.data)            
             this.setState({
                 subCategorias: response.data.data
             })
@@ -215,39 +212,31 @@ class Articulo extends Component {
     }
 
     componentDidMount(){
-        //this.getSubCategorias()
-    }
-
-
-    ejemplo(){
-        
-        //console.log("Que paso men")
-        //h.map(indice => <option >{indice.nombre}</option>)
-        /*
-       for(var i in h){
-            //<option>h[i].nombre</option>
-            console.log(h[i].nombre)
-        }
-        */
+        this.getInitialCategorias()    
     }
 
     crearProducto() {
         const mensaje = {
-            nombre: this.state.nombre,
-            imagen_url: this.state.imagen,
-            empresa_fabricante: this.state.fabricante,            
+            nombre_producto: this.state.nombre,
             descripcion: this.state.descripcion,
-            precio_unitario: this.state.precio,
-            descuento: 0,
-            iva: 19,
-            unidades_disponibles: this.state.cantidad,
-            detalles: this.state.detalle,
-            id_subcategoria: this.state.idNombreSubCategoria,
+            marca: this.state.marca,
+            precio: this.state.precio,
+            id_subcategoria: this.state.idSubTag,
         }
         //Axios se encarga de hacer solicitudes de forma sencilla
-        axios.post('http://localhost:4000/api/productos', mensaje)
+        axios.post('http://localhost:4000/api/productos/create', mensaje)
             .then((response) => {
-                alert(JSON.stringify(response.data))
+                console.log(response)
+                if(response.data.error){
+                    console.log(response.data.message)
+                }else{
+                    if(response.data.failure){
+                        console.log(response.data)
+                    }else{
+                        console.log(response.data.message)
+                    }
+                }
+                //alert(JSON.stringify(response.data))
             })
     }
 
@@ -256,6 +245,15 @@ class Articulo extends Component {
         this.setState({ [input]: e.target.value});
     }  
 
+    //Cambio en las cateorias padre
+    onChangeParentTag = input => e =>{
+        this.setState({ 
+          [input]: e.target.value,
+          idSubTag: this.state.categorias[e.target.value].subcategoria[0].id_subcategoria
+        });
+    }
+
+    //============== MODIFICAR PRODUTO ======================
     //Para cambiar el estado del producto a editar
     onModifyChange = input => e =>{ 
         const { modificarProducto } = {...this.state};
@@ -266,10 +264,13 @@ class Articulo extends Component {
         });
     }  
 
+    //Para modificar producto
     onSelect(e) {         
         this.setState({modificarProducto: h[[e.target.value]]})
     }  
-    
+    //============== FIN MODIFICAR PRODUTO ======================
+
+    // Para el cambio de tabs (visual)
     toggle(tab) {
         if (this.state.activeTab !== tab) {
             this.setState({
@@ -289,8 +290,12 @@ class Articulo extends Component {
     }
 
     render() {
-        const categorias = this.state.categorias;
-
+        if(this.state.loading){
+            return(
+              <Loading/>
+            )
+          }
+          const categorias = this.state.categorias;
         return (
             <div className="admin-productos">
                 <div id="espacio" />
@@ -319,7 +324,7 @@ class Articulo extends Component {
                             <Row form >
                                 <Col md={4}>
                                     <FormGroup>
-                                        <Label for="exampleEmail">Nombre del producto</Label>
+                                        <Label for="nombrePoducto">Nombre del producto</Label>
                                         <Input type="text" name="nombrePoducto" id="nombrePoducto" 
                                         placeholder="Nombre" 
                                         onChange = {this.onChange('nombre')}/>
@@ -327,7 +332,7 @@ class Articulo extends Component {
                                 </Col>
                                 <Col md={4}>
                                     <FormGroup>
-                                        <Label for="exampleEmail">Marca</Label>
+                                        <Label for="marcaPoducto">Marca</Label>
                                         <Input type="text" name="marcaPoducto" id="marcaPoducto" 
                                         placeholder="Marca" 
                                         onChange = {this.onChange('marca')}/>
@@ -335,7 +340,7 @@ class Articulo extends Component {
                                 </Col>
                                 <Col md={4}>
                                     <FormGroup>
-                                        <Label for="exampleEmail">Precio de venta</Label>
+                                        <Label for="precio">Precio de venta</Label>
                                         <Input type="number" name="precio" id="precio" 
                                         placeholder="Precio" 
                                         onChange = {this.onChange('precio')}/>
@@ -344,15 +349,15 @@ class Articulo extends Component {
                              </Row>
 
                             <FormGroup>
-                                <Label for="exampleText">Descripcion</Label>
-                                <Input type="textarea" name="text" id="descripcion" 
+                                <Label for="descripcion">Descripcion</Label>
+                                <Input type="textarea" name="descripcion" id="descripcion" 
                                 onChange = {this.onChange('descripcion')}/>
                             </FormGroup>
                         
                             <FormGroup>
-                                <Label for="exampleEmail">Seleccion una subcategoria</Label>
-                                <Input type="select" name="select" id="indexTag"
-                                onChange={this.onChange('indexTag')}>
+                                <Label for="indexTag">Seleccion una subcategoria</Label>
+                                <Input type="select" name="indexTag" id="indexTag"
+                                onChange={this.onChangeParentTag('indexTag')}>
                                 {categorias.map((indice, index) => 
                                     <option key={indice.nombre_categoria+index} 
                                     value={index}>{indice.nombre_categoria}</option>)

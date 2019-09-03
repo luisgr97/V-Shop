@@ -3,6 +3,7 @@ import Producto from '../models/producto';
 // este es un metodo asincrono ya que toma tiempo para crearse, por ende, en funcion se le indica con "async" y en la constante con await, para esperar a su creacion antes de hacer el send
 export async function crearProducto(req, res) {
     const { nombre_producto, descripcion, marca, precio, id_subcategoria } = req.body;
+    console.log(req.body)
 
     var failure = false;
     var productoObject = {
@@ -13,7 +14,7 @@ export async function crearProducto(req, res) {
         id_subcategoria: true
     };
 
-    if(typeof(precio) != 'number'){
+    if(typeof(parseInt(precio)) != 'number'){
         productoObject.precio = false;
         failure = true;
     }
@@ -26,11 +27,14 @@ export async function crearProducto(req, res) {
         failure = true;
     }
     if(typeof(marca) != 'string' || marca == ""){
+        console.log("Esta vacio")
+    }
+    if(typeof(marca) != 'string' || marca == ""){
         productoObject.marca = false;
         failure = true;
     }
-    if(typeof(id_subcategoria) != 'number'){
-        productoObject.marca = false;
+    if(typeof(parseInt(id_subcategoria)) != 'number'){
+        productoObject.id_subcategoria = false;
         failure = true;
     }
     if(failure){
@@ -52,13 +56,13 @@ export async function crearProducto(req, res) {
         });
         return res.json({
             message: "Producto creado con exito",
-            exito  : nuevoProducto
+            exito  : true
         })
     } catch (e) {
         console.log(e);
         res.status(200).json({
             message: "Something goes wrong 200",
-            data: {}
+            error: true,
         });
     }
 }
