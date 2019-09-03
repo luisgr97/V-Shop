@@ -194,23 +194,28 @@ export async function logUsuario(req, res) {
             if (usuario.clave == clave){
                 return res.json({
                     find: true,
+                    pass: true,
                     nick: usuario.nick,
                     id_usuario: usuario.id_usuario
                 });   
             }else {
                return res.json({
                    find: true,
+                   pass: false,
                    message: 'la contraseña es incorrecta'
                });
             }            
         } else {
-            return res.json({ find: false });
+            return res.json({ 
+                find: false,
+                message: 'Usuario no registrado' 
+            });
         }
     } catch (e) {
         console.log(e);
         res.json({
-            message: "Error 505",
-            data: {}
+            find: false,
+            message: 'Error, por favor intentelo mas tarde'
         });
     }
 }
