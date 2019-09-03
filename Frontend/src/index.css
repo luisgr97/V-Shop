@@ -400,34 +400,89 @@ text-decoration: none
 
 .nav-tabs .nav-item {
   width: 50%;
-  background: #D10024;
+  border-radius: 10px 10px 0 0;
+  border-bottom: 2px solid #6c757d;
   font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif; 
   text-align: center;
   cursor: pointer;
-  color:#eee;
+  color:#495057;
   border-color: #fff #fff #fff;
 }
-.nav-tabs .nav-link.active {
-  color: #495057;
-  transition: 0.4s all;
-  background-color: #eee;
-}
+
 .nav-tabs .nav-link.active:hover {
   color: #333;
+  border-color: #fff;
 }
 
 .nav-tabs .nav-item .nav-link{
   transition: 0.4s all;
   border-top-left-radius: 0rem;
   border-top-right-radius: 0rem;
+  border-bottom: 2px solid #eee;
 }
-
+.nav-tabs .nav-link.active {
+  color: #495057;
+  border-color: #fff;
+  transition: 0.4s all;
+  background-color: #fff;
+  border-bottom: 2px solid #D10024
+}
 .admin-productos, #admin-catalogo, #admin-categorias{
   border: 1px solid #eee;
   position: relative;
   background: #fff;
   margin:0 auto;
   padding: 30px;
+}
+
+#selectFile{
+  visibility: hidden
+}
+
+#load-img-button{
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  border-style: dotted; 
+  width: 180px;
+  border-width: 2px; 
+  border-color: #6c757d; 
+}
+
+#load-img-button:hover{
+cursor: pointer;
+}
+
+#load-img-button i{
+top:0px
+}
+
+#img-container{
+  text-align: center
+}
+.img-ctn{
+  margin:20px;
+  display: inline-block;
+  width: 250px;
+  height: 250px;
+  background-color: #eee;
+ transition: .2s all ease-out;
+
+
+}
+.img-ctn:hover{
+  transform: scale(1.5)
+}
+
+.img-ctn img{
+  display: block;
+  max-width:250px;
+  max-height:250px;
+  width: auto;
+  height: auto;
+  margin: auto;
+  transition: .2s all ease-in-out;
+
 }
 
 @media screen and (max-width: 1400px) {

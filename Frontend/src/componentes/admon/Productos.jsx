@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import { TabContent, TabPane, Nav, NavItem, NavLink, Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { TabContent, TabPane, 
+    Nav, NavItem, NavLink, 
+    Col, Row, Button, Form, 
+    FormGroup, Label, Input, FormText } from 'reactstrap';
 import axios from 'axios'
 import classnames from 'classnames';
 
@@ -163,7 +166,9 @@ class Articulo extends Component {
             categorias: categorias,
             indexTag: 0,
             idSubTag: "",
-            activeTab: '1'
+            activeTab: '1',
+            images: [],
+        	imageUrls: [],
         }
         this.onChange = this.onChange.bind(this) 
         this.ejemplo = this.ejemplo.bind(this)
@@ -173,6 +178,7 @@ class Articulo extends Component {
         this.crearProducto = this.crearProducto.bind(this)
         this.getSubCategorias = this.getSubCategorias.bind(this)
         this.toggle = this.toggle.bind(this);
+        this.selectFiles = this.selectFiles.bind(this)
 
     }
 
@@ -245,10 +251,12 @@ class Articulo extends Component {
             })
     }
 
+    //Cambio en los inputs
     onChange = input => e =>{ 
         this.setState({ [input]: e.target.value});
     }  
 
+    //Para cambiar el estado del producto a editar
     onModifyChange = input => e =>{ 
         const { modificarProducto } = {...this.state};
         const currentState = modificarProducto;
@@ -268,6 +276,16 @@ class Articulo extends Component {
                 activeTab: tab
             });
         }
+    }
+    //Para subir imagenes
+    selectFiles = (event) => {
+    	let images = [];
+    	for (var i = 0; i < event.target.files.length; i++) {
+            images[i] = event.target.files.item(i);
+        }
+        images = images.filter(image => image.name.match(/\.(jpg|jpeg|png|gif)$/))
+        let message = `${images.length} valid image(s) selected`
+        this.setState({ images, message })
     }
 
     render() {
@@ -349,25 +367,40 @@ class Articulo extends Component {
                                 }
                                 </Input>    
                             </FormGroup>
-
                             <FormGroup>
-                                <Label for="exampleEmail">Imagen</Label>
-                                <Input type="text" name="email" id="nombrePoducto" 
-                                placeholder="URL" 
-                                onChange = {this.onChange('imagen')}/>
-                            </FormGroup>
-                            <div className="center">
-                            {this.state.imagenes.length>0?
-                            <img alt="" src={this.state.imagenes[0].url}/>: null
+                            <div id="img-container">
+                                <br/>
+                                <Label id="load-img-button" for="selectFile">
+                                    Cargar imagenes
+                                    <i className="fas fa-upload"></i>
+                                </Label>
+                                <Input type="file" name="file" onChange={this.selectFiles}
+                                id="selectFile" multiple/>
+                                <FormText color="muted">
+                                    {this.state.images.length? 
+                                    `Se ha seleccionado ${this.state.images.length} imagen(es) valida(s)` :
+                                    "No se han seleccionado imagenes"}
+                                </FormText>
+                                {this.state.images.map((imagen, index) => (
+                                <div key={`imagen${index}`} className="img-ctn">
+                                        <img alt=""  
+                                        src={ URL.createObjectURL(imagen)}/>
+                                </div>
+                            ))
                             }
-                            </div>
+                                 </div>
+                            </FormGroup>                            
+                            
+                       
+                            
                             <div className="center">
                             <Button color="primary" onClick={this.crearProducto}>Crear</Button>
                             </div>
                         </Form>
                     </TabPane>
-                    <TabPane tabId="2">
-                       
+
+
+                    <TabPane tabId="2">                       
                         <Form>
                             <FormGroup>
                                 <Label for="exampleEmail">Seleccionar producto</Label>
