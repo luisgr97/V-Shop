@@ -113,8 +113,8 @@ export async function updateUsuario(req, res) {
         var cadena_text = "[A-Za-z ñ]+"; 
         var exp_reg_text = new RegExp(cadena_text);
       
-        if ((numero_documento.length==10)&&
-            (telefono.length==10))
+        if ((numero_documento.length <= 10)&&(numero_documento.length > 5)&&
+            (telefono.length < 11)&&(telefono.length > 6))
             { if (correo.match(exp_reg_correo)){
                   if ((nombres.match(exp_reg_text))&&
                       (apellidos.match(exp_reg_text))
