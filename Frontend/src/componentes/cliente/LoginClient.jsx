@@ -36,18 +36,21 @@ class LoginClient extends Component {
       }
       //Axios se encarga de hacer solicitudes de forma sencilla
       axios.post('http://localhost:4000/usuario/login', mensaje)
-      .then((response) => {
-        console.log(response.data)
+      .then((response) => {      
         this.setState({ loading: false })
         if(response.data.find){
-          this.props.login(0, response.data)
+          if(response.data.pass){
+            this.props.login(0, response.data)
+          }else{
+            alert(response.data.message)
+          }
         }else{
-          console.log("Usuario invalido")
+          alert(response.data.message)
         }      
       })      
       .catch(err=>{
-        alert("Intentelo mas tarde")
         this.setState({ loading: false })
+        alert("Error, por favor intentelo mas tarde")        
       })
       
     }
