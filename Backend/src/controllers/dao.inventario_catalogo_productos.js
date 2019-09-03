@@ -2,6 +2,9 @@ import Inventario from '../models/inventario_catalogo_productos';
 import Producto from '../models/producto';
 import SubCategoria from '../models/subcategoria';
 import Categoria from '../models/categoria';
+import Descuento from '../models/descuento';
+import Imagenes from '../models/imagen';
+import Comentario from '../models/comentario';
 
 // este es un metodo asincrono ya que toma tiempo para crearse, por ende, en funcion se le indica con "async" y en la constante con await, para esperar a su creacion antes de hacer el send
 export async function crear(req, res) {
@@ -152,23 +155,38 @@ export async function getProductosHomePageByCatalogo(req, res) {
     const { id_catalogo } = req.params;
     try {
         const catalogo = await Inventario.findAll({
-        //    attributes: ['id_catalogo'],
+            attributes: ['cantidad_en_inventario'],
             include:[{
-                attributes: [/*'id_producto',*/'nombre_producto'],
                 model: Producto,
+                required: true,
+                attributes: ['id_producto','nombre_producto','precio'],
                 include:[{
-                    attributes: ['nombre_subcategoria'],
                     model: SubCategoria,
+                    required: true,
+                    attributes: ['nombre_subcategoria'],
                     include:[{
-                        model: Categoria
+                        model: Categoria,
+                        required: true,
+                        attributes: ['nombre_categoria']
                     }]
+                },{
+                    model: Imagenes,
+                    required: false,
+                    limit: 1
+                },{
+                    model: Comentario,
+                    attributes: ['calificacion']
                 }]
+            },{
+                model: Descuento,
+                required: true,
+                attributes:['descuento']
             }],
             where: {
                 id_catalogo
             }
         });
-        //console.log("Datos en catalogo ",catalogo.inventario_catalogo_productos);
+        console.log(catalogo.cantidad_en_inventario);
         return res.json({
             message: "Catalogos encontrados",
             data: catalogo

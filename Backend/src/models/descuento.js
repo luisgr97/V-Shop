@@ -27,4 +27,6 @@ const Descuento = sequelize.define('descuento',{
 Descuento.hasMany(Inventario,{foreignKey: 'id_descuento', sourcekey:'id_descuento'});
 Inventario.belongsTo(Descuento,{foreignKey: 'id_descuento', sourcekey:'id_descuento'});
 
+
+
 export default Descuento;

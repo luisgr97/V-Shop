@@ -37,5 +37,4 @@ app.use('/api/factura/detalle_factura',detalle_facturaRoutes);
 app.use('/api/pago',pagRoutes)
 app.use('/usuario',usersRoutes);
 
-
 export default app;
