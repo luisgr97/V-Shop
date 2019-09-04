@@ -2,7 +2,6 @@ import Imagenes from '../models/imagen';
 
 export async function addImagen(req, res) {
     const { id_producto } = req.params;
-    console.log("El id de pŕoducto",id_producto)
     let mensaje = []
     for(var i = 0; i<req.files.length;i++){
         mensaje.push({

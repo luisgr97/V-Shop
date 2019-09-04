@@ -63,20 +63,20 @@ class Articulo extends Component {
             idSubTag: "",
             activeTab: '1',
             
+            updateImages: [],
             images: [],
-        	imageUrls: [],
         }
         this.getInitialCategorias = this.getInitialCategorias.bind(this)
         this.crearProducto = this.crearProducto.bind(this)
 
         this.onChange = this.onChange.bind(this) 
         this.onChangeParentTag = this.onChangeParentTag.bind(this)
-        this.onModifyChange = this.onModifyChange.bind(this)
 
         this.onSelect = this.onSelect.bind(this)
         this.toggle = this.toggle.bind(this);
         this.selectFiles = this.selectFiles.bind(this)
         this.uploadImages = this.uploadImages.bind(this)
+        this.deleteImage = this.deleteImage.bind(this)
 
     }
 
@@ -150,16 +150,6 @@ class Articulo extends Component {
     }
 
     //============== MODIFICAR PRODUTO ======================
-    //Para cambiar el estado del producto a editar
-    onModifyChange = input => e =>{ 
-        const { modificarProducto } = {...this.state};
-        const currentState = modificarProducto;
-        currentState[input] = e.target.value
-        this.setState({
-            modificarProducto: currentState    
-        });
-    }  
-
     //Para modificar producto
     onSelect(e) {  
         let indexTag, indexSubTag, id;
@@ -179,7 +169,8 @@ class Articulo extends Component {
             marca: h[[e.target.value]].marca,
             precio: h[[e.target.value]].precio,
             indexTag,
-            idSubTag: this.state.categorias[indexTag].subcategoria[indexSubTag].id_subcategoria
+            idSubTag: this.state.categorias[indexTag].subcategoria[indexSubTag].id_subcategoria,
+            updateImages:  h[[e.target.value]].imagenes        
         })
     }  
     //============== FIN MODIFICAR PRODUTO ======================
@@ -195,7 +186,7 @@ class Articulo extends Component {
     //Para subir imagenes
     selectFiles = (event) => {
     	let images = [];
-    	for (var i = 0; i < event.target.files.length; i++) {
+    	for (var i = 0; i < 6; i++) {
             images[i] = event.target.files.item(i);
         }
         images = images.filter(image => image.name.match(/\.(jpg|jpeg|png|gif)$/))
@@ -213,6 +204,18 @@ class Articulo extends Component {
             console.log(response)
     })
     }
+
+    deleteImage = (e) =>{
+        console.log("esta cliekado")
+        const valor = parseInt(e.target.value)
+        console.log("esta cliekado", valor)
+        this.setState(prevState => {
+          const images = prevState.images.filter((imagen, i) => i !== valor);
+          return { images };
+        });  
+        console.log(this.state.images)
+    }
+
     render() {
         if(this.state.loading){
             return(
@@ -316,28 +319,43 @@ class Articulo extends Component {
                             }
                             </Input>    
                         </FormGroup>
+
                         <FormGroup>
-                        <div id="img-container">
-                            <br/>
-                            <Label id="load-img-button" for="selectFile">
-                                Cargar imagenes
-                                <i className="fas fa-upload"></i>
-                            </Label>
-                            <Input type="file" name="file" onChange={this.selectFiles}
-                            id="selectFile" multiple/>
-                            <FormText color="muted">
-                                {this.state.images.length? 
-                                `Se ha seleccionado ${this.state.images.length} imagen(es) valida(s)` :
-                                "No se han seleccionado imagenes"}
-                            </FormText>
-                            {this.state.images.map((imagen, index) => (
-                            <div key={`imagen${index}`} className="img-ctn">
-                                    <img alt=""  
-                                    src={ URL.createObjectURL(imagen)}/>
+                            <div id="img-container">
+                                <br/>
+                                <Label id="load-img-button" for="selectFile">
+                                    Cargar imagenes
+                                    <i className="fas fa-upload"></i>
+                                </Label>
+                            
+                                <Input type="file" name="file" onChange={this.selectFiles}
+                                id="selectFile" multiple/>
+
+                                <FormText color="muted">
+                                    {this.state.images.length? 
+                                    `Se ha seleccionado ${this.state.images.length} imagen(es) valida(s)` :
+                                    "No se han seleccionado imagenes"}
+                                </FormText>
+
+                                {this.state.images.map((imagen, index) => (
+                                    <div key={`imagen${index}`} className="img-ctn">                                    
+                                        <button type="button" value={index} 
+                                        className="fa fa-times img-delete" 
+                                        onClick={this.deleteImage}/>
+                                        <img alt=""  
+                                        src={ URL.createObjectURL(imagen)}/>
+                                    </div>
+                                ))}
+
+                                {this.state.activeTab !== '1'?
+                                    this.state.updateImages.map((imagen) => (
+                                        <div key={`uimg${imagen.id_imagen}`} className="img-ctn">
+                                                <img alt=""  
+                                                src={`http://localhost:4000/${imagen.ruta}`}/>
+                                        </div>
+                                    )) : null
+                                }
                             </div>
-                        ))
-                        }
-                                </div>
                         </FormGroup>                            
                                                                                                            
                     </Form>
