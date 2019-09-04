@@ -7,148 +7,42 @@ import axios from 'axios'
 import classnames from 'classnames';
 import Loading from '../principal/Loading'
 
-
-/*
-const categorias = [
-    {
-      "id_categoria": 1,
-      "nombre_categoria": "EQUIPOS DE COMPUTO",
-      "linkimagen": null,
-      "subcategoria": [
-        {
-          "id_subcategoria": 1,
-          "nombre_subcategoria": "DESKTOP",
-          "linkimagen": null,
-          "id_categoria": 1
-        },
-        {
-          "id_subcategoria": 2,
-          "nombre_subcategoria": "GAMER O DE ALTO REDIMIENTO",
-          "linkimagen": null,
-          "id_categoria": 1
-        },
-        {
-          "id_subcategoria": 3,
-          "nombre_subcategoria": "PORTATILES",
-          "linkimagen": null,
-          "id_categoria": 1
-        }
-      ]
-    },
-    {
-      "id_categoria": 2,
-      "nombre_categoria": "DISPOSITIVOS MOVILES",
-      "linkimagen": null,
-      "subcategoria": [
-        {
-          "id_subcategoria": 4,
-          "nombre_subcategoria": "GAMA ALTA",
-          "linkimagen": null,
-          "id_categoria": 2
-        },
-        {
-          "id_subcategoria": 5,
-          "nombre_subcategoria": "GAMA MEDIA",
-          "linkimagen": null,
-          "id_categoria": 2
-        },
-        {
-          "id_subcategoria": 6,
-          "nombre_subcategoria": "GAMA BAJA",
-          "linkimagen": null,
-          "id_categoria": 2
-        }
-      ]
-    },
-    {
-      "id_categoria": 3,
-      "nombre_categoria": "CONSOLAS DE VIDEO JUEGOS",
-      "linkimagen": null,
-      "subcategoria": [
-        {
-          "id_subcategoria": 7,
-          "nombre_subcategoria": "CONSOLAS TRADICIONALES",
-          "linkimagen": null,
-          "id_categoria": 3
-        },
-        {
-          "id_subcategoria": 8,
-          "nombre_subcategoria": "CONSOLAS PORTATILES",
-          "linkimagen": null,
-          "id_categoria": 3
-        },
-        {
-          "id_subcategoria": 9,
-          "nombre_subcategoria": "ARCADES",
-          "linkimagen": null,
-          "id_categoria": 3
-        }
-      ]
-    },
-    {
-      "id_categoria": 4,
-      "nombre_categoria": "SMART WIDGETS",
-      "linkimagen": null,
-      "subcategoria": [
-        {
-          "id_subcategoria": 10,
-          "nombre_subcategoria": "SMART TIME",
-          "linkimagen": null,
-          "id_categoria": 4
-        },
-        {
-          "id_subcategoria": 11,
-          "nombre_subcategoria": "SMART HOME",
-          "linkimagen": null,
-          "id_categoria": 4
-        },
-        {
-          "id_subcategoria": 12,
-          "nombre_subcategoria": "SMART LIVE",
-          "linkimagen": null,
-          "id_categoria": 4
-        }
-      ]
-    },
-    {
-      "id_categoria": 5,
-      "nombre_categoria": "ZONA MULTIMEDIA",
-      "linkimagen": null,
-      "subcategoria": [
-        {
-          "id_subcategoria": 13,
-          "nombre_subcategoria": "PROYECTORES DE VIDEO",
-          "linkimagen": null,
-          "id_categoria": 5
-        },
-        {
-          "id_subcategoria": 14,
-          "nombre_subcategoria": "CONSOLAS DE SONIDO",
-          "linkimagen": null,
-          "id_categoria": 5
-        },
-        {
-          "id_subcategoria": 15,
-          "nombre_subcategoria": "SISTEMAS DE GRABACIÓN MULTIMEDIA",
-          "linkimagen": null,
-          "id_categoria": 5
-        }
-      ]
-    }
-  ]
- */
 const h = [
     {
-        nombre: "Camara",
-        descripcion: "Una buena camara xdxdxd",
-        marca: "SONY",
-        precio: "150000"
+      "id_producto": 1,
+      "nombre_producto": "Xiaomi mi 9T",
+      "descripcion": "good phone",
+      "marca": "Xiaomi",
+      "precio": 300,
+      "id_subcategoria": 5,
+      "imagenes": [
+        {
+          "id_imagen": 27,
+          "ruta": "product-images/1567553597007-product05.png"
+        },
+        {
+          "id_imagen": 28,
+          "ruta": "product-images/1567553597007-product05.png"
+        }
+      ]
     },
     {
-        nombre: "Cinturon",
-        descripcion: "Correa a estas gonorreas",
-        marca: "Quinta paja",
-        precio: "15000000"
+      "id_producto": 2,
+      "nombre_producto": "LG UHD",
+      "descripcion": "good tv",
+      "marca": "LG",
+      "precio": 500,
+      "id_subcategoria": 11,
+      "imagenes": [
+        {
+          "id_imagen": 29,
+          "ruta": "product-images/1567553597007-product05.png"
+        },
+        {
+          "id_imagen": 53,
+          "ruta": "product-images/1567553597007-product05.png"
+        }
+      ]
     }
 ]
 
@@ -157,12 +51,12 @@ class Articulo extends Component {
         super(props)
         this.state = {
             loading: true,
+            id_producto: "",
             nombre: "",
             descripcion: "",
             marca: "",
             precio: "",
 
-            modificarProducto: [],
             categorias: [],
             
             indexTag: 0,
@@ -267,8 +161,26 @@ class Articulo extends Component {
     }  
 
     //Para modificar producto
-    onSelect(e) {         
-        this.setState({modificarProducto: h[[e.target.value]]})
+    onSelect(e) {  
+        let indexTag, indexSubTag, id;
+        for(var i=0;i<this.state.categorias.length;i++){
+            for(var j=0;j<this.state.categorias[i].subcategoria.length;j++){
+                if(this.state.categorias[i].subcategoria[j].id_subcategoria === h[[e.target.value]].id_subcategoria){
+                    indexTag =  i   
+                    indexSubTag = j                                  
+                    break;
+                }
+            }
+        }
+        this.setState({
+            id_producto: h[[e.target.value]].id_producto,
+            nombre: h[[e.target.value]].nombre_producto,
+            descripcion: h[[e.target.value]].descripcion,
+            marca: h[[e.target.value]].marca,
+            precio: h[[e.target.value]].precio,
+            indexTag,
+            idSubTag: this.state.categorias[indexTag].subcategoria[indexSubTag].id_subcategoria
+        })
     }  
     //============== FIN MODIFICAR PRODUTO ======================
 
@@ -332,143 +244,113 @@ class Articulo extends Component {
 
                 <TabContent activeTab={this.state.activeTab}>
                     <TabPane tabId="1">
-                        <Form>
-                            <Row form >
-                                <Col md={4}>
-                                    <FormGroup>
-                                        <Label for="nombrePoducto">Nombre del producto</Label>
-                                        <Input type="text" name="nombrePoducto" id="nombrePoducto" 
-                                        placeholder="Nombre" 
-                                        onChange = {this.onChange('nombre')}/>
-                                    </FormGroup>                   
-                                </Col>
-                                <Col md={4}>
-                                    <FormGroup>
-                                        <Label for="marcaPoducto">Marca</Label>
-                                        <Input type="text" name="marcaPoducto" id="marcaPoducto" 
-                                        placeholder="Marca" 
-                                        onChange = {this.onChange('marca')}/>
-                                    </FormGroup>                   
-                                </Col>
-                                <Col md={4}>
-                                    <FormGroup>
-                                        <Label for="precio">Precio de venta</Label>
-                                        <Input type="number" name="precio" id="precio" 
-                                        placeholder="Precio" 
-                                        onChange = {this.onChange('precio')}/>
-                                    </FormGroup>
-                                </Col>
-                             </Row>
-
-                            <FormGroup>
-                                <Label for="descripcion">Descripcion</Label>
-                                <Input type="textarea" name="descripcion" id="descripcion" 
-                                onChange = {this.onChange('descripcion')}/>
-                            </FormGroup>
-                        
-                            <FormGroup>
-                                <Label for="indexTag">Seleccion una subcategoria</Label>
-                                <Input type="select" name="indexTag" id="indexTag"
-                                onChange={this.onChangeParentTag('indexTag')}>
-                                {categorias.map((indice, index) => 
-                                    <option key={indice.nombre_categoria+index} 
-                                    value={index}>{indice.nombre_categoria}</option>)
-                                }
-                                </Input>      
-
-                                <Input type="select" name="select" id="idModSubTagName"
-                                onChange={this.onChange('idSubTag')}>
-                                {this.state.categorias[this.state.indexTag].subcategoria.map((indice) => 
-                                    <option key={indice.nombre_subcategoria} 
-                                    value={indice.id_subcategoria}>{indice.nombre_subcategoria}</option>)
-                                }
-                                </Input>    
-                            </FormGroup>
-                            <FormGroup>
-                            <div id="img-container">
-                                <br/>
-                                <Label id="load-img-button" for="selectFile">
-                                    Cargar imagenes
-                                    <i className="fas fa-upload"></i>
-                                </Label>
-                                <Input type="file" name="file" onChange={this.selectFiles}
-                                id="selectFile" multiple/>
-                                <FormText color="muted">
-                                    {this.state.images.length? 
-                                    `Se ha seleccionado ${this.state.images.length} imagen(es) valida(s)` :
-                                    "No se han seleccionado imagenes"}
-                                </FormText>
-                                {this.state.images.map((imagen, index) => (
-                                <div key={`imagen${index}`} className="img-ctn">
-                                        <img alt=""  
-                                        src={ URL.createObjectURL(imagen)}/>
-                                </div>
-                            ))
-                            }
-                                 </div>
-                            </FormGroup>                            
-                            
-                       
-                            
-                            <div className="center">
-                            <Button color="primary" onClick={this.crearProducto}>Crear</Button>
-                            </div>
-                        </Form>
                     </TabPane>
 
 
                     <TabPane tabId="2">                       
-                        <Form>
                             <FormGroup>
                                 <Label for="exampleEmail">Seleccionar producto</Label>
                                     <Input type="select" name="select" id="exampleSelect" 
                                     onChange={this.onSelect}>
                                         {h.map((indice, index) => 
-                                        <option key={index} 
-                                        value={index}>{indice.nombre}</option>)}
+                                        <option key={'idx'+index} 
+                                        value={index}>{indice.nombre_producto}</option>)}
                                     </Input>                        
-                            </FormGroup>
+                            </FormGroup>                                                 
+                    </TabPane>
+                    <Form>
+                        <Row form >
+                            <Col md={4}>
+                                <FormGroup>
+                                    <Label for="nombrePoducto">Nombre del producto</Label>
+                                    <Input type="text" name="nombrePoducto" id="nombrePoducto" 
+                                    placeholder="Nombre" 
+                                    value={this.state.nombre}                                    
+                                    onChange = {this.onChange('nombre')}/>
+                                </FormGroup>                   
+                            </Col>
+                            <Col md={4}>
+                                <FormGroup>
+                                    <Label for="marcaPoducto">Marca</Label>
+                                    <Input type="text" name="marcaPoducto" id="marcaPoducto" 
+                                    placeholder="Marca" 
+                                    value={this.state.marca} 
+                                    onChange = {this.onChange('marca')}/>
+                                </FormGroup>                   
+                            </Col>
+                            <Col md={4}>
+                                <FormGroup>
+                                    <Label for="precio">Precio de venta</Label>
+                                    <Input type="number" name="precio" id="precio" 
+                                    placeholder="Precio" 
+                                    value={this.state.precio} 
+                                    onChange = {this.onChange('precio')}/>
+                                </FormGroup>
+                            </Col>
+                        </Row>
 
-                            <FormGroup>
-                                <Label for="exampleEmail">Nombre del producto</Label>
-                                <Input type="text" name="email" id="nombrePoducto"                         
-                                placeholder="Nombre" 
-                                onChange = {this.onModifyChange('nombre')}
-                                value={this.state.modificarProducto.nombre}/>
-                            </FormGroup>
+                        <FormGroup>
+                            <Label for="descripcion">Descripcion</Label>
+                            <Input type="textarea" name="descripcion" id="descripcion" 
+                            value={this.state.descripcion} 
+                            onChange = {this.onChange('descripcion')}/>
+                        </FormGroup>
+                        
+                        <FormGroup>
+                            <Label for="indexTag">Seleccion una subcategoria</Label>
+                            <Input type="select" name="indexTag" id="indexTag"
+                            value={this.state.indexTag}
+                            onChange={this.onChangeParentTag('indexTag')}>
+                            {categorias.map((indice, index) => 
+                                <option key={indice.nombre_categoria+index} 
+                                value={index}>{indice.nombre_categoria}</option>)
+                            }
+                            </Input>      
 
-                            <FormGroup>
-                                <Label for="exampleEmail">Marca del producto</Label>
-                                <Input type="text" name="email" id="marcaProducto" 
-                                value={this.state.modificarProducto.marca}
-                                placeholder="Marca" 
-                                onChange = {this.onModifyChange('marca')}/>
-                            </FormGroup>
-
-                            <FormGroup>
-                                <Label for="exampleEmail">Precio del producto</Label>
-                                <Input type="text" name="email" id="marcaProducto" 
-                                value={this.state.modificarProducto.precio}
-                                placeholder="Precio" 
-                                onChange = {this.onModifyChange('precio')}/>
-                            </FormGroup>
-
-                            <FormGroup>
-                                <Label for="exampleText">Descripcion</Label>
-                                <Input type="textarea" name="text" id="descripcion"
-                                value={this.state.modificarProducto.descripcion} 
-                                onChange = {this.onModifyChange('descripcion')}
-                                />
-                            </FormGroup>
-
-                            
-                            <div className="center">
+                            <Input type="select" name="select" id="idModSubTagName"
+                            value={this.state.idSubTag}
+                            onChange={this.onChange('idSubTag')}>
+                            {this.state.categorias[this.state.indexTag].subcategoria.map((indice) => 
+                                <option key={indice.nombre_subcategoria} 
+                                value={indice.id_subcategoria}>{indice.nombre_subcategoria}</option>)
+                            }
+                            </Input>    
+                        </FormGroup>
+                        <FormGroup>
+                        <div id="img-container">
+                            <br/>
+                            <Label id="load-img-button" for="selectFile">
+                                Cargar imagenes
+                                <i className="fas fa-upload"></i>
+                            </Label>
+                            <Input type="file" name="file" onChange={this.selectFiles}
+                            id="selectFile" multiple/>
+                            <FormText color="muted">
+                                {this.state.images.length? 
+                                `Se ha seleccionado ${this.state.images.length} imagen(es) valida(s)` :
+                                "No se han seleccionado imagenes"}
+                            </FormText>
+                            {this.state.images.map((imagen, index) => (
+                            <div key={`imagen${index}`} className="img-ctn">
+                                    <img alt=""  
+                                    src={ URL.createObjectURL(imagen)}/>
+                            </div>
+                        ))
+                        }
+                                </div>
+                        </FormGroup>                            
+                                                                                                           
+                    </Form>
+                    
+                    {this.state.activeTab !== '1'? 
+                        <div className="center">
                             <Button color="primary">Modificar</Button>{' '}
                             <Button color="danger">Eliminar</Button>{' '}
-                            </div>
-                        </Form>
-
-                    </TabPane>
+                        </div>:
+                        <div className="center">
+                        <Button color="primary" onClick={this.crearProducto}>Crear</Button>
+                        </div>
+                    }
                 </TabContent>
                 
             </div>
