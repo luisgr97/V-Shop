@@ -5,6 +5,7 @@ import Categoria from '../models/categoria';
 import Descuento from '../models/descuento';
 import Imagenes from '../models/imagen';
 import Comentario from '../models/comentario';
+import Catalogo from '../models/catalogo';
 
 // este es un metodo asincrono ya que toma tiempo para crearse, por ende, en funcion se le indica con "async" y en la constante con await, para esperar a su creacion antes de hacer el send
 export async function crear(req, res) {
@@ -15,12 +16,12 @@ export async function crear(req, res) {
             cantidad_en_inventario,
             id_descuento,
             id_catalogo
-        },{
-            fields: ['id_producto', 'cantidad_en_inventario', 'id_descuento', 'id_catalogo']
-        });
+        }, {
+                fields: ['id_producto', 'cantidad_en_inventario', 'id_descuento', 'id_catalogo']
+            });
         return res.json({
             message: "inventario add con exito",
-            data : newInventario
+            data: newInventario
         })
     } catch (e) {
         console.log(e);
@@ -94,12 +95,12 @@ export async function updateOn(req, res) {
             cantidad_en_inventario,
             id_descuento,
             id_catalogo
-        },{
-            where: {
-                id_producto: id_product,
-                id_catalogo: id_catal
-            }
-        });
+        }, {
+                where: {
+                    id_producto: id_product,
+                    id_catalogo: id_catal
+                }
+            });
         return res.json(comentarioU);
     } catch (e) {
         console.log(e);
@@ -116,12 +117,12 @@ export async function updateOnCantidad(req, res) {
         const { cantidad_en_inventario } = req.body;
         const comentarioU = await Inventario.update({
             cantidad_en_inventario
-        },{
-            where: {
-                id_producto,
-                id_catalogo
-            }
-        });
+        }, {
+                where: {
+                    id_producto,
+                    id_catalogo
+                }
+            });
         return res.json(comentarioU);
     } catch (e) {
         console.log(e);
@@ -154,33 +155,37 @@ export async function getOnByProducto(req, res) {
 export async function getProductosHomePageByCatalogo(req, res) {
     const { id_catalogo } = req.params;
     try {
-        const catalogo = await Inventario.findAll({
-            attributes: ['cantidad_en_inventario'],
-            include:[{
-                model: Producto,
-                required: true,
-                attributes: ['id_producto','nombre_producto','precio'],
-                include:[{
-                    model: SubCategoria,
-                    required: true,
-                    attributes: ['nombre_subcategoria'],
-                    include:[{
-                        model: Categoria,
-                        required: true,
-                        attributes: ['nombre_categoria']
+        const catalogo = await Catalogo.findOne({
+            attributes: ['id_catalogo'],
+            include: [{
+                model: Inventario,
+                attributes: ['cantidad_en_inventario'],
+                include: [{
+                    model: Producto,
+                    //required: true,
+                    attributes: ['id_producto', 'nombre_producto', 'precio'],
+                    include: [{
+                        model: SubCategoria,
+                        //required: true,
+                        attributes: ['nombre_subcategoria'],
+                        include: [{
+                            model: Categoria,
+                            //required: true,
+                            attributes: ['nombre_categoria']
+                        }]
+                    }, {
+                        model: Imagenes,
+                        //required: false,
+                        limit: 1
+                    }, {
+                        model: Comentario,
+                        attributes: ['calificacion']
                     }]
-                },{
-                    model: Imagenes,
-                    required: false,
-                    limit: 1
-                },{
-                    model: Comentario,
-                    attributes: ['calificacion']
+                }, {
+                    model: Descuento,
+                    //required: true,
+                    attributes: ['descuento']
                 }]
-            },{
-                model: Descuento,
-                required: true,
-                attributes:['descuento']
             }],
             where: {
                 id_catalogo
