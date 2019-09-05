@@ -6,12 +6,14 @@
     max-width: 100%;
     background: #fff;
     padding: 30px;
+
 }
 .comment-box{
     position: relative;
     background: #fff;
-    margin-bottom: 40px;
-    border-bottom: 1px solid #eee
+    padding-bottom: 20px;
+    margin-bottom: 80px;
+    border-bottom: 2px solid #eee;
 
 }
 .comment-box .comment-header > span{
@@ -21,7 +23,6 @@
     max-width: 30%;
     right: 0px;
     font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
-
 }
 
 .comment-box .comment-header > span:first-child{
@@ -36,8 +37,46 @@
 .comment-box p{
     margin-top:20px;
     display:block;
-    font-size: 18px;
-    font-weight: 100;
-    font-family: "Calibri";
-    color: #333
+    font-size: 17px;
+    color: #333;
+}
+.comment-box .rating-stars i{
+    color: #D10024
+}
+.comment-box .rating-stars > span{ 
+    padding-right: 10px
+}
+
+.comment-delete, .comment-edit {
+    top:20px;
+    width: 40px;
+    height: 40px;
+    color: #eee;
+    background: #D10024;
+    border: none;
+    transition: 0.2s all;
+    border-radius: 50%;
+    margin: 0 10px;
+    
+
+  }
+  .comment-edit {
+    background: #2889ce;
+
+  }
+  
+  .comment-delete:hover, .comment-edit:hover {
+    background-color: #E4E7ED;
+    color: #D10024;
+  }
+ 
+  .comment-delete:focus, .comment-edit:focus {    
+      outline: 0
+  }
+ 
+
+.options-comt-buttons{
+    position: relative;
+    float:right;
+
 }

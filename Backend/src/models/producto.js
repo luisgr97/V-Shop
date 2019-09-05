@@ -35,6 +35,7 @@ Producto.hasMany(Imagenes,{foreignKey: 'id_producto', sourcekey:'id_producto'});
 //Imagenes.belongsTo(Producto,{foreignKey: 'id_producto', sourcekey:'id_producto'});
 
 Producto.hasMany(Comentario,{foreignKey: 'id_producto', sourcekey:'id_producto'});
+Comentario.belongsTo(Producto, {foreignKey: 'id_producto', sourcekey:'id_producto'})
 //Comentario.belongsTo(Producto,{foreignKey: 'id_producto', sourcekey:'id_producto'});
 
 //Producto.hasMany(Inventario_catalogo_productos,{foreignKey: 'id_producto', sourcekey:'id_producto'});

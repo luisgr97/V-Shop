@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { crear, get, getOn, deleteOn, updateOn, getOnByProducto } from '../controllers/dao.comentarios'; //funcion con los controladores para productos
+import { crear, get, getOn, deleteOn, updateOn, getOnByProducto, getOnByUser } from '../controllers/dao.comentarios'; //funcion con los controladores para productos
 const router = Router();
 
 /*CRUD category*/
@@ -16,5 +16,7 @@ router.delete('/delete/:id_comentario', deleteOn);
 
 /*functions*/
 router.get('/get/by-producto/:id_producto',getOnByProducto);
+
+router.get('/get/by-user/:id_usuario', getOnByUser);
 
 export default router;

@@ -96,7 +96,7 @@ class Cliente extends Component {
 
               <Route path={`/cliente/${clientRoutes[2].id}`} 
                 render={()=>(
-                  <Comments />
+                  <Comments idCliente={this.props.idCliente}/>
               )}/>
                 
             </Col>

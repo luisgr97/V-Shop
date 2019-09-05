@@ -506,6 +506,10 @@ top:0px
   outline: 0
 }
 
+#img-message{
+  margin-top:50px;
+}
+
 @media screen and (max-width: 1400px) {
   #admin-sidebar{
     left:0px

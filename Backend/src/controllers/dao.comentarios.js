@@ -1,4 +1,6 @@
 import Comentario from '../models/comentario';
+import Producto from '../models/producto'
+import Usuario from '../models/usuario';
 
 // este es un metodo asincrono ya que toma tiempo para crearse, por ende, en funcion se le indica con "async" y en la constante con await, para esperar a su creacion antes de hacer el send
 export async function crear(req, res) {
@@ -116,6 +118,28 @@ export async function getOnByProducto(req, res) {
         res.status(605).json({
             message: "Algo salio mal 605",
             data: {}
+        });
+    }
+}
+
+export async function getOnByUser(req, res) {
+    const { id_usuario } = req.params;
+    try {
+        const comentarios = await Comentario.findAll({
+            where: {
+                id_usuario
+            },
+            include: [{
+                model: Producto,
+                attributes: ['nombre_producto']
+            }]            
+        });
+        return res.json(comentarios);
+    } catch (e) {
+        console.log(e);
+        res.status(605).json({
+            message: "Algo salio mal 605",
+            error: true
         });
     }
 }

@@ -44,7 +44,6 @@ export async function crearProducto(req, res) {
             data : productoObject
         });
     }
-    
 
     try {
         let nuevoProducto = await Producto.create({
@@ -144,7 +143,7 @@ export async function updateProductos(req, res) {
         console.log(e);
         res.status(204).json({
             message: "Algo salio mal 204",
-            data: {}
+            error: true
         });
     }
 }

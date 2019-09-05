@@ -17,13 +17,13 @@ const h = [
       "id_subcategoria": 5,
       "imagenes": [
         {
-          "id_imagen": 27,
-          "ruta": "product-images/1567553597007-product05.png"
-        },
-        {
-          "id_imagen": 28,
-          "ruta": "product-images/1567553597007-product05.png"
-        }
+            "id_imagen": 27,
+            "ruta": "product-images/1567626395741-product03.png"
+          },
+          {
+            "id_imagen": 28,
+            "ruta": "product-images/1567626395745-product02.png"
+          }
       ]
     },
     {
@@ -35,15 +35,41 @@ const h = [
       "id_subcategoria": 11,
       "imagenes": [
         {
-          "id_imagen": 29,
-          "ruta": "product-images/1567553597007-product05.png"
-        },
-        {
-          "id_imagen": 53,
-          "ruta": "product-images/1567553597007-product05.png"
-        }
+            "id_imagen": 27,
+            "ruta": "product-images/1567626395741-product03.png"
+          },
+          {
+            "id_imagen": 28,
+            "ruta": "product-images/1567626395745-product02.png"
+          }
       ]
-    }
+    },
+    {
+        "id_producto": 33,
+        "nombre_producto": "Carabali3",
+        "descripcion": "fdjñodihfñohdf",
+        "marca": "carabali3",
+        "precio": 4444,
+        "id_subcategoria": 1,
+        "imagenes": [
+          {
+            "id_imagen": 86,
+            "ruta": "product-images/1567631509663-product01.png"
+          },
+          {
+            "id_imagen": 85,
+            "ruta": "product-images/1567631509656-product02.png"
+          },
+          {
+            "id_imagen": 84,
+            "ruta": "product-images/1567631509650-product03.png"
+          },
+          {
+            "id_imagen": 83,
+            "ruta": "product-images/1567631509638-product04.png"
+          }
+        ]
+      }
 ]
 
 class Articulo extends Component {
@@ -65,10 +91,11 @@ class Articulo extends Component {
             
             updateImages: [],
             images: [],
+            urlToDelete: []
         }
         this.getInitialCategorias = this.getInitialCategorias.bind(this)
         this.crearProducto = this.crearProducto.bind(this)
-
+        this.updateProduct = this.updateProduct.bind(this)
         this.onChange = this.onChange.bind(this) 
         this.onChangeParentTag = this.onChangeParentTag.bind(this)
 
@@ -77,6 +104,7 @@ class Articulo extends Component {
         this.selectFiles = this.selectFiles.bind(this)
         this.uploadImages = this.uploadImages.bind(this)
         this.deleteImage = this.deleteImage.bind(this)
+        this.deletePrevImage = this.deletePrevImage.bind(this)
 
     }
 
@@ -110,6 +138,109 @@ class Articulo extends Component {
         this.getInitialCategorias()    
     }
 
+    //Cambio en los inputs
+    onChange = input => e =>{ 
+        this.setState({ [input]: e.target.value});
+    }  
+
+    //Cambio en las cateorias padre
+    onChangeParentTag = input => e =>{
+        this.setState({ 
+          [input]: e.target.value,
+          idSubTag: this.state.categorias[e.target.value].subcategoria[0].id_subcategoria
+        });
+    }
+
+    //============== MODIFICAR PRODUTO ======================
+    //Para modificar producto
+    onSelect(e) {  
+        let indexTag, indexSubTag;
+        for(var i=0;i<this.state.categorias.length;i++){
+            for(var j=0;j<this.state.categorias[i].subcategoria.length;j++){
+                if(this.state.categorias[i].subcategoria[j].id_subcategoria === h[[e.target.value]].id_subcategoria){
+                    indexTag =  i   
+                    indexSubTag = j                                  
+                    break;
+                }
+            }
+        }
+        this.setState({
+            id_producto: h[[e.target.value]].id_producto,
+            nombre: h[[e.target.value]].nombre_producto,
+            descripcion: h[[e.target.value]].descripcion,
+            marca: h[[e.target.value]].marca,
+            precio: h[[e.target.value]].precio,
+            indexTag,
+            idSubTag: this.state.categorias[indexTag].subcategoria[indexSubTag].id_subcategoria,
+            images: [],
+            updateImages:  h[[e.target.value]].imagenes,
+            urlToDelete: []      
+        })
+    }  
+    //============== FIN MODIFICAR PRODUTO ======================
+
+    // Para el cambio de tabs (visual)
+    toggle(tab) {
+        if (this.state.activeTab !== tab) {
+            this.setState({
+                activeTab: tab,
+                images: []
+            });
+        }
+    }
+    //Para subir imagenes
+    selectFiles = (event) => {
+        let valor = 6
+        if(this.state.activeTab !== '1'){
+            valor = 6 - this.state.updateImages.length
+        }
+    	let images = [];
+    	for (var i = 0; i < event.target.files.length; i++) {
+            images[i] = event.target.files.item(i);
+        }
+        images = images.filter(image => image.name.match(/\.(jpg|jpeg|png|gif)$/))
+        images = images.filter((image, i) => i<valor)
+        let message = `${images.length} valid image(s) selected`
+        this.setState({ images, message })
+    }
+
+    uploadImages = (idProducto) => {
+        let data  = new FormData(); 
+    	const uploaders = this.state.images.map(image => {
+		    data.append("images", image, image.name);		
+        });
+        axios.post('http://localhost:4000/api/productos/imagenes/add/' + idProducto, data)
+        .then(response => {
+            console.log(response)
+    })
+    }
+
+    deleteImage = (e) =>{
+        const valor = parseInt(e.target.value)
+        this.setState(prevState => {
+          const images = prevState.images.filter((imagen, i) => i !== valor);
+          return { images };
+        });  
+        console.log(this.state.images)
+    }
+
+    deletePrevImage = (e) =>{
+        const valor = parseInt(e.target.value)
+        let removedImg = this.state.urlToDelete
+        const images = this.state.updateImages.filter((imagen, i) => {
+            if(i !== valor){                
+                return imagen
+            }else{
+                removedImg.push(imagen)
+            }});
+        this.setState({
+          updateImages: images,
+          urlToDelete: removedImg
+        });  
+        console.log(this.state.images)
+    }
+
+
     crearProducto() {
         const mensaje = {
             nombre_producto: this.state.nombre,
@@ -136,84 +267,35 @@ class Articulo extends Component {
             })
     }
 
-    //Cambio en los inputs
-    onChange = input => e =>{ 
-        this.setState({ [input]: e.target.value});
-    }  
-
-    //Cambio en las cateorias padre
-    onChangeParentTag = input => e =>{
-        this.setState({ 
-          [input]: e.target.value,
-          idSubTag: this.state.categorias[e.target.value].subcategoria[0].id_subcategoria
-        });
-    }
-
-    //============== MODIFICAR PRODUTO ======================
-    //Para modificar producto
-    onSelect(e) {  
-        let indexTag, indexSubTag, id;
-        for(var i=0;i<this.state.categorias.length;i++){
-            for(var j=0;j<this.state.categorias[i].subcategoria.length;j++){
-                if(this.state.categorias[i].subcategoria[j].id_subcategoria === h[[e.target.value]].id_subcategoria){
-                    indexTag =  i   
-                    indexSubTag = j                                  
-                    break;
-                }
-            }
+    updateProduct() {
+        let updateProduct = false, dltImages = false
+        const mensaje = {
+            nombre_producto: this.state.nombre,
+            descripcion: this.state.descripcion,
+            marca: this.state.marca,
+            precio: this.state.precio,
+            id_subcategoria: this.state.idSubTag,
         }
-        this.setState({
-            id_producto: h[[e.target.value]].id_producto,
-            nombre: h[[e.target.value]].nombre_producto,
-            descripcion: h[[e.target.value]].descripcion,
-            marca: h[[e.target.value]].marca,
-            precio: h[[e.target.value]].precio,
-            indexTag,
-            idSubTag: this.state.categorias[indexTag].subcategoria[indexSubTag].id_subcategoria,
-            updateImages:  h[[e.target.value]].imagenes        
-        })
-    }  
-    //============== FIN MODIFICAR PRODUTO ======================
-
-    // Para el cambio de tabs (visual)
-    toggle(tab) {
-        if (this.state.activeTab !== tab) {
-            this.setState({
-                activeTab: tab
-            });
-        }
-    }
-    //Para subir imagenes
-    selectFiles = (event) => {
-    	let images = [];
-    	for (var i = 0; i < 6; i++) {
-            images[i] = event.target.files.item(i);
-        }
-        images = images.filter(image => image.name.match(/\.(jpg|jpeg|png|gif)$/))
-        let message = `${images.length} valid image(s) selected`
-        this.setState({ images, message })
-    }
-
-    uploadImages = (idProducto) => {
-        let data  = new FormData(); 
-    	const uploaders = this.state.images.map(image => {
-		    data.append("images", image, image.name);		
-        });
-        axios.post('http://localhost:4000/api/productos/imagenes/add/' + idProducto, data)
-        .then(response => {
-            console.log(response)
-    })
-    }
-
-    deleteImage = (e) =>{
-        console.log("esta cliekado")
-        const valor = parseInt(e.target.value)
-        console.log("esta cliekado", valor)
-        this.setState(prevState => {
-          const images = prevState.images.filter((imagen, i) => i !== valor);
-          return { images };
-        });  
-        console.log(this.state.images)
+        
+        axios.put('http://localhost:4000/api/productos/update/' + this.state.id_producto, mensaje)
+            .then((response) => {
+                if(response.data.error){
+                    console.log(response.data.message)
+                }else{ updateProduct = true}
+            })
+        this.uploadImages(this.state.id_producto)
+        
+       let imagenes = this.state.urlToDelete
+       console.log(imagenes)
+        axios.post('http://localhost:4000/api/productos/imagenes/delete/', imagenes)
+            .then((response) => {
+                if(response.data.error){
+                    console.log(response.data.message)
+                }else{ dltImages = true}
+            })
+        if(updateProduct && dltImages){
+            alert("Producto actualizado con exito")
+        }else{alert("Error al actualizar")}
     }
 
     render() {
@@ -221,8 +303,8 @@ class Articulo extends Component {
             return(
               <Loading/>
             )
-          }
-          const categorias = this.state.categorias;
+        }
+        const categorias = this.state.categorias;
         return (
             <div className="admin-productos">
                 <div id="espacio" />
@@ -334,7 +416,7 @@ class Articulo extends Component {
                                 <FormText color="muted">
                                     {this.state.images.length? 
                                     `Se ha seleccionado ${this.state.images.length} imagen(es) valida(s)` :
-                                    "No se han seleccionado imagenes"}
+                                    "(6 imagenes maximo). No se ha seleccionado ninguna imagen"}
                                 </FormText>
 
                                 {this.state.images.map((imagen, index) => (
@@ -346,12 +428,19 @@ class Articulo extends Component {
                                         src={ URL.createObjectURL(imagen)}/>
                                     </div>
                                 ))}
-
                                 {this.state.activeTab !== '1'?
-                                    this.state.updateImages.map((imagen) => (
+                                this.state.updateImages.length? 
+                                <p id="img-message" >{`${this.state.updateImages.length} Imagenes guardadas del producto`}</p>
+                                : null : null
+                                 }
+                                {this.state.activeTab !== '1'?
+                                    this.state.updateImages.map((imagen, index) => (
                                         <div key={`uimg${imagen.id_imagen}`} className="img-ctn">
-                                                <img alt=""  
-                                                src={`http://localhost:4000/${imagen.ruta}`}/>
+                                            <button type="button" value={index} 
+                                            className="fa fa-times img-delete" 
+                                            onClick={this.deletePrevImage}/>
+                                            <img alt=""  
+                                            src={`http://localhost:4000/${imagen.ruta}`}/>
                                         </div>
                                     )) : null
                                 }
@@ -362,7 +451,7 @@ class Articulo extends Component {
                     
                     {this.state.activeTab !== '1'? 
                         <div className="center">
-                            <Button color="primary">Modificar</Button>{' '}
+                            <Button color="primary" onClick={this.updateProduct} >Modificar</Button>{' '}
                             <Button color="danger">Eliminar</Button>{' '}
                         </div>:
                         <div className="center">

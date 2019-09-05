@@ -1,4 +1,16 @@
 import Imagenes from '../models/imagen';
+import fs from 'fs'
+
+const deleteImagOnDisk = (imagenes) => {
+    for (var i=0;i<imagenes.length;i++){
+        var fileName = imagenes[i].ruta
+        console.log(imagenes[i].ruta)
+        fs.unlink("public/" + fileName, (err) => {
+            if (err) null
+        })
+    }
+    
+}
 
 export async function addImagen(req, res) {
     const { id_producto } = req.params;
@@ -89,13 +101,17 @@ export async function updateImagen(req, res) {
 }
 
 export async function deleteOnImagen(req, res) {
-    const { id_imagen } = req.params;
+    let imagenes = []
+    req.body.map(imagen => (
+        imagenes.push(imagen.id_imagen)
+    ))    
     try{
         const imagen = await Imagenes.destroy({
             where:{
-                id_imagen
+                id_imagen: imagenes
             }
         });
+        deleteImagOnDisk(req.body)
         return res.json(imagen);
     }catch(e){
         console.log(e);
@@ -104,6 +120,7 @@ export async function deleteOnImagen(req, res) {
             data: {}
         });
     }
+    
 }
 
 export async function getImagesByProducto(req, res) {
