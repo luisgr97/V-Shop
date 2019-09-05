@@ -4,15 +4,17 @@
 
 .comments{
     max-width: 100%;
-    background: #fff;
-    padding: 30px;
-
+    background: #f8f8f8;
+    padding: 10px;
+    transition: 0.2s all ease-in-out
 }
 .comment-box{
     position: relative;
     background: #fff;
+    padding:20px;
+
     padding-bottom: 20px;
-    margin-bottom: 80px;
+    margin-bottom: 50px;
     border-bottom: 2px solid #eee;
 
 }
@@ -80,3 +82,48 @@
     float:right;
 
 }
+
+
+.comments .input-rating {
+    margin-bottom: 15px;
+  }
+  
+  .comments .input-rating .stars {
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  .comments .input-rating .stars input[type="radio"] {
+    display: none;
+  }
+  
+  .comments .input-rating .stars>label {
+    float: right;
+    cursor: pointer;
+    padding: 0px 3px;
+    margin: 0px;
+  }
+  
+  .comments .input-rating .stars>label:before {
+    content: "\f005";
+    font-family: "Font Awesome 5 Free";
+    color: #797979;
+    font-weight: 400;
+    -webkit-transition: 0.2s all;
+    transition: 0.2s all;
+  }
+  
+  .comments .input-rating .stars>label:hover:before, .comments .input-rating .stars>label:hover~label:before {
+    color: #D10024;
+  }
+  
+  .comments .input-rating .stars>input:checked label:before, .comments .input-rating .stars>input:checked~label:before {
+    content: "\f005";
+    font-weight: 900; 
+    color: #D10024;
+  }
+
+  #cmt-descripcion{
+      padding:10px;
+      margin: 10px
+  }

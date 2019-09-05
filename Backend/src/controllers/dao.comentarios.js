@@ -74,7 +74,7 @@ export async function deleteOn(req, res) {
         console.log(e);
         res.status(603).json({
             message: "Algo salio mal 603",
-            data: {}
+            error : true
         });
     }
 }
