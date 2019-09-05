@@ -82,12 +82,10 @@ export async function deleteOn(req, res) {
 export async function updateOn(req, res) {
     const { id_comentario } = req.params;
     try {
-        const { comentario, calificacion, fecha, id_producto } = req.body;
+        const { comentario, calificacion } = req.body;
         const comentarioU = await Comentario.update({
             comentario,
             calificacion,
-            fecha,
-            id_producto
         },{
             where: {
                 id_comentario
@@ -98,7 +96,7 @@ export async function updateOn(req, res) {
         console.log(e);
         res.status(604).json({
             message: "Algo salio mal 604",
-            data: {}
+            error: true
         });
     }
 }

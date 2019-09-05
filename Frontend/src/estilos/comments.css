@@ -13,7 +13,7 @@
     background: #fff;
     padding:20px;
 
-    padding-bottom: 20px;
+    padding-bottom: 17px;
     margin-bottom: 50px;
     border-bottom: 2px solid #eee;
 
@@ -49,22 +49,22 @@
     padding-right: 10px
 }
 
-.comment-delete, .comment-edit {
-    top:20px;
-    width: 40px;
-    height: 40px;
+.comment-delete, .comment-edit, .comment-check, .comment-close {
+    width: 35px;
+    height: 35px;
     color: #eee;
     background: #D10024;
     border: none;
     transition: 0.2s all;
     border-radius: 50%;
-    margin: 0 10px;
-    
-
+    margin: 0 10px;     
   }
   .comment-edit {
     background: #2889ce;
+  }
 
+  .comment-check {
+    background: rgb(54, 150, 129);
   }
   
   .comment-delete:hover, .comment-edit:hover {
@@ -72,7 +72,7 @@
     color: #D10024;
   }
  
-  .comment-delete:focus, .comment-edit:focus {    
+  .comment-delete:focus, .comment-edit:focus, .comment-check:focus, .comment-close:focus {    
       outline: 0
   }
  
