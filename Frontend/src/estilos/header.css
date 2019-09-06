@@ -1,8 +1,16 @@
+#header-ctn{
+  margin-bottom: 100px!important;
+}
 
 #header {
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding-top: 10px;
+    padding-bottom: 5px;
     background-color: #15161D;
+    top:0;
+    width: 100%;  
+    z-index: 50;
+    position: fixed;
+
   }
   
   .header-logo {

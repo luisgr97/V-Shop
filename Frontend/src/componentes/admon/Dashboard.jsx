@@ -20,16 +20,16 @@ const propiedades = {
 };
 
 const propiedades2={
-  tipo: "CC",
-  numero: "12151518",
-  nombre: "Esneider Manzano",
+  tipo_documento: "CC",
+  numero_documento: "12151518",
+  nombres: "Esneider Manzano",
   apellidos: "Aranago",
   telefono: "4455971",
   direccion: "Cra 28 C # 54 - 123",
+  fecha_de_nacimiento: "1995-10-18",
   correo: "esneider.manzano@correounivalle.edu.co",
-  clave: "",       
-  nacimiento: "1995-10-18",
   nick: "loquendomanzano",
+  clave: "",       
 };
 
 export default class Example extends React.Component {
@@ -99,12 +99,14 @@ export default class Example extends React.Component {
 
             <Route path="/manager/datos" render={() => (
                 <Registro actualizar={true}
+                  idCliente={this.props.id_usuario}
                   datos={propiedades2}
                   mensaje={"ACTUALIZAR"} />
             )}/>
 
             <Route path="/manager/gerentes" render={() => (
-                <Registro actualizar={false}
+                <Registro isManager={true}  
+                  actualizar={false}                  
                   datos={propiedades}
                   mensaje={"REGISTRAR GERENTE"} />
             )}/>
