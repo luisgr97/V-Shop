@@ -152,61 +152,6 @@ export async function getOnByProducto(req, res) {
     }*/
 }
 
-export async function getProductosHomePageByCatalogo2(req, res) {
-    const { id_catalogo } = req.params;
-    try {
-        const catalogo = await Catalogo.findAll({
-            attributes: ['id_catalogo'],
-            include: [{
-                model: Inventario,
-                attributes: ['cantidad_en_inventario'],
-                //required: true,
-                include: [{
-                    model: Producto,
-                    //required: true,
-                    attributes: ['id_producto', 'nombre_producto', 'precio'],
-                    include: [
-                        {
-                            model: SubCategoria,
-                            //required: true,
-                            attributes: ['nombre_subcategoria'],
-                            include: [{
-                                model: Categoria,
-                                attributes: ['nombre_subcategoria']
-                            }]
-                        }, {
-                            model: Imagenes,
-                            limit: 1
-                            //required: false
-                        }, {
-                            model: Comentario,
-                            attributes: ['calificacion'],
-                            //required: false
-                        }
-                    ]
-                }, {
-                    model: Descuento,
-                    //required: false,
-                    attributes: ['descuento']
-                }]
-            }],
-            where: {
-                id_catalogo
-            }
-        });
-        return res.json({
-            message: "Catalogos encontrados",
-            data: catalogo
-        });
-    } catch (e) {
-        console.log(e);
-        res.status(607).json({
-            message: "Algo salio mal 607",
-            data: {}
-        });
-    }
-}
-
 export async function getProductosHomePageByCatalogo(req, res) {
     const { id_catalogo } = req.params;
     try {
@@ -240,7 +185,61 @@ export async function getProductosHomePageByCatalogo(req, res) {
                 model: Descuento,
                 //required: false,
                 attributes: ['descuento']
-            }]
+            }],
+            where : {
+                id_catalogo
+            }
+        });
+        return res.json({
+            message: "Catalogos encontrados",
+            data: inventario
+        });
+    } catch (e) {
+        console.log(e);
+        res.status(607).json({
+            message: "Algo salio mal 607a",
+            data: {}
+        });
+    }
+}
+
+
+export async function getProductoPage(req, res) {
+    const { id_catalogo, id_producto } = req.params;
+    try {
+        const inventario = await Inventario.findAll({
+            attributes: ['cantidad_en_inventario'],
+            //required: true,
+            include: [{
+                model: Producto,
+                //required: true,
+                attributes: ['id_producto', 'nombre_producto', 'precio'],
+                include: [
+                    {
+                        model: SubCategoria,
+                        //required: true,
+                        attributes: ['nombre_subcategoria'],
+                        include: [{
+                            model: Categoria,
+                            attributes: ['nombre_categoria']
+                        }]
+                    }, {
+                        model: Imagenes
+                        //required: false
+                    }, {
+                        model: Comentario
+                        //required: false
+                    }
+                ]
+            }, {
+                model: Descuento,
+                //required: false,
+                attributes: ['descuento']
+            }],
+            where: {
+                id_catalogo,
+                id_producto
+            }
         });
         return res.json({
             message: "Catalogos encontrados",
