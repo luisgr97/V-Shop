@@ -164,11 +164,11 @@ export async function getProductosHomePageByCatalogo(req, res) {
                 attributes: ['id_producto', 'nombre_producto', 'precio'],
                 include: [
                     {
-                        model: SubCategoria,
+                        model: SubCategoria, as: 'subcategoria',
                         //required: true,
                         attributes: ['nombre_subcategoria'],
                         include: [{
-                            model: Categoria,
+                            model: Categoria, as: 'categoria',
                             attributes: ['nombre_categoria']
                         }]
                     }, {
@@ -216,11 +216,11 @@ export async function getProductoPage(req, res) {
                 attributes: ['id_producto', 'nombre_producto', 'precio'],
                 include: [
                     {
-                        model: SubCategoria,
+                        model: SubCategoria, as: 'subcategoria',
                         //required: true,
                         attributes: ['nombre_subcategoria'],
                         include: [{
-                            model: Categoria,
+                            model: Categoria, as: 'categoria',
                             attributes: ['nombre_categoria']
                         }]
                     }, {
