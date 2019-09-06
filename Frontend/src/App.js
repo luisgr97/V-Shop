@@ -156,9 +156,9 @@ render(){
                                 login={this.handleChangeLoggin}                                 
                                 logueado={this.state.clienteLogueado}                         
                             />
-                            <Fade in={true} tag="h5" className="mt-3">                                                           
-                            <Main login={this.state.clienteLogueado} />                                    
-                            </Fade>
+                                <Fade in={true} tag="h5" className="mt-3">                                                           
+                                <Main login={this.state.clienteLogueado} />                                    
+                                </Fade>
                         </div>
                     )}/>
 
@@ -193,10 +193,10 @@ render(){
                                 nombre={this.state.nickCliente}
                                 login={this.handleChangeLoggin} 
                                 logueado={this.state.clienteLogueado}                         
-                                />                                                                                                           
-                            <Cliente idCliente={this.state.idCliente}                                
-                                location = {location}
-                            />
+                                /> 
+                                <Cliente idCliente={this.state.idCliente}                                
+                                    location = {location}
+                                />
                         </div>) : <Redirect to="/login" />
                     }/>
                 
@@ -206,7 +206,8 @@ render(){
                         (<Fade in={true} className="mt-3" id="registro"> 
                             <BlackLogo/> 
                             <div id="registro-container">                    
-                                <Regitro actualizar={false}
+                                <Regitro isManager={false}
+                                actualizar={false}
                                 datos={propiedades}
                                 mensaje={"REGISTRARME"}                             
                                 />
@@ -236,9 +237,9 @@ render(){
                             login={this.handleChangeLoggin}                                 
                             logueado={this.state.clienteLogueado}                         
                             />
-                            <Fade in={true} className="mt-3">
-                                <ProductPage/>                                         
-                            </Fade>
+                                <Fade in={true} className="mt-3">
+                                    <ProductPage/>                                         
+                                </Fade>
                         </div>
                     }/>
                 

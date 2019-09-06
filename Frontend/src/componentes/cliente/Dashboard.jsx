@@ -10,33 +10,7 @@ import Purchase from './ClientPurchase'
 import Loading from '../principal/Loading'
 
 import clientRoutes from './rutas'
-/*
-const propiedades2={
-  tipo: "CC",
-  numero: "12151518",
-  nombre: "Esneider Manzano",
-  apellidos: "Aranago",
-  telefono: "4455971",
-  direccion: "Cra 28 C # 54 - 123",
-  correo: "esneider.manzano@correounivalle.edu.co",
-  clave: "stefierrote",       
-  nacimiento: "1995-10-18",
-  nick: "loquendomanzano",
-};
 
-const inicial={
-  tipo:"CC",
-  numero: "",
-  nombre: "",
-  apellidos: "",
-  telefono: "",
-  direccion: "",
-  correo: "",
-  clave: "",        
-  nacimiento: "",
-  nick: "",
-};
-*/
 class Cliente extends Component {
   constructor(props){
     super(props)
@@ -74,7 +48,7 @@ class Cliente extends Component {
     }else{
       return (
         <Container>
-          <div className="espacio"/>
+          <br/>
           <Row>
             <Col xs="3">
               <Sidebar pathname = {location.pathname}/>

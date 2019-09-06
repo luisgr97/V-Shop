@@ -36,7 +36,10 @@ export async function createUsuario(req, res) {
             nick,
             tipo_usuario
         }, {
-                fields: ['tipo_documento', 'numero_documento', 'nombres', 'apellidos', 'telefono', 'direccion', 'fecha_de_nacimiento', 'correo', 'estado', 'clave', 'nick', 'tipo_usuario']
+                fields: ['tipo_documento', 'numero_documento', 
+                'nombres', 'apellidos', 'telefono', 'direccion', 
+                'fecha_de_nacimiento', 'correo', 'estado', 'clave', 
+                'nick', 'tipo_usuario']
             });
         return res.json({
             message: "Usuario creado con exito",
@@ -46,7 +49,7 @@ export async function createUsuario(req, res) {
         console.log(e);
         res.status(502).json({
             message: "Algo salio mal 500",
-            data: {}
+            error: true
         });
     }
 }

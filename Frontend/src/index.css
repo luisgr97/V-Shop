@@ -16,6 +16,10 @@ main{
   text-align: center;
 }
 
+.container-after-header{
+  margin-top:100px
+}
+
 .formulario{
   position: relative;
   background: #eee;

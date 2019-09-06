@@ -25,15 +25,32 @@ class Registro extends React.Component {
         };
         this.handleOnChange = this.handleOnChange.bind(this) 
         this.enviar = this.enviar.bind(this)
+        this.resetState = this.resetState.bind(this)
 
     }
 
     componentWillMount(){
         console.log("Se renderizo una sola vez")
     }
+
+    resetState(){
+        this.setState({
+            numero: "",
+            nombre: "",
+            apellidos: "",
+            telefono: "",
+            direccion: "",
+            nacimiento: "",
+            correo: "",           
+            nick: "",
+            clave: "",
+            clave2: "",    
+        })
+    }
+
     handleOnChange = input => e =>{ 
         this.setState({ [input]: e.target.value});
-      }  
+    }  
 
     handleRadioChange = changeEvent => {
     this.setState({
@@ -42,7 +59,7 @@ class Registro extends React.Component {
     }
     
     enviar() {
-        const mensaje = {
+        let mensaje = {
             tipo_documento: this.state.tipo,
             numero_documento: this.state.numero,
             nombres: this.state.nombre,
@@ -61,17 +78,28 @@ class Registro extends React.Component {
             axios.put('http://localhost:4000/usuario/update/' + this.props.idCliente, mensaje)
             .then((response) => {
             alert(JSON.stringify(response.data))
-            console.log("se actualizo con exito")
+            console.log("Se actualizaron los datos con exito")
             })
             .catch(err=>{
                 alert("Intentelo mas tarde registro")
             })
         }else{
             // Si es una creacion
+            if(this.props.isManager){
+                mensaje.tipo_usuario = "Gerente"
+            }
             axios.post('http://localhost:4000/usuario/create', mensaje)
             .then((response) => {
-            alert(JSON.stringify(response.data))
-                this.setState({ redirect:true })
+                if(response.data.error){
+                    alert(response.data.message)
+                }else{
+                    alert("Usuario creado con exito")
+                    if(this.props.isManager){
+                        this.resetState()
+                    }else{
+                        this.setState({ redirect:true })
+                    } 
+                }                               
             })
             .catch(err=>{
                 alert("Intentelo mas tarde registro")
@@ -204,7 +232,7 @@ class Registro extends React.Component {
                 <Col md={6}>
                         <FormGroup>
                             <Label for="numero">Telefono *</Label>
-                            <Input type="text" id="telefono" placeholder="Su identificacion..." 
+                            <Input type="text" id="telefono" placeholder="Numero telefonico..." 
                                 value={this.state.telefono}  
                                 onChange = {this.handleOnChange('telefono')}
                             />

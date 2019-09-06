@@ -8,6 +8,7 @@ import '../../estilos/header.css'
 
 const Header = (props) => {
     return(        
+        <div id="header-ctn">
         <div id="header">
         <div className="container">
             <div className="row">
@@ -58,6 +59,7 @@ const Header = (props) => {
                 </div>
             </div>
         </div>
+    </div>
     </div>
     )
 }
