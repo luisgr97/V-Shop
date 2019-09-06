@@ -99,6 +99,7 @@
   font-size: 70%;
   font-weight: 400;
   color: #8D99AE;
+  margin-left: 5px
 }
 
 .product .product-body .product-rating {
@@ -115,6 +116,7 @@
   background: #FFF;
   color: #E4E7ED;
   z-index: 10;
+  margin: 2px
 }
 
 .product .product-body .product-rating>i.fa-star {

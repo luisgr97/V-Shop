@@ -190,15 +190,12 @@ export async function getProductosHomePageByCatalogo(req, res) {
                 id_catalogo
             }
         });
-        return res.json({
-            message: "Catalogos encontrados",
-            data: inventario
-        });
+        return res.json(inventario);
     } catch (e) {
         console.log(e);
         res.status(607).json({
             message: "Algo salio mal 607a",
-            data: {}
+            error: true
         });
     }
 }
@@ -241,15 +238,12 @@ export async function getProductoPage(req, res) {
                 id_producto
             }
         });
-        return res.json({
-            message: "Catalogos encontrados",
-            data: inventario
-        });
+        return res.json(inventario);
     } catch (e) {
         console.log(e);
         res.status(607).json({
             message: "Algo salio mal 607a",
-            data: {}
+            error: true
         });
     }
 }

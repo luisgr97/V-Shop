@@ -156,9 +156,8 @@ render(){
                                 login={this.handleChangeLoggin}                                 
                                 logueado={this.state.clienteLogueado}                         
                             />
-                                <Fade in={true} tag="h5" className="mt-3">                                                           
+                                                                                           
                                 <Main login={this.state.clienteLogueado} />                                    
-                                </Fade>
                         </div>
                     )}/>
 

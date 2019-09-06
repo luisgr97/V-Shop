@@ -3,22 +3,39 @@ import {Link} from 'react-router-dom'
 
 import '../../estilos/producto.css'
 
+const brokenImage = "http://karinlifoods.com/wp-content/uploads/2017/09/imagen-no-disponible.jpg"
+
 const Producto = (props) =>{
     return(
         
         <div className="product">
-            <Link to="/">
+            <Link to={`/producto/${props.producto.id_producto}`}>
             <div className="product-img">
-            <img src={props.imagen} className="App-logo" alt="logo" />
+            <img src={`http://localhost:4000/${props.producto.imagenes[0].ruta}`} 
+            onError={(e)=>{e.target.onerror = null; e.target.src=brokenImage}}
+            className="App-logo" alt="Producto" />
+            {props.descuento.descuento!==0?
                 <div className="product-label">
-                    <span className="sale">-{props.descuento}%</span>
-                    <span className="new">NEW</span>
-                </div>
+                    <span className="sale">-{props.descuento.descuento*100}%</span>
+                    <span className="new">OFF!</span>
+                </div> : null
+            }
+                
             </div>
             <div className="product-body">
-                <p className="product-category">{props.categoria}</p>
-                <h3 className="product-name">{props.nombre}</h3>
-                <h4 className="product-price">${props.precio} <del className="product-old-price">$990.00</del></h4>
+                <p className="product-category">
+                    {props.producto.subcategoria.categoria.nombre_categoria}
+                </p>
+                <h3 className="product-name">{props.producto.nombre_producto}</h3>
+                {props.descuento.descuento!==0?
+                    <h4 className="product-price">${props.producto.precio*props.descuento.descuento}                
+                        <del className="product-old-price">
+                            {`$${props.producto.precio}`}
+                        </del>                                     
+                    </h4> :
+                    <h4 className="product-price">${props.producto.precio}                                                  
+                    </h4>
+                } 
                 <div className="product-rating">
                     <i className="fa fa-star"></i>
                     <i className="fa fa-star"></i>
