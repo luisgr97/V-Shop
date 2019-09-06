@@ -152,38 +152,41 @@ export async function getOnByProducto(req, res) {
     }*/
 }
 
-export async function getProductosHomePageByCatalogo(req, res) {
+export async function getProductosHomePageByCatalogo2(req, res) {
     const { id_catalogo } = req.params;
     try {
-        const catalogo = await Catalogo.findOne({
+        const catalogo = await Catalogo.findAll({
             attributes: ['id_catalogo'],
             include: [{
                 model: Inventario,
                 attributes: ['cantidad_en_inventario'],
+                //required: true,
                 include: [{
                     model: Producto,
                     //required: true,
                     attributes: ['id_producto', 'nombre_producto', 'precio'],
-                    include: [{
-                        model: SubCategoria,
-                        //required: true,
-                        attributes: ['nombre_subcategoria'],
-                        include: [{
-                            model: Categoria,
+                    include: [
+                        {
+                            model: SubCategoria,
                             //required: true,
-                            attributes: ['nombre_categoria']
-                        }]
-                    }, {
-                        model: Imagenes,
-                        //required: false,
-                        limit: 1
-                    }, {
-                        model: Comentario,
-                        attributes: ['calificacion']
-                    }]
+                            attributes: ['nombre_subcategoria'],
+                            include: [{
+                                model: Categoria,
+                                attributes: ['nombre_subcategoria']
+                            }]
+                        }, {
+                            model: Imagenes,
+                            limit: 1
+                            //required: false
+                        }, {
+                            model: Comentario,
+                            attributes: ['calificacion'],
+                            //required: false
+                        }
+                    ]
                 }, {
                     model: Descuento,
-                    //required: true,
+                    //required: false,
                     attributes: ['descuento']
                 }]
             }],
@@ -191,7 +194,6 @@ export async function getProductosHomePageByCatalogo(req, res) {
                 id_catalogo
             }
         });
-        console.log(catalogo.cantidad_en_inventario);
         return res.json({
             message: "Catalogos encontrados",
             data: catalogo
@@ -200,6 +202,54 @@ export async function getProductosHomePageByCatalogo(req, res) {
         console.log(e);
         res.status(607).json({
             message: "Algo salio mal 607",
+            data: {}
+        });
+    }
+}
+
+export async function getProductosHomePageByCatalogo(req, res) {
+    const { id_catalogo } = req.params;
+    try {
+        const inventario = await Inventario.findAll({
+            attributes: ['cantidad_en_inventario'],
+            //required: true,
+            include: [{
+                model: Producto,
+                //required: true,
+                attributes: ['id_producto', 'nombre_producto', 'precio'],
+                include: [
+                    {
+                        model: SubCategoria,
+                        //required: true,
+                        attributes: ['nombre_subcategoria'],
+                        include: [{
+                            model: Categoria,
+                            attributes: ['nombre_categoria']
+                        }]
+                    }, {
+                        model: Imagenes,
+                        limit: 1
+                        //required: false
+                    }, {
+                        model: Comentario,
+                        attributes: ['calificacion'],
+                        //required: false
+                    }
+                ]
+            }, {
+                model: Descuento,
+                //required: false,
+                attributes: ['descuento']
+            }]
+        });
+        return res.json({
+            message: "Catalogos encontrados",
+            data: inventario
+        });
+    } catch (e) {
+        console.log(e);
+        res.status(607).json({
+            message: "Algo salio mal 607a",
             data: {}
         });
     }
