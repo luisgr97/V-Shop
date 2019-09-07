@@ -28,7 +28,8 @@ const Producto = (props) =>{
                 </p>
                 <h3 className="product-name">{props.producto.nombre_producto}</h3>
                 {props.descuento.descuento!==0?
-                    <h4 className="product-price">${props.producto.precio*props.descuento.descuento}                
+                    <h4 className="product-price">
+                        ${props.producto.precio*(1-props.descuento.descuento)}                
                         <del className="product-old-price">
                             {`$${props.producto.precio}`}
                         </del>                                     

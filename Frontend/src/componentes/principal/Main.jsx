@@ -54,7 +54,7 @@ class Main extends React.Component {
         )
       }
       return (
-        <Fade in={true} tag="h5" className="mt-3">
+        <Fade in={true}>
           <main>
           {this.state.catalogo.map((product,i) => (<Producto key={`producto${i}`} 
           {...product}/>))}

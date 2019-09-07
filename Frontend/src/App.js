@@ -142,22 +142,15 @@ render(){
         <div className="App" >
             <BrowserRouter>
                 <Switch>                
-                    {/*
-                    <Route path="/admin" render={props => 
-                        this.state.adminLogueado ? 
-                        <Dashboard {...props} /> :
-                        <Redirect to="/vs-admin"/>} 
-                    />
-                    */}
+
                     <Route exact path="/" render={() =>(
-                        <div>
-                            <Header number={this.state.number}
+                        <div className="body-ctn">
+                            <Header                     
                                 nombre={this.state.nickCliente}
                                 login={this.handleChangeLoggin}                                 
                                 logueado={this.state.clienteLogueado}                         
                             />
-                                                                                           
-                                <Main login={this.state.clienteLogueado} />                                    
+                            <Main login={this.state.clienteLogueado} />                                    
                         </div>
                     )}/>
 
@@ -180,27 +173,27 @@ render(){
                             userId={this.state.idManager}
                             userNick={this.state.nickManager}
                         /> :
-                        <LoginAdmon login={this.handleChangeLoggin}                            
-                            isAdmin={false}
+                        <LoginAdmon isAdmin={false}                    
+                            login={this.handleChangeLoggin}
                         />
                     }/>
 
                     <Route path="/cliente" render={({location}) => 
                         this.state.clienteLogueado ? 
-                        (<div> 
-                            <Header number={this.state.number} 
+                        (<div className="body-ctn"> 
+                            <Header 
                                 nombre={this.state.nickCliente}
                                 login={this.handleChangeLoggin} 
                                 logueado={this.state.clienteLogueado}                         
                                 /> 
-                                <Cliente idCliente={this.state.idCliente}                                
-                                    location = {location}
+                                <Cliente location = {location}
+                                    idCliente={this.state.idCliente}                                                                    
                                 />
                         </div>) : <Redirect to="/login" />
                     }/>
                 
                     <Route path="/registro" render={() => 
-                        this.state.clienteLogueado ? 
+                        this.state.clienteLogueado ?
                         <Redirect to="/" /> : 
                         (<Fade in={true} className="mt-3" id="registro"> 
                             <BlackLogo/> 
@@ -213,8 +206,7 @@ render(){
                                 
                             </div>
                         </Fade>
-                    )}/>
-                    
+                    )}/>                    
                     
                     <Route path="/login" render={() => 
                         this.state.clienteLogueado ? 
@@ -227,11 +219,9 @@ render(){
                         </div>
                     )}/>
 
-
-
                     <Route path="/producto/:id_producto" render={() =>                         
-                        <div>
-                            <Header number={this.state.number}
+                        <div className="body-ctn">
+                            <Header 
                             nombre={this.state.nickCliente}
                             login={this.handleChangeLoggin}                                 
                             logueado={this.state.clienteLogueado}                         
