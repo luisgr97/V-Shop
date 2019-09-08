@@ -1,144 +1,74 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
-import CartToPay from './CartToPay'
+import Checkout from './Checkout'
+import { ProductContext, ProductContextConsumer } from './Context'
 
 import {
-
   DropdownToggle,
   DropdownMenu,
-  UncontrolledDropdown
-  
+  UncontrolledDropdown  
 } from "reactstrap";
 
-import imagen from '../../product01.png'
 import '../../estilos/shopping-cart.css'
 
-
-const product =[
-  {
-  id: "123654",
-  nombre: "XBOX ONE",
-  descripcion: "COnsola para jugar bien bacano",
-  marca: "SONY",
-  precio: 1000000,
-  imagen: imagen,
-  categoria: "Consolas",
-  descuento: 0
-},
-{
-  id: "13654",
-  nombre: "XBOX ONE",
-  descripcion: "COnsola para jugar bien bacano",
-  marca: "SONY",
-  precio: 1000000,
-  imagen: imagen,
-  categoria: "Consolas",
-  descuento: 0
-},
-{
-  id: "136054",
-  nombre: "XBOX ONE",
-  descripcion: "COnsola para jugar bien bacano",
-  marca: "SONY",
-  precio: 1000000,
-  imagen: imagen,
-  categoria: "Consolas",
-  descuento: 0
-}];
-
-
-export default class Example extends React.Component {
+export default class ShoopingCart extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      number: 0,
       openModal: false,
-      productos: []
     }
-    this.producto = this.producto.bind(this)
-    this.precioTotal = this.precioTotal.bind(this)
-    this.eliminarProducto= this.eliminarProducto.bind(this)
     this.handleOnBuyClik = this.handleOnBuyClik.bind(this)
   }
 
-  
-  componentWillMount(){
-    if(localStorage.getItem('productos')){
-      this.setState({
-        productos: JSON.parse(localStorage.getItem('productos'))
-      })
-    }else{
-      this.setState({
-        productos: product
-      })
-    }
-  }
-
-  componentDidUpdate(){
-    localStorage.setItem('productos', JSON.stringify(this.state.productos))
-  }
-
-  eliminarProducto = (e) =>{
-    const valor = e.target.value
-    this.setState(prevState => {
-      const productos = prevState.productos.filter(producto => producto.id !== valor);
-      return { productos };
-    });  
-  }
-
-  producto = (product, index) =>{
-    return(
-        <div className="product-widget" key={product.id}>
-            <div className="product-img">
-                <img src={product.imagen} alt=""/>
-            </div>
-            <div className="product-body">
-                <h3 className="product-name">
-                  <Link to={`/producto/${product.id}`}>{product.nombre}</Link>
-                </h3>
-                <h4 className="product-price">${product.precio}</h4>
-                
-                <button value={product.id} 
-                  className="fa fa-trash product-delete" 
-                  onClick={this.eliminarProducto}
-                />
-            </div>                   
-        </div>
-    )
-  }
-
-  precioTotal(){
-    let total = 0;
-    for(var i=0;i<this.state.productos.length;i++){
-      total += this.state.productos[i].precio
-    }
-    return total;
-  }
-
   handleOnBuyClik(){
-    console.log("Se presiono esta monda")
     this.setState({
       openModal: !this.state.openModal
     })
   }
 
+  componentDidUpdate(){
+    console.log("Se actulaizdo esta monda")
+  }
   render() {
-    const numPorductos = this.state.productos.length
+
+    //Componenete consumidor con estado
+    const {productos, precioTotal, waveEffect} = this.context;
+    const numPorductos = productos.length
     return (
       <div className="carrito">                                
         <i className="fa fa-shopping-cart"></i>
-        <div className="qty">{numPorductos}</div>                                                        
+        <div className={waveEffect? "qty_animated" : "qty"}>{numPorductos}</div>                                                        
                              
         <UncontrolledDropdown 
-        className="clienteOpciones">
+            className="clienteOpciones">
           <DropdownToggle caret nav>       
               Carrito
           </DropdownToggle>
           <DropdownMenu right className="cart-dropdown">
               <div className="cart-list">
-                {this.state.productos.map((producto, index) => (
-                  this.producto(producto, index)
-                ))}                
+
+                {productos.map((product, index) => (
+                  <div className="product-widget" key={product.id+index}>
+                      <div className="product-img">
+                          <img src={product.imagen} alt=""/>
+                      </div>
+                      <div className="product-body">
+                          <h3 className="product-name">
+                            <Link to={`/producto/${product.id}`}>{product.nombre}</Link>
+                          </h3>
+                          <h4 className="product-price">${product.precio}</h4>
+                          <ProductContextConsumer>
+                            {({eliminarProducto}) => (
+                              <button value={product.id} 
+                                className="fa fa-trash product-delete" 
+                                onClick={eliminarProducto}
+                              />
+                            )}
+                          </ProductContextConsumer>
+                      </div>                   
+                  </div>
+                ))} 
+                               
               </div>
               <div className="cart-summary">
                   <small>{numPorductos}
@@ -146,26 +76,23 @@ export default class Example extends React.Component {
                           " productos agregados" : 
                           " producto agregado"} 
                   </small>
-                  <h5>{numPorductos? `TOTAL ${this.precioTotal()}`: "Carrito vacio"}</h5>
+                  <h5>{numPorductos? `TOTAL ${precioTotal()}`: "Carrito vacio"}</h5>
               </div>
               {numPorductos? 
                 <div className="cart-btns">                   
-                    <a onClick={this.handleOnBuyClik}>Comprar    <i className="fa fa-arrow-circle-right"></i></a>
+                    <div onClick={this.handleOnBuyClik}>Comprar    <i className="fa fa-arrow-circle-right"></i></div>
                 </div>: ""
               }
               
           </DropdownMenu>
         </UncontrolledDropdown>
-        <CartToPay 
+        <Checkout 
           switchModal = {this.handleOnBuyClik} 
           openModal={this.state.openModal}
         />
       </div> 
-
-
-
-
-
     );
   }
 }
+
+ShoopingCart.contextType = ProductContext; 

@@ -16,7 +16,7 @@
     display: inline-block;
   }
 
-  .qty {
+  .qty, .qty_animated {
     position: absolute;
     top: 10px;
     margin-left: 30px!important;
@@ -53,7 +53,7 @@
     cursor: pointer;
   }
 
-  .cart-dropdown .cart-btns>a {
+  .cart-dropdown .cart-btns>div {
     display: inline-block;
     width: 100%;
     padding: 12px;
@@ -153,12 +153,23 @@
   }
  
 
-  
+  .qty_animated{
+    animation: pulse 2s infinite;
+}
 
 
+@keyframes pulse {
+  0% {
+    transform: scale( 1 );
+    box-shadow: 0 0 0 0 rgba(209,0,36, 1);
+  }
 
-
-
-
-
-  
+  70% {
+    transform: scale( 1 );
+      box-shadow: 0 0 0 100px rgba(209,0,36, 0);
+  }
+  100% {
+    transform: scale( 1 );
+      box-shadow: 0 0 0 0  rgba(0,0,0, 0);
+  }
+}

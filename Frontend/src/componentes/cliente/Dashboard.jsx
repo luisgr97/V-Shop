@@ -39,7 +39,6 @@ class Cliente extends Component {
 
   render(){
     const {location} = this.props
-    const datos = this.state.cliente
 
     if(this.state.loading){
       return(

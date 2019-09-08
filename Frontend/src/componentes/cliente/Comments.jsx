@@ -100,7 +100,7 @@ class Comentario extends React.Component{
     editComment(e){
         let id_comentario = e.target.value, comentario;
         for(var i =0;i<this.state.comments.length;i++){
-            if(id_comentario == this.state.comments[i].id_comentario){
+            if(parseInt(id_comentario) === this.state.comments[i].id_comentario){
                 comentario = this.state.comments[i].comentario
                 break;
             }             
@@ -130,7 +130,6 @@ class Comentario extends React.Component{
     }  
 
     render(){
-        const updateScore = this.state.updateScore
         if(this.state.loading){
             return(
               <Loading/>
@@ -149,7 +148,7 @@ class Comentario extends React.Component{
                             <span>{`El dia: ${comment.fecha}`}</span>
                         </div>                   
 
-                        {this.state.editComment==comment.id_comentario?
+                        {parseInt(this.state.editComment)===comment.id_comentario?
                             <div> 
                                 <Input type="textarea" name="cmt-descripcion" id="cmt-descripcion" 
                                     value={this.state.editDescription} onChange={this.onChange('editDescription')}/>
@@ -177,8 +176,7 @@ class Comentario extends React.Component{
                             </div>
                         }
                         
-                        
-                        {this.state.editComment==comment.id_comentario? 
+                        {parseInt(this.state.editComment)===comment.id_comentario? 
                             <div className="options-comt-buttons">
                                 <button value={comment.id_comentario}
                                 onClick={this.modifyComment}

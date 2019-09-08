@@ -1,7 +1,7 @@
 import Categorias from './Categorias'
 import Productos from './Productos'
 import Catalogo from './Catalogo'
-import Modal from '../principal/CartToPay'
+import Modal from '../principal/Checkout'
 
 const adminRoutes = [
   {

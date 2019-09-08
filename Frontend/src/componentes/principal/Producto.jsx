@@ -1,13 +1,17 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {Link} from 'react-router-dom'
+import {ProductContext} from './Context'
 
 import '../../estilos/producto.css'
 
 const brokenImage = "http://karinlifoods.com/wp-content/uploads/2017/09/imagen-no-disponible.jpg"
 
 const Producto = (props) =>{
-    return(
-        
+
+    //Componenete consumidor sin estado
+    const {addProduct} = useContext(ProductContext)
+
+    return(        
         <div className="product">
             <Link to={`/producto/${props.producto.id_producto}`}>
             <div className="product-img">
@@ -45,13 +49,23 @@ const Producto = (props) =>{
                     <i className="fa fa-star"></i>
                 </div>                
             </div>
-            <div className="add-to-cart">
-                <button className="add-to-cart-btn"><i className="fa fa-shopping-cart"></i> al carrito</button>
-            </div>
             </Link>
+            
+                <div className="add-to-cart">                
+                    <button onClick={() => {
+                        var producto = {
+                            id: String(props.producto.id_producto),
+                            nombre: props.producto.nombre_producto,                            
+                            precio: props.producto.precio,
+                            imagen: `http://localhost:4000/${props.producto.imagenes[0].ruta}`
+                        }
+                        addProduct(producto)    
+                        }} className="add-to-cart-btn"><i className="fa fa-shopping-cart"></i> al carrito</button>
+                </div> 
+                
+            
         </div>
 
     )
 }
-
 export default Producto;

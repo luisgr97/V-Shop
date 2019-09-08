@@ -206,7 +206,7 @@ class Articulo extends Component {
 
     uploadImages = (idProducto) => {
         let data  = new FormData(); 
-    	const uploaders = this.state.images.map(image => {
+    	this.state.images.map((image) => {
 		    data.append("images", image, image.name);		
         });
         axios.post('http://localhost:4000/api/productos/imagenes/add/' + idProducto, data)

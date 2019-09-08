@@ -38,7 +38,6 @@ const Factura = (props) =>{
     )
 }
 const Purchase = (props) =>{
-    const arreglo = [1,2,3,4,5,6]
     return(
         <ListGroup className="listaCompras">
             {props.bills.map((indice) => (
