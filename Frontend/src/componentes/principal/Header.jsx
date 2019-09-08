@@ -2,6 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import UserList from './UserList'
 import Cart from './ShoppingCart'
+import StoreList from './StoreList'
 
 import logo from '../../imagenes/logo-white.png'
 import '../../estilos/header.css'
@@ -11,28 +12,31 @@ const Header = (props) => {
         <div id="header">
         <div className="container">
             <div className="row">
-                <div className="col-md-3">
+                <div className="col-md-auto">
                     <div className="header-logo">
                     <Link className="logo" to={"/"} ><img src={logo} alt=""/></Link> 
                     </div>
+                    
                 </div>
-
-                <div className="col-md-6">
+                
+                <div className="col">
+                
                     <div className="header-search">
                         <form>
                             <select className="input-select">
                                 <option value="0">Categorias</option>
-                                <option value="1">Computadores</option>
+                                
                                 <option value="1">Celulares</option>
                             </select>
                             <input className="input" placeholder="Buscar producto"/>
-                            <button className="search-btn">Buscar</button>
+                            <button className="search-btn"><i class="fas fa-search"></i> </button>
                         </form>
                     </div>
                 </div>
 
-                <div className="col-md-3 clearfix">
-                    <div className="header-ctn">                                                                              
+                <div className="col-md-auto">
+                    <div className="header-ctn">
+                    <StoreList/>                                                                         
                         <Cart number={props.number}/>                                                                       
                         <div className="ingresarCliente">
                             <i className="fa fa-user"></i>
@@ -46,14 +50,7 @@ const Header = (props) => {
                                 </Link>
                             }                                                      
                         </div>
-                        {/*
-                        <div className="menu-toggle">
-                            <a href="#">
-                                <i className="fa fa-bars"></i>
-                                <span>Menu</span>
-                            </a>
-                        </div>
-                        */}
+                        
                     </div>
                 </div>
             </div>

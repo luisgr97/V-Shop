@@ -2,20 +2,6 @@
 	CARRITO DE COMPRAS
 ===========================================================*/
 
-.carrito{
-    margin-right: 55px;
-  }
-
-.header-ctn {
-    float: right;
-    padding: 15px 0px;
-  }
-
-
-.header-ctn>div {
-    display: inline-block;
-  }
-
   .qty, .qty_animated {
     position: absolute;
     top: 10px;
@@ -44,6 +30,7 @@
   }
   .cart-dropdown .cart-list .product-widget .product-body .product-price {
     color: #2B2D42;
+    font-weight: bold
   }
 
   .cart-dropdown .cart-btns {
@@ -164,12 +151,12 @@
     box-shadow: 0 0 0 0 rgba(209,0,36, 1);
   }
 
-  70% {
+  50% {
     transform: scale( 1 );
       box-shadow: 0 0 0 100px rgba(209,0,36, 0);
   }
   100% {
     transform: scale( 1 );
-      box-shadow: 0 0 0 0  rgba(0,0,0, 0);
+    box-shadow: 0 0 0 0 rgba(209,0,36, 1);
   }
 }

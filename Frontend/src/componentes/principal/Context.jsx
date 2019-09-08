@@ -68,7 +68,7 @@ export class ProductoProvider extends React.Component{
             this.setState({
               waveEffect: false
             })
-          }, 2000)
+          }, 900)
         })
         console.log(this.state.productos)
         

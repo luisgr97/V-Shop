@@ -40,7 +40,7 @@ export default class ShoopingCart extends React.Component {
         <div className={waveEffect? "qty_animated" : "qty"}>{numPorductos}</div>                                                        
                              
         <UncontrolledDropdown 
-            className="clienteOpciones">
+            className="option-list">
           <DropdownToggle caret nav>       
               Carrito
           </DropdownToggle>

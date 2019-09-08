@@ -73,7 +73,9 @@
     -webkit-transition: 0.2s all;
     transition: 0.2s all;
   }
-  
+  .product-details .add-to-cart .add-to-cart-btn:focus {
+    outline: 0
+  }
   .product-details .add-to-cart .add-to-cart-btn>i {
     position: absolute;
     left: 0;

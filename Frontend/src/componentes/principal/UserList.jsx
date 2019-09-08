@@ -11,12 +11,12 @@ import clientRoutes from '../cliente/rutas'
 
 const UserList = (props) => {
     return (
-      <UncontrolledDropdown className="clienteOpciones">
+      <UncontrolledDropdown className="option-list">
         <DropdownToggle caret nav>
         {props.name}
         </DropdownToggle>
         <DropdownMenu right>
-            <Link className="client-item" to={`/cliente/${clientRoutes[0].id}`}>
+            <Link className="option-item" to={`/cliente/${clientRoutes[0].id}`}>
               <DropdownItem >Mi cuenta</DropdownItem>
             </Link>
             <DropdownItem onClick={() => props.login(0, null)}>Cerrar Sesión</DropdownItem>                
