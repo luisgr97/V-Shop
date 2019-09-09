@@ -37,7 +37,7 @@ export class ProductoProvider extends React.Component{
       }
 
     componentDidUpdate(){
-    localStorage.setItem('productos', JSON.stringify(this.state.productos))    
+      localStorage.setItem('productos', JSON.stringify(this.state.productos))    
     }
 
     precioTotal(){
@@ -53,8 +53,7 @@ export class ProductoProvider extends React.Component{
         this.setState(prevState => {
           const productos = prevState.productos.filter(producto => producto.id !== valor);
           return { productos };
-        });  
-        
+        });          
     }
 
     addProduct(mensaje){
@@ -70,23 +69,22 @@ export class ProductoProvider extends React.Component{
             })
           }, 900)
         })
-        console.log(this.state.productos)
-        
+        console.log(this.state.productos)        
     }
 
     render(){
         const {children} = this.props;
         return(
-            <ProductContext.Provider 
-                value={{
-                    productos: this.state.productos,
-                    precioTotal: this.precioTotal,
-                    eliminarProducto: this.eliminarProducto,
-                    addProduct : this.addProduct,
-                    waveEffect: this.state.waveEffect
-                }}>
-                    {children}
-            </ProductContext.Provider>
+          <ProductContext.Provider 
+              value={{
+                  productos: this.state.productos,
+                  precioTotal: this.precioTotal,
+                  eliminarProducto: this.eliminarProducto,
+                  addProduct : this.addProduct,
+                  waveEffect: this.state.waveEffect
+              }}>
+                  {children}
+          </ProductContext.Provider>
         )
     }
 }

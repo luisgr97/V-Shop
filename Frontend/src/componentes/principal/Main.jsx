@@ -1,7 +1,7 @@
 /* Por el momento solo se tiene el login como ejemplo */
 import React from 'react'
 import Axios from 'axios';
-
+import Nav from './Nav'
 import Producto from './Producto'
 import Loading from './Loading'
 /*
@@ -40,10 +40,13 @@ class Main extends React.Component {
         )
       }
       return (
-          <main>
-          {this.state.catalogo.map((product,i) => (<Producto key={`producto${i}`} 
-          {...product}/>))}
-        </main>
+        <React.Fragment>
+          <Nav/>
+          <main>               
+            {this.state.catalogo.map((product,i) => (<Producto key={`producto${i}`} 
+            {...product}/>))}
+          </main>
+        </React.Fragment>
       );
     
     }

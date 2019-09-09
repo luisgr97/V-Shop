@@ -46,7 +46,7 @@ class Cliente extends Component {
       )
     }else{
       return (
-        <Container>
+        <Container className="client-ctn">
           <br/>
           <Row>
             <Col xs="3">

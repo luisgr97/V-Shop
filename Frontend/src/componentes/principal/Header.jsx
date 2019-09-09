@@ -2,7 +2,6 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import UserList from './UserList'
 import Cart from './ShoppingCart'
-import StoreList from './StoreList'
 
 import logo from '../../imagenes/logo-white.png'
 import '../../estilos/header.css'
@@ -22,21 +21,20 @@ const Header = (props) => {
                 <div className="col">
                 
                     <div className="header-search">
-                        <form>
+                        <form>                            
                             <select className="input-select">
-                                <option value="0">Categorias</option>
-                                
-                                <option value="1">Celulares</option>
+                                <option value="0">Cali</option>                                
+                                <option value="1">Medellin</option>
                             </select>
                             <input className="input" placeholder="Buscar producto"/>
-                            <button className="search-btn"><i class="fas fa-search"></i> </button>
+                            <button className="search-btn"><i className="fas fa-search"></i> </button>
                         </form>
                     </div>
                 </div>
 
                 <div className="col-md-auto">
                     <div className="header-ctn">
-                    <StoreList/>                                                                         
+                                                                                          
                         <Cart number={props.number}/>                                                                       
                         <div className="ingresarCliente">
                             <i className="fa fa-user"></i>

@@ -10,6 +10,7 @@ import Cliente from './componentes/cliente/Dashboard'
 import LoginCliente from './componentes/cliente/LoginClient'
 
 import Header from './componentes/principal/Header'
+import Nav from './componentes/principal/Nav'
 import Main from './componentes/principal/Main'
 import Footer from './componentes/principal/Footer'
 import Regitro from './componentes/principal/Registro'
@@ -157,7 +158,7 @@ render(){
                     
                     <Route path="/login" render={() => 
                         this.state.clienteLogueado ? 
-                        <Redirect to="/"/> :
+                        <Redirect to="/cliente"/> :
                         (<Fade in={true} id="login">
                             <BlackLogo/>                                         
                             <LoginCliente login={this.handleChangeLoggin}/>
@@ -173,7 +174,7 @@ render(){
                                     nombre={this.state.nickCliente}
                                     login={this.handleChangeLoggin}                                 
                                     logueado={this.state.clienteLogueado}                         
-                                />                            
+                                />                                       
                                 <Switch>
                                     <Route path="/cliente" render={({location}) =>
                                         this.state.clienteLogueado ? 
