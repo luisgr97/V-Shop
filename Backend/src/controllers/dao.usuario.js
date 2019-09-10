@@ -3,6 +3,7 @@ import Factura from '../models/factura';
 import Detalle_factura from '../models/detalle_factura';
 import Producto from '../models/producto';
 import Comentario from '../models/comentario';
+import Catalogo from '../models/catalogo';
 
 //create user
 export async function createUsuario(req, res) {
@@ -301,6 +302,47 @@ export async function getJoinComentario(req, res){
         console.log(e);
         res.status(408).json({
             message: "error 402 no funca",
+            data: {}
+        });
+    }
+}
+
+/*Retorna todos los usuarios con sus catalogos */
+export async function getJoinUsersAvalaibles(req, res){
+    try{
+        const usuario = await Usuario.findAll({
+            attributes: ['tipo_documento',
+                'numero_documento',
+                'nombres',
+                'apellidos',
+                'telefono',
+                'direccion',
+                'fecha_de_nacimiento',
+                'correo',
+                'nick'
+            ],  include: [{
+                model: Catalogo,
+                attributes: ['id_catalogo', 'ciudad', 'nombre_catalogo'] 
+            }],
+            where: {
+                estado: 1,
+                tipo_usuario: 'Gerente'
+            }
+        });
+        //fragmento de codigo para elimanar los que tienen catalogo.
+        var nulls = 1;
+        for (var i in usuario) {
+            if (usuario[i].catalogo !== null){
+                nulls++;//a medida que borra uno la cuenta para eliminarl los nulls 
+                delete usuario[i];
+                usuario.splice(i,nulls);
+            }
+        }
+        return res.json(usuario);
+    }catch(e){
+        console.log(e);
+        res.status(408).json({
+            message: "error 408 no funca",
             data: {}
         });
     }

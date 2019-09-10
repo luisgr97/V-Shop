@@ -166,3 +166,21 @@ export async function getOnProductoBySubcategoria(req, res) {
         });
     }
 }
+
+//filtra producto por sus caracteristicas.
+export async function buscarProducto(req, res) {
+    const tags  = req.body;
+    try {
+        const productos = await Producto.findAll({
+            fields: ['nombre_producto', 'descripcion', 'marca', 'precio', 'id_subcategoria'],
+            where: tags//filtra por los parametros recibidos
+        });
+        return res.json(productos);
+    } catch (e) {
+        console.log(e);
+        res.status(200).json({
+            message: "Something goes wrong 200",
+            error: true,
+        });
+    }
+}

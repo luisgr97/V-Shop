@@ -100,6 +100,8 @@ export async function updateOn(req, res) {
     }
 }
 
+
+
 /*
 export async function getOnByProducto(req, res) {
     const { id_producto } = req.params;

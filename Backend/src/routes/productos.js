@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { crearProducto, getProductos, getOnProducto, deleteOnProducto, updateProductos, getOnProductoBySubcategoria } from '../controllers/dao.productos'; //funcion con los controladores para productos
+import { buscarProducto, crearProducto, getProductos, getOnProducto, deleteOnProducto, updateProductos, getOnProductoBySubcategoria } from '../controllers/dao.productos'; //funcion con los controladores para productos
 const router = Router();
 
 /*CRUD category*/
@@ -16,5 +16,7 @@ router.delete('/delete/:id_producto', deleteOnProducto);
 
 /*functions*/
 router.get('/get/by-subcategory/:id_subcategoria',getOnProductoBySubcategoria);
+//filtrar producto
+router.post('/buscar-productos', buscarProducto);
 
 export default router;

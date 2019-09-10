@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { logUsuario, createUsuario, deleteUsuario, getOneUsuario, updateUsuario, listUsuarios, checkNick, getJoinFacturas, getJoinComentario } from '../controllers/dao.usuario';
+import { logUsuario, createUsuario, deleteUsuario, getOneUsuario, updateUsuario, listUsuarios, checkNick,
+      getJoinFacturas, getJoinComentario,getJoinUsersAvalaibles } from '../controllers/dao.usuario';
 
 const router = Router();
 
@@ -24,7 +25,8 @@ router.post('/login', logUsuario);
 router.get('/check-nick/:nick', checkNick);
 //GetFacturasJoinUsuarios
 router.get('/getJoinFacturas/:id_usuario', getJoinFacturas);
-
+//Get users avaliables, return users || null
+router.get('/usuariosdisponibles', getJoinUsersAvalaibles);
 
 
 
