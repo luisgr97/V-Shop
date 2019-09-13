@@ -144,7 +144,7 @@ render(){
                     <Route path="/registro" render={() => 
                         this.state.clienteLogueado ?
                         <Redirect to="/" /> : 
-                        (<Fade in={true} className="mt-3" id="registro"> 
+                        (<Fade in={true} id="registro"> 
                             <BlackLogo/> 
                             <div id="registro-container">                    
                                 <Regitro isManager={false}

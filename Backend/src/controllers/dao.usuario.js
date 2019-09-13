@@ -311,7 +311,8 @@ export async function getJoinComentario(req, res){
 export async function getJoinUsersAvalaibles(req, res){
     try{
         const usuario = await Usuario.findAll({
-            attributes: ['tipo_documento',
+            attributes: ['id_usuario',
+                'tipo_documento',
                 'numero_documento',
                 'nombres',
                 'apellidos',

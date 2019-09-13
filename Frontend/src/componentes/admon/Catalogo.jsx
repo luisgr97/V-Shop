@@ -1,26 +1,66 @@
 import React from 'react'
-import { Form, FormGroup, Label, Input, Row, Col } from 'reactstrap';
+import {Redirect} from 'react-router-dom'
 
-const manager = [
-    {
-        id_usuario: 2,
-        nombre: "Esneider Manzano",
-    },
-    {
-        id_usuario: 12,
-        nombre: "Abdul Jalamelavalija",
-    }
-]
+import { Form, FormGroup, Label, Input, Row, Col, Button } from 'reactstrap';
+import Loading from '../principal/Loading'
+import Axios from 'axios';
+
 class Sedes extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            loading: true,
+            managers: [],
             nameCatalog: "",
             idManagerInCharge: "",
             city: "",
-
         }
         this.onChange = this.onChange.bind(this)
+        this.crearCatalogo = this.crearCatalogo.bind(this)
+        this.getAvailableManagers = this.getAvailableManagers.bind(this)
+    }
+    getAvailableManagers(){
+        Axios.get('http://localhost:4000/usuario/usuariosdisponibles')
+        .then(response => {
+            if(response.data.length === 0){
+                alert("No hay gerentes disponibles, por favor cree uno")
+            }else{
+                this.setState({
+                    managers: response.data,
+                    loading: false,
+                    idManagerInCharge: response.data[0].id_usuario
+                })
+            }
+
+        }).catch(err => ( alert("Intentelo mas tarde")))
+    }
+
+    componentDidMount(){
+        this.getAvailableManagers()
+    }
+
+    crearCatalogo(){
+        let mensaje = {
+            ciudad: this.state.city,
+            id_gerente: this.state.idManagerInCharge,
+            nombre_catalogo: this.state.nameCatalog
+        }
+        Axios.post('http://localhost:4000/api/catalogos/create', mensaje)
+        .then(response => {
+            if(response.data.error){
+                alert("Error en la creacion, intentelo de nuevo")
+            }else{
+                alert(response.data.message)
+                this.setState({
+                    loading: true,
+                    managers: [],
+                    nameCatalog: "",
+                    idManagerInCharge: "",
+                    city: "",
+                })
+                this.getAvailableManagers()
+            }
+        }).catch(err => (alert("Intentelo mas tarde")))
     }
 
     //Captura en el estado correspondiente, el teclado
@@ -30,6 +70,12 @@ class Sedes extends React.Component {
 
 
     render() {
+        if(this.state.loading){
+            return <Loading/>
+        }
+        if(this.state.managers.length===0){
+            return <Redirect to="gerentes"/>
+        }
         return (
             <div id="admin-catalogo">
                 <h2>Gestion de Catalogos</h2>
@@ -54,14 +100,17 @@ class Sedes extends React.Component {
                             </FormGroup>
                         </Col>
                     </Row>
-                    <Label>Modificar categoria</Label>
+                    <Label>Asignar un Gerente</Label>
                     <Input type="select" name="select" id="idManagerInCharge"
                         onChange={this.onChange('idManagerInCharge')}>
-                        {manager.map((indice) =>
-                            <option key={indice.nombre}
-                                value={indice.id_usuario}>{indice.nombre}</option>)
+                        {this.state.managers.map((gerente) =>
+                            <option key={`manager${gerente.id_usuario}`}
+                                value={gerente.id_usuario}>
+                                {`${gerente.nombres} ${gerente.apellidos} - cc ${gerente.numero_documento}`}
+                            </option>)
                         }
                     </Input>
+                    <Button color="primary" onClick={this.crearCatalogo}>Crear</Button>{' '}
                 </Form>
             </div>
         )

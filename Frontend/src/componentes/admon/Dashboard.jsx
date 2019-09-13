@@ -6,6 +6,7 @@ import Registro from '../principal/Registro'
 import WhiteLogo from '../../imagenes/logo-white.png'
 import adminRoutes from './rutas'
 
+import '../../estilos/admon.css'
 const propiedades = {
   tipo_documento: "CC",
   numero_documento: "",

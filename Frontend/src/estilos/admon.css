@@ -1,0 +1,216 @@
+
+#admin-zone{
+    margin:auto;
+    position: relative;  
+    max-width: 1400px;
+    max-height: 100%
+  }
+  
+  #admin-sidebar{
+    position: fixed;
+    background: #15161D;
+    width: 260px;
+    height: 100vh;
+    line-height: 3.5;
+    font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif; 
+    overflow: hidden; 
+  }
+  #admin-sidebar a{
+    color:#c1c1c1;
+  }
+  #admin-sidebar a:hover{
+  text-decoration: none
+  }
+  
+  #admin-sidebar, #admin-main{
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+  }
+  
+  
+  #admin-main{
+    background: #eee;
+    position: absolute;
+    padding: 30px;
+    width: calc(100% - 260px);
+    right: 0;
+  }
+  
+  #admin-sidebar .nav-link {
+    padding-left:30px;
+    transition: 0.4s all;
+    border-left:5px solid #15161D
+  
+  }
+  
+  #admin-sidebar .nav-link:hover{
+    padding-left: 40px;
+    border-left:5px solid #D10024
+  }
+  #admin-sidebar .nav-link {
+    border-radius: 0rem;
+  }
+  
+  #admin-sidebar .nav-item i{
+    position: absolute;
+    margin-top:10px;
+    color: #c1c1c1;
+    font-size: 22px;
+    padding-left:0px!important
+  }
+  
+  #admin-sidebar .nav-item span{
+    padding-left:40px!important
+  }
+  
+  #admin-sidebar .nav-link.active {
+    background-color: #15161D;
+    border-left: 5px solid #D10024!important
+  }
+  
+  
+  #admin-sidebar .nav-link.active:hover, #admin-sidebar .show > .nav-link:hover {
+    background-color: #15161D;
+    border-left: 5px solid #D10024
+  }
+  
+  
+  #admin-sidebar .nav-item a{
+    color:#c1c1c1;
+    padding: 0px;
+    padding-left: 30px
+  }
+  
+  #admin-sidebar img{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:10px;
+    margin-bottom:10px;
+  }
+  
+  /*Linea que separa logo de sidebar admin*/
+  #linea {
+    height: 1px;
+    background: #6c757d;
+    max-width: 90%;
+    margin-left:5%
+  }
+  
+  
+  .admin-productos .nav-tabs .nav-item {
+    width: 50%;
+    border-radius: 10px 10px 0 0;
+    border-bottom: 2px solid #6c757d;
+    font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif; 
+    text-align: center;
+    cursor: pointer;
+    color:#495057;
+    border-color: #fff #fff #fff;
+  }
+  
+  .admin-productos .nav-tabs .nav-link.active:hover {
+    color: #333;
+    border-color: #fff;
+  }
+  
+  .admin-productos .nav-tabs .nav-item .nav-link{
+    transition: 0.4s all;
+    border-top-left-radius: 0rem;
+    border-top-right-radius: 0rem;
+    border-bottom: 2px solid #eee;
+  }
+  .admin-productos .nav-tabs .nav-link.active {
+    color: #495057;
+    border-color: #fff;
+    transition: 0.4s all;
+    background-color: #fff;
+    border-bottom: 2px solid #D10024
+  }
+  .admin-productos, #admin-catalogo, #admin-categorias{
+    border: 1px solid #eee;
+    position: relative;
+    background: #fff;
+    margin:0 auto;
+    padding: 30px;
+  }
+  
+  #selectFile{
+    visibility: hidden
+  }
+  
+  #load-img-button{
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    border-style: dotted; 
+    width: 180px;
+    border-width: 2px; 
+    border-color: #6c757d; 
+  }
+  
+  #load-img-button:hover{
+  cursor: pointer;
+  }
+  
+  #load-img-button i{
+  top:0px
+  }
+  
+  #img-container{
+    text-align: center
+  }
+  .img-ctn{
+    margin:20px;
+    display: inline-block;
+    width: 250px;
+    height: 250px;
+    background-color: #eee;
+   transition: .2s all ease-out;
+  }
+  
+  
+  .img-ctn:hover{
+    transform: scale(1.5)
+  }
+  
+  .img-ctn img{
+    display: block;
+    max-width:250px;
+    max-height:250px;
+    width: auto;
+    height: auto;
+    margin: auto;
+    transition: .2s all ease-in-out;
+  
+  }
+  .img-delete {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    margin-left: 100px;
+    margin-top: -10px;
+    color: #eee;
+    background: #333;
+    border: none;
+    transition: 0.2s all;
+    border-radius: 50%;
+  }
+  
+  .img-delete:hover {
+    background-color: #E4E7ED;
+    color: #D10024;
+    
+  }
+  .img-delete:active, .img-delete:focus {
+    outline: 0
+  }
+  
+  #img-message{
+    margin-top:50px;
+  }
+
+  #admin-catalogo{
+      height: 90vh;
+  }

@@ -13,14 +13,13 @@ export async function crear(req, res) {
             fields: ['ciudad', 'id_gerente', 'nombre_catalogo']
         });
         return res.json({
-            message: "catalogo creado con exito",
-            data : newCatalogo
+            message: "catalogo creado con exito",            
         });
     } catch (e) {
         console.log(e);
         res.status(800).json({
             message: "Something goes wrong 800",
-            data: {}
+            error: true
         });
     }
 }
