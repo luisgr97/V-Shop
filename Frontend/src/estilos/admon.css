@@ -2,10 +2,13 @@
 #admin-zone{
     margin:auto;
     position: relative;  
-    max-width: 1400px;
+    max-width: 100%;
     max-height: 100%
   }
-  
+  #admin-zone h2{
+    text-align: center
+  }
+
   #admin-sidebar{
     position: fixed;
     background: #15161D;
@@ -23,9 +26,6 @@
   }
   
   #admin-sidebar, #admin-main{
-    -webkit-transition: all .3s ease-in-out;
-    -moz-transition: all .3s ease-in-out;
-    -o-transition: all .3s ease-in-out;
     transition: all .3s ease-in-out;
   }
   
@@ -55,9 +55,9 @@
   
   #admin-sidebar .nav-item i{
     position: absolute;
-    margin-top:10px;
+    margin-top:15px;
     color: #c1c1c1;
-    font-size: 22px;
+    font-size: 18px;
     padding-left:0px!important
   }
   

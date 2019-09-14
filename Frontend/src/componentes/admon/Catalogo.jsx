@@ -9,8 +9,10 @@ class Sedes extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            loading: true,
+            loadingManager: true,
+            loadingCatalog: true,
             managers: [],
+            catalogs: [],
             nameCatalog: "",
             idManagerInCharge: "",
             city: "",
@@ -19,6 +21,7 @@ class Sedes extends React.Component {
         this.crearCatalogo = this.crearCatalogo.bind(this)
         this.getAvailableManagers = this.getAvailableManagers.bind(this)
     }
+
     getAvailableManagers(){
         Axios.get('http://localhost:4000/usuario/usuariosdisponibles')
         .then(response => {
@@ -26,13 +29,32 @@ class Sedes extends React.Component {
                 alert("No hay gerentes disponibles, por favor cree uno")
                 this.setState({
                     managers: [],
-                    loading: false
+                    loadingManager: false
                 })
             }else{
                 this.setState({
                     managers: response.data,
-                    loading: false,
+                    loadingManager: false,
                     idManagerInCharge: response.data[0].id_usuario
+                })
+            }
+
+        }).catch(err => ( alert("Intentelo mas tarde")))
+    }
+
+    getCatalogos(){
+        Axios.get('http://localhost:4000/usuario/usuariosdisponibles')
+        .then(response => {
+            if(response.data.length === 0){
+                alert("No hay gerentes disponibles, por favor cree uno")
+                this.setState({
+                    catalogs: [],
+                    loadingManager: false
+                })
+            }else{
+                this.setState({
+                    catalogs: response.data,
+                    loadingManager: false,
                 })
             }
 
@@ -56,7 +78,7 @@ class Sedes extends React.Component {
             }else{
                 alert(response.data.message)
                 this.setState({
-                    loading: true,
+                    loadingManager: true,
                     managers: [],
                     nameCatalog: "",
                     idManagerInCharge: "",
@@ -74,7 +96,7 @@ class Sedes extends React.Component {
 
 
     render() {
-        if(this.state.loading){
+        if(this.state.loadingManager){
             return <Loading/>
         }
         console.log(this.state.managers.length)
@@ -84,6 +106,8 @@ class Sedes extends React.Component {
         return (
             <div id="admin-catalogo">
                 <h2>Gestion de Catalogos</h2>
+                <h4>Crear un nuevo catalogo</h4>
+                <br/>
                 <Form>
                     <Row>
                         <Col xs={6}>
@@ -115,7 +139,47 @@ class Sedes extends React.Component {
                             </option>)
                         }
                     </Input>
-                    <Button color="primary" onClick={this.crearCatalogo}>Crear</Button>{' '}
+                    <div className="center">
+                        <Button color="primary" onClick={this.crearCatalogo}>Crear</Button>{' '}
+                    </div>
+                </Form>
+                <br/><br/>
+                <h4>Modificar catalogo existente</h4>
+                <br/>
+                <Form>
+                    <Row>
+                        <Col xs={6}>
+                            <FormGroup>
+                                <Label for="exampleEmail">Ciudad del catalogo</Label>
+                                <Input type="text" name="cityCatalog" id="cityCatalog" 
+                                    placeholder="Ciudad" 
+                                    onChange={this.onChange('city')}
+                                />
+                            </FormGroup>
+                        </Col>
+                        <Col xs={6}>
+                            <FormGroup>
+                                <Label for="exampleEmail">Nombre del catalogo</Label>
+                                <Input type="text" name="nameCatalog" id="nameCatalog" 
+                                    placeholder="Nombre" 
+                                    onChange={this.onChange('nameCatalog')}
+                                />
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    <Label>Asignar un Gerente</Label>
+                    <Input type="select" name="select" id="idManagerInCharge"
+                        onChange={this.onChange('idManagerInCharge')}>
+                        {this.state.managers.map((gerente) =>
+                            <option key={`manager${gerente.id_usuario}`}
+                                value={gerente.id_usuario}>
+                                {`${gerente.nombres} ${gerente.apellidos} - cc ${gerente.numero_documento}`}
+                            </option>)
+                        }
+                    </Input>
+                    <div className="center">
+                        <Button color="primary" onClick={this.crearCatalogo}>Modificar</Button>{' '}
+                    </div>
                 </Form>
             </div>
         )
