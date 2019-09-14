@@ -331,6 +331,7 @@ export async function getJoinUsersAvalaibles(req, res){
             }
         });
         //fragmento de codigo para elimanar los que tienen catalogo.
+        /*
         var nulls = 1;
         for (var i in usuario) {
             if (usuario[i].catalogo !== null){
@@ -339,7 +340,9 @@ export async function getJoinUsersAvalaibles(req, res){
                 usuario.splice(i,nulls);
             }
         }
-        return res.json(usuario);
+        */
+        const availables = usuario.filter(usuario => usuario.catalogo === null)
+        return res.json(availables);
     }catch(e){
         console.log(e);
         res.status(408).json({

@@ -24,6 +24,10 @@ class Sedes extends React.Component {
         .then(response => {
             if(response.data.length === 0){
                 alert("No hay gerentes disponibles, por favor cree uno")
+                this.setState({
+                    managers: [],
+                    loading: false
+                })
             }else{
                 this.setState({
                     managers: response.data,
@@ -73,6 +77,7 @@ class Sedes extends React.Component {
         if(this.state.loading){
             return <Loading/>
         }
+        console.log(this.state.managers.length)
         if(this.state.managers.length===0){
             return <Redirect to="gerentes"/>
         }
