@@ -226,3 +226,35 @@
   transition: 0.8s
 }
 
+.manager-data{
+  padding: 20px;
+  background: #fff;
+  border: 5px solid #eee;
+  border-radius: 20px;  
+  margin: 20px 0px;
+}
+.manager-data .table .active{
+  color: #fff;
+  padding: 5px;
+  border-radius: 20px;
+  background-color: rgb(54, 150, 129)
+}
+
+.manager-data .table .inactive{
+  color: #fff;
+  padding: 5px;
+  border-radius: 20px;
+  background-color: #D10024
+}
+
+.manager-data .table th{
+  background-color: #eee
+}
+
+.manager-data .table{
+    margin-bottom: 0rem!important;
+}
+
+.manager-list{
+  margin-top: 20px
+}

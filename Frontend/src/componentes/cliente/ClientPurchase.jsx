@@ -11,29 +11,29 @@ const Factura = (props) =>{
             <ListGroupItem id={`toogler${props.id_factura}`} action>
             {`Factura N° ${props.id_factura}`}
             </ListGroupItem>
-        <UncontrolledCollapse toggler={`#toogler${props.id_factura}`}>
-        <div className="order-details">
-            <div className="order-summary">
-                <div className="order-col">
-                    <div><strong>PRODUCTOS</strong></div>
-                    <div><strong>VALOR</strong></div>
-                </div>
-                <div className="order-products">
-                    
-                {props.detalle_facturas.map((indice, index) => (
-                        <div className="order-col" key={indice.num_detalle+index}>
-                            <div>{`${indice.cantidad_comprada}x  ${indice.producto.nombre_producto}`}</div>
-                        <div>{indice.precio_actual}</div>
+            <UncontrolledCollapse toggler={`#toogler${props.id_factura}`}>
+            <div className="order-details">
+                <div className="order-summary">
+                    <div className="order-col">
+                        <div><strong>PRODUCTOS</strong></div>
+                        <div><strong>VALOR</strong></div>
                     </div>
-                    ))}                
-                </div>
-                <div className="order-col">
-                    <div><strong>TOTAL PAGADO</strong></div>
-                    <div><strong className="order-total">${props.total}</strong></div>
-                </div>
-            </div>           
-        </div>
-        </UncontrolledCollapse>
+                    <div className="order-products">
+                        
+                    {props.detalle_facturas.map((indice, index) => (
+                            <div className="order-col" key={indice.num_detalle+index}>
+                                <div>{`${indice.cantidad_comprada}x  ${indice.producto.nombre_producto}`}</div>
+                            <div>{indice.precio_actual}</div>
+                        </div>
+                        ))}                
+                    </div>
+                    <div className="order-col">
+                        <div><strong>TOTAL PAGADO</strong></div>
+                        <div><strong className="order-total">${props.total}</strong></div>
+                    </div>
+                </div>           
+            </div>
+            </UncontrolledCollapse>
         </div>        
     )
 }

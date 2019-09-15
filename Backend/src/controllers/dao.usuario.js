@@ -55,12 +55,54 @@ export async function createUsuario(req, res) {
     }
 }
 
-//get all users
-export async function listUsuarios(req, res) {
+//get all users customers
+export async function listUserClient(req, res) {
     const usuario = await Usuario.findAll({
-        attributes: ['id_usuario', 'tipo_documento', 'numero_documento', 'nombres', 'apellidos', 'telefono', 'direccion', 'fecha_de_nacimiento', 'correo', 'estado', 'clave', 'nick', 'tipo_usuario']
+        //attributes: ['id_usuario', 'tipo_documento', 'numero_documento', 'nombres', 'apellidos', 'telefono', 'direccion', 'fecha_de_nacimiento', 'correo', 'estado', 'clave', 'nick', 'tipo_usuario'],
+        where:{
+            tipo_usuario: "Cliente"
+        }
+        
     });
     res.send(usuario)
+}
+
+//get all users managers
+export async function listUserManager(req, res) {
+    try {
+        const usuario = await Usuario.findAll({
+            //attributes: ['id_usuario', 'tipo_documento', 'numero_documento', 'nombres', 'apellidos', 'telefono', 'direccion', 'fecha_de_nacimiento', 'correo', 'estado', 'clave', 'nick', 'tipo_usuario'],
+            include: [{
+                model: Catalogo
+            }],
+            where:{
+                tipo_usuario: "Gerente"
+            }            
+        });
+        res.send(usuario)
+    }catch(e){
+        res.json({
+            message: "Error al cargar gerentes",
+            error:true
+        })
+    }
+}
+
+//get all users managers
+export async function deactivateUser(req, res) {
+    try {
+        const { id_usuario, estado } = req.body;
+        const updateUsuario = await Usuario.update(
+            { estado }, 
+            { where: { id_usuario }}         
+        );
+        res.send(updateUsuario)
+    }catch(e){
+        res.json({
+            message: "Error al cambiar el estado",
+            error:true
+        })
+    }
 }
 
 //get on user
@@ -87,7 +129,7 @@ export async function getOneUsuario(req, res) {
         console.log(e);
         res.status(502).json({
             message: "Algo salio mal 503",
-            erro:true
+            error:true
         });
     }
 }

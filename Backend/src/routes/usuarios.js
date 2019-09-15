@@ -1,14 +1,29 @@
 import { Router } from 'express';
-import { logUsuario, createUsuario, deleteUsuario, getOneUsuario, updateUsuario, listUsuarios, checkNick,
-      getJoinFacturas, getJoinComentario,getJoinUsersAvalaibles, getJoinManagerCatalog } from '../controllers/dao.usuario';
+import { logUsuario, 
+      createUsuario, 
+      deleteUsuario, 
+      getOneUsuario, 
+      updateUsuario, 
+      listUserClient, 
+      listUserManager, 
+      deactivateUser,
+      checkNick,
+      getJoinFacturas, 
+      getJoinComentario,
+      getJoinUsersAvalaibles, 
+      getJoinManagerCatalog } from '../controllers/dao.usuario';
 
 const router = Router();
 
 /*CRUD usuario*/
 //Create user, requires body, return user || error
 router.post('/create', createUsuario);
-//Get all users, return users || null
-router.get('/get', listUsuarios);
+//Get all users customers, return users || null
+router.get('/get-client', listUserClient);
+//Get all users managers, return users || null
+router.get('/get-manager', listUserManager);
+//Change user state , require id_user and state, retur 1 || 0
+router.post('/change-state', deactivateUser)
 //Get one user, requires parameter id_usuario, return user || null
 router.get('/get/:id_usuario', getOneUsuario);
 //Get one user, requires parameter id_usuario, return user || null
