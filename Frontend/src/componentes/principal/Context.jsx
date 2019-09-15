@@ -20,7 +20,8 @@ export class ProductoProvider extends React.Component{
         this.state={
             message: "hola",
             productos: [],
-            waveEffect: false
+            waveEffect: false,
+            count: 0
         }
         this.addProduct = this.addProduct.bind(this)
         this.precioTotal = this.precioTotal.bind(this)
@@ -31,12 +32,17 @@ export class ProductoProvider extends React.Component{
     componentDidMount(){
         if(localStorage.getItem('productos')){
           this.setState({
-            productos: JSON.parse(localStorage.getItem('productos'))
+            productos: JSON.parse(localStorage.getItem('productos')),
+            count: this.state.count++
           })
         }
       }
 
-    componentDidUpdate(){
+    shouldComponentUpdate(nextProps, nextState){
+      return this.state.count !== nextState.count
+    }
+
+    componentWillUpdate(){
       localStorage.setItem('productos', JSON.stringify(this.state.productos))    
     }
 
@@ -49,11 +55,11 @@ export class ProductoProvider extends React.Component{
     }
 
     eliminarProducto = (e) =>{
-        const valor = e.target.value        
-        this.setState(prevState => {
-          const productos = prevState.productos.filter(producto => producto.id !== valor);
-          return { productos };
-        });          
+      this.setState({
+        productos: this.state.productos.filter(producto => producto.id !== e.target.value  ),
+        count: this.state.count++
+       
+     });           
     }
 
     addProduct(mensaje){
@@ -61,11 +67,13 @@ export class ProductoProvider extends React.Component{
         product.push(mensaje)
         this.setState({
             productos : product,
-            waveEffect: true
+            waveEffect: true,
+            count: this.state.count++
         }, ()=>{
           window.setTimeout(() => {
             this.setState({
-              waveEffect: false
+              waveEffect: false,
+              count: this.state.count++
             })
           }, 900)
         })
