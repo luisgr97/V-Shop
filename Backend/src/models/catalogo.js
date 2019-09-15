@@ -1,6 +1,7 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../database/database';
 import Inventario_catalogo_productos from './inventario_catalogo_productos';
+import Usuario from './usuario'
 
 const Catalogo = sequelize.define('catalogo',{
     id_catalogo:{

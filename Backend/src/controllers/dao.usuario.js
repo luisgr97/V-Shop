@@ -351,3 +351,33 @@ export async function getJoinUsersAvalaibles(req, res){
         });
     }
 }
+
+
+/*Retorna todos manager y sus catalogos */
+export async function getJoinManagerCatalog(req, res){
+    try{
+        const usuario = await Usuario.findAll({
+            attributes: ['id_usuario',
+                'numero_documento',
+                'nombres',
+                'apellidos',
+            ],  include: [{
+                model: Catalogo,
+                required: true,
+                attributes: ['id_catalogo', 'ciudad', 'nombre_catalogo'],
+            }],
+            where: {
+                estado: 1,
+                tipo_usuario: 'Gerente'
+            }
+        });
+    
+        return res.json(usuario);
+    }catch(e){
+        console.log(e);
+        res.status(408).json({
+            message: "error 408 no funca",
+            error: true        
+        });
+    }
+}

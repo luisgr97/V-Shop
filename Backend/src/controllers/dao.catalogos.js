@@ -1,5 +1,5 @@
 import Catalogo from '../models/catalogo';
-import SubCategoria from '../models/subcategoria';
+import Usuario from '../models/usuario';
 
 // este es un metodo asincrono ya que toma tiempo para crearse, por ende, en funcion se le indica con "async" y en la constante con await, para esperar a su creacion antes de hacer el send
 export async function crear(req, res) {
@@ -27,14 +27,17 @@ export async function crear(req, res) {
 export async function get(req, res) {
     try {
         const consulta = await Catalogo.findAll({
-            attributes: ['id_catalogo','ciudad', 'id_gerente', 'nombre_catalogo']
+            //attributes: ['id_catalogo','ciudad', 'id_gerente', 'nombre_catalogo']
+            include: [{
+                model: Usuario
+            }]
         });
         return res.json(consulta);
     } catch (e) {
         console.log(e);
         res.status(801).json({
             message: 'Algo salio mal 801',
-            data: {}
+            error: true
         });
     }
 }
@@ -89,12 +92,14 @@ export async function updateOn(req, res) {
                 id_catalogo
             }
         });
-        return res.json(catalogoU);
+        return res.json({
+            message: "Catalogo actualizado con exito", 
+        });
     } catch (e) {
         console.log(e);
         res.status(804).json({
             message: "Algo salio mal 804",
-            data: {}
+            error: true
         });
     }
 }

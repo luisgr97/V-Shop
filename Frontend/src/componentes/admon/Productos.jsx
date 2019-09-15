@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TabContent, TabPane, 
+import { Table, TabContent, TabPane, 
     Nav, NavItem, NavLink, 
     Col, Row, Button, Form, 
     FormGroup, Label, Input, FormText } from 'reactstrap';
@@ -7,76 +7,13 @@ import axios from 'axios'
 import classnames from 'classnames';
 import Loading from '../principal/Loading'
 
-const h = [
-    {
-      "id_producto": 1,
-      "nombre_producto": "Xiaomi mi 9T",
-      "descripcion": "good phone",
-      "marca": "Xiaomi",
-      "precio": 300,
-      "id_subcategoria": 5,
-      "imagenes": [
-        {
-            "id_imagen": 27,
-            "ruta": "product-images/1567626395741-product03.png"
-          },
-          {
-            "id_imagen": 28,
-            "ruta": "product-images/1567626395745-product02.png"
-          }
-      ]
-    },
-    {
-      "id_producto": 2,
-      "nombre_producto": "LG UHD",
-      "descripcion": "good tv",
-      "marca": "LG",
-      "precio": 500,
-      "id_subcategoria": 11,
-      "imagenes": [
-        {
-            "id_imagen": 27,
-            "ruta": "product-images/1567626395741-product03.png"
-          },
-          {
-            "id_imagen": 28,
-            "ruta": "product-images/1567626395745-product02.png"
-          }
-      ]
-    },
-    {
-        "id_producto": 33,
-        "nombre_producto": "Carabali3",
-        "descripcion": "fdjñodihfñohdf",
-        "marca": "carabali3",
-        "precio": 4444,
-        "id_subcategoria": 1,
-        "imagenes": [
-          {
-            "id_imagen": 86,
-            "ruta": "product-images/1567631509663-product01.png"
-          },
-          {
-            "id_imagen": 85,
-            "ruta": "product-images/1567631509656-product02.png"
-          },
-          {
-            "id_imagen": 84,
-            "ruta": "product-images/1567631509650-product03.png"
-          },
-          {
-            "id_imagen": 83,
-            "ruta": "product-images/1567631509638-product04.png"
-          }
-        ]
-      }
-]
-
 class Articulo extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            loading: true,
+            loadingTags: true,
+            loadingProducts: true,
+
             id_producto: "",
             nombre: "",
             descripcion: "",
@@ -84,7 +21,8 @@ class Articulo extends Component {
             precio: "",
 
             categorias: [],
-            
+            products: [],
+            indexToModify: "",
             indexTag: 0,
             idSubTag: "",
             activeTab: '1',
@@ -94,12 +32,17 @@ class Articulo extends Component {
             urlToDelete: []
         }
         this.getInitialCategorias = this.getInitialCategorias.bind(this)
+        this.getProductos = this.getProductos.bind(this)
+        this.resetAll = this.resetAll.bind(this)
+
         this.crearProducto = this.crearProducto.bind(this)
         this.updateProduct = this.updateProduct.bind(this)
         this.onChange = this.onChange.bind(this) 
         this.onChangeParentTag = this.onChangeParentTag.bind(this)
 
-        this.onSelect = this.onSelect.bind(this)
+        this.onSelectProductToEdit = this.onSelectProductToEdit.bind(this)
+        this.closeProductToEdit = this.closeProductToEdit.bind(this)
+
         this.toggle = this.toggle.bind(this);
         this.selectFiles = this.selectFiles.bind(this)
         this.uploadImages = this.uploadImages.bind(this)
@@ -112,30 +55,60 @@ class Articulo extends Component {
         axios.get('http://localhost:4000/api/categorias/getJoinSubCategoria')
         .then((response) => {
             if(response.data.error){
-                console.log("Esto es un error de servidor")
+                alert(response.data.message)
             }else{
-                console.log("Se metio no encontro")
-            }
-            this.setState({
-                categorias: response.data,
-                idSubTag: response.data[0].subcategoria[0].id_subcategoria,
-                loading: false            
-            })
-        })
+                this.setState({
+                    categorias: response.data,
+                    idSubTag: response.data[0].subcategoria[0].id_subcategoria,
+                    loadingTags: false            
+                })
+            }            
+        }).catch(err=>(
+            alert("Intentelo mas tarde")
+        ))
     }
 
     getProductos(){
-        axios.get('http://localhost:4000/api/productos')
+        axios.get('http://localhost:4000/api/productos/get')
         .then((response) => {
-            //console.log(response.data.data)            
+            if(response.data.error){
+                alert(response.data.message)
+            }           
             this.setState({
-                subCategorias: response.data.data
+                products: response.data,
+                loadingProducts: false
             })
+        }).catch(err=>(
+            alert("Error al carga productos, recargue la pagina")
+        ))
+    }
+
+    resetAll(){
+        this.setState({
+            loadingTags: true,
+            loadingProducts: true,
+
+            id_producto: "",
+            nombre: "",
+            descripcion: "",
+            marca: "",
+            precio: "",
+
+            categorias: [],
+            products: [],
+            indexToModify: "",
+            indexTag: 0,
+            idSubTag: "",
+            
+            updateImages: [],
+            images: [],
+            urlToDelete: []
         })
     }
 
     componentDidMount(){
         this.getInitialCategorias()    
+        this.getProductos()
     }
 
     //Cambio en los inputs
@@ -153,30 +126,44 @@ class Articulo extends Component {
 
     //============== MODIFICAR PRODUTO ======================
     //Para modificar producto
-    onSelect(e) {  
-        let indexTag, indexSubTag;
+    onSelectProductToEdit(e) {
+        const index = e.target.value
+        const idTag = this.state.products[index].subcategoria.id_categoria
+        const idSubTag = this.state.products[index].subcategoria.id_subcategoria
+        let indexTag;
+
         for(var i=0;i<this.state.categorias.length;i++){
-            for(var j=0;j<this.state.categorias[i].subcategoria.length;j++){
-                if(this.state.categorias[i].subcategoria[j].id_subcategoria === h[[e.target.value]].id_subcategoria){
-                    indexTag =  i   
-                    indexSubTag = j                                  
-                    break;
+            if(this.state.categorias[i].id_categoria === idTag){
+                for(var j=0;j<this.state.categorias[i].subcategoria.length;j++){
+                    if(this.state.categorias[i].subcategoria[j].id_subcategoria === idSubTag){
+                        indexTag =  i   
+                        break;
+                    }
                 }
-            }
+            }            
         }
+        console.log(this.state.products[index].id_producto)
         this.setState({
-            id_producto: h[[e.target.value]].id_producto,
-            nombre: h[[e.target.value]].nombre_producto,
-            descripcion: h[[e.target.value]].descripcion,
-            marca: h[[e.target.value]].marca,
-            precio: h[[e.target.value]].precio,
+            id_producto: this.state.products[index].id_producto,
+            nombre: this.state.products[index].nombre_producto,
+            descripcion: this.state.products[index].descripcion,
+            marca: this.state.products[index].marca,
+            precio: this.state.products[index].precio,
+            indexToModify: index,
             indexTag,
-            idSubTag: this.state.categorias[indexTag].subcategoria[indexSubTag].id_subcategoria,
+            idSubTag,
             images: [],
-            updateImages:  h[[e.target.value]].imagenes,
+            updateImages:  this.state.products[index].imagenes,
             urlToDelete: []      
         })
+        
     }  
+
+    closeProductToEdit(){
+        this.setState({
+            indexToModify: ""
+        })
+    }
     //============== FIN MODIFICAR PRODUTO ======================
 
     // Para el cambio de tabs (visual)
@@ -204,15 +191,12 @@ class Articulo extends Component {
         this.setState({ images, message })
     }
 
-    uploadImages = (idProducto) => {
+    async uploadImages(idProducto) {
         let data  = new FormData(); 
-    	this.state.images.map((image) => {
+    	this.state.images.forEach((image) => {
 		    data.append("images", image, image.name);		
         });
-        axios.post('http://localhost:4000/api/productos/imagenes/add/' + idProducto, data)
-        .then(response => {
-            console.log(response)
-    })
+        await axios.post('http://localhost:4000/api/productos/imagenes/add/' + idProducto, data)        
     }
 
     deleteImage = (e) =>{
@@ -227,12 +211,22 @@ class Articulo extends Component {
     deletePrevImage = (e) =>{
         const valor = parseInt(e.target.value)
         let removedImg = this.state.urlToDelete
+        let images = []
+        for(var i=0;i<this.state.updateImages.length;i++){
+            if(i !== valor){
+                images.push(this.state.updateImages[i])
+            }else{
+                removedImg.push(this.state.updateImages[i])
+            }
+        }
+        /*
         const images = this.state.updateImages.filter((imagen, i) => {
-            if(i !== valor){                
+            if(i !== valor){
                 return imagen
             }else{
                 removedImg.push(imagen)
             }});
+            */
         this.setState({
           updateImages: images,
           urlToDelete: removedImg
@@ -241,7 +235,7 @@ class Articulo extends Component {
     }
 
 
-    crearProducto() {
+    async crearProducto() {
         const mensaje = {
             nombre_producto: this.state.nombre,
             descripcion: this.state.descripcion,
@@ -250,24 +244,28 @@ class Articulo extends Component {
             id_subcategoria: this.state.idSubTag,
         }
         //Axios se encarga de hacer solicitudes de forma sencilla
-        axios.post('http://localhost:4000/api/productos/create', mensaje)
-            .then((response) => {
-                console.log(response)
-                if(response.data.error){
-                    console.log(response.data.message)
-                }else{
-                    if(response.data.failure){
-                        console.log(response.data)
-                    }else{
-                        console.log(response.data.id_producto)
-                        this.uploadImages(response.data.id_producto)
-                    }
+        try{        
+         let response = await axios.post('http://localhost:4000/api/productos/create', mensaje)
+            if(response.data.error){
+                console.log(response.data.message)
+            }else{
+                if(response.data.failure){
+                    console.log(response.data)
+                }else{                    
+                    await this.uploadImages(response.data.id_producto)
+                    alert(response.data.message)
+                    this.resetAll()
+                    this.getInitialCategorias()    
+                    this.getProductos()
                 }
-                //alert(JSON.stringify(response.data))
-            })
+            }
+        } catch(e){
+            alert("Error al crear producto")
+        }
     }
 
-    updateProduct() {
+    async updateProduct() {
+        try{
         let updateProduct = false, dltImages = false
         const mensaje = {
             nombre_producto: this.state.nombre,
@@ -277,34 +275,161 @@ class Articulo extends Component {
             id_subcategoria: this.state.idSubTag,
         }
         
-        axios.put('http://localhost:4000/api/productos/update/' + this.state.id_producto, mensaje)
-            .then((response) => {
-                if(response.data.error){
-                    console.log(response.data.message)
-                }else{ updateProduct = true}
-            })
-        this.uploadImages(this.state.id_producto)
+        let responseP = await axios.put('http://localhost:4000/api/productos/update/' + this.state.id_producto, mensaje)
+            if(responseP.data.error){
+                console.log(responseP.data.message)
+            }else{ updateProduct = true}
+
+        await this.uploadImages(this.state.id_producto)
         
-       let imagenes = this.state.urlToDelete
-       console.log(imagenes)
-        axios.post('http://localhost:4000/api/productos/imagenes/delete/', imagenes)
-            .then((response) => {
-                if(response.data.error){
-                    console.log(response.data.message)
+        let imagenes = this.state.urlToDelete
+        if(imagenes.length===0){
+            dltImages = true
+        }else{
+            let responseI = await axios.post('http://localhost:4000/api/productos/imagenes/delete/', imagenes)
+                if(responseI.data.error){
+                    console.log(responseI.data.message)
                 }else{ dltImages = true}
-            })
+        }
+
+        console.log(updateProduct, " ", dltImages)
         if(updateProduct && dltImages){
             alert("Producto actualizado con exito")
-        }else{alert("Error al actualizar")}
+            this.resetAll()
+            this.getInitialCategorias()    
+            this.getProductos()
+        }else{
+            if(updateProduct){
+                alert("No se pudo actualizar el producto")
+            }else{
+                alert("No se pudieron actualizar las imagenes")
+            }
+        }
+    }catch(e){
+        alert("Error al actualizar el producto")
+    }
     }
 
+    createProductForm(){
+        const categorias = this.state.categorias;
+        return(
+            <Form>
+            <Row form >
+                <Col md={4}>
+                    <FormGroup>
+                        <Label for="nombrePoducto">Nombre del producto</Label>
+                        <Input type="text" name="nombrePoducto" id="nombrePoducto" 
+                        placeholder="Nombre" 
+                        value={this.state.nombre}                                    
+                        onChange = {this.onChange('nombre')}/>
+                    </FormGroup>                   
+                </Col>
+                <Col md={4}>
+                    <FormGroup>
+                        <Label for="marcaPoducto">Marca</Label>
+                        <Input type="text" name="marcaPoducto" id="marcaPoducto" 
+                        placeholder="Marca" 
+                        value={this.state.marca} 
+                        onChange = {this.onChange('marca')}/>
+                    </FormGroup>                   
+                </Col>
+                <Col md={4}>
+                    <FormGroup>
+                        <Label for="precio">Precio de venta</Label>
+                        <Input type="number" name="precio" id="precio" 
+                        placeholder="Precio" 
+                        value={this.state.precio} 
+                        onChange = {this.onChange('precio')}/>
+                    </FormGroup>
+                </Col>
+            </Row>
+
+            <FormGroup>
+                <Label for="descripcion">Descripcion</Label>
+                <Input type="textarea" name="descripcion" id="descripcion" 
+                value={this.state.descripcion} 
+                onChange = {this.onChange('descripcion')}/>
+            </FormGroup>
+            
+            <FormGroup>
+                <Label for="indexTag">Seleccion una subcategoria</Label>
+                <Input type="select" name="indexTag" id="indexTag"
+                value={this.state.indexTag}
+                onChange={this.onChangeParentTag('indexTag')}>
+                {categorias.map((indice, index) => 
+                    <option key={indice.nombre_categoria+index} 
+                    value={index}>{indice.nombre_categoria}</option>)
+                }
+                </Input>      
+
+                <Input type="select" name="select" id="idModSubTagName"
+                value={this.state.idSubTag}
+                onChange={this.onChange('idSubTag')}>
+                {this.state.categorias[this.state.indexTag].subcategoria.map((indice) => 
+                    <option key={indice.nombre_subcategoria} 
+                    value={indice.id_subcategoria}>{indice.nombre_subcategoria}</option>)
+                }
+                </Input>    
+            </FormGroup>
+
+            <FormGroup>
+                <div id="img-container">
+                    <br/>
+                    <Label id="load-img-button" for="selectFile">
+                        Cargar imagenes
+                        <i className="fas fa-upload"></i>
+                    </Label>
+                
+                    <Input type="file" name="file" onChange={this.selectFiles}
+                    id="selectFile" multiple/>
+
+                    <FormText color="muted">
+                        {this.state.images.length? 
+                        `Se ha seleccionado ${this.state.images.length} imagen(es) valida(s)` :
+                        "(6 imagenes maximo). No se ha seleccionado ninguna imagen"}
+                    </FormText>
+
+                    {this.state.images.map((imagen, index) => (
+                        <div key={`imagen${index}`} className="img-ctn">                                    
+                            <button type="button" value={index} 
+                            className="fa fa-times img-delete" 
+                            onClick={this.deleteImage}/>
+                            <img alt=""  
+                            src={ URL.createObjectURL(imagen)}/>
+                        </div>
+                    ))}
+
+                    {this.state.activeTab !== '1'?                                
+                        <p id="img-message" >
+                        {`${this.state.updateImages.length} Imagenes guardadas del producto`}
+                        </p>
+                        : null
+                     }
+
+                    {this.state.activeTab !== '1'?
+                        this.state.updateImages.map((imagen, index) => (
+                            <div key={`uimg${imagen.id_imagen}`} className="img-ctn">
+                                <button type="button" value={index} 
+                                className="fa fa-times img-delete" 
+                                onClick={this.deletePrevImage}/>
+                                <img alt=""  
+                                src={`http://localhost:4000/${imagen.ruta}`}/>
+                            </div>
+                        )) : null
+                    }
+                </div>
+            </FormGroup>                                                                                                                           
+            </Form>       
+        )
+    }
+
+
     render() {
-        if(this.state.loading){
+        if(this.state.loadingTags || this.state.loadingProducts){
             return(
               <Loading/>
             )
         }
-        const categorias = this.state.categorias;
         return (
             <div className="admin-productos">
                 <div id="espacio" />
@@ -327,136 +452,85 @@ class Articulo extends Component {
 
                 <br/><br/>
 
+                {/**PARA CREAR PRODUCTOS */}
+
                 <TabContent activeTab={this.state.activeTab}>
                     <TabPane tabId="1">
                     </TabPane>
 
-
-                    <TabPane tabId="2">                       
+                {/**PARA Actualziar PRODUCTOS */}
+                    <TabPane tabId="2">   
+                    <Table>
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Producto</th>
+                        <th>Marca</th>
+                        <th>Categoria</th>
+                        <th>Precio</th>
+                        <th>Acción</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.products.map((producto, i) => (
+                            <React.Fragment key={`product${i}`}>
+                            <tr id={parseInt(this.state.indexToModify) === i? "seleccionado" : ""}>
+                                <td>{i+1}</td>
+                                <td>{producto.nombre_producto}</td>
+                                <td>{producto.marca}</td>
+                                <td>{producto.subcategoria.nombre_subcategoria}</td>
+                                <td>{producto.precio}</td>
+                                <td>
+                                    {parseInt(this.state.indexToModify) === i?
+                                        <React.Fragment>
+                                        <button value={i} 
+                                            onClick={this.updateProduct}                                                                
+                                            className="fa fa-check comment-check"/>
+                                        <button  onClick={this.closeProductToEdit}                               
+                                            className="fa fa-times comment-delete"/>
+                                        </React.Fragment> :
+                                        <React.Fragment>
+                                        <button value={i} 
+                                            onClick={this.onSelectProductToEdit}                                                                
+                                            className="fa fa-pen comment-edit"/>
+                                        <button  onClick={this.closeProductToEdit}                               
+                                            className="fa fa-trash comment-delete"/>
+                                        </React.Fragment>
+                                    }
+                                </td>
+                            </tr>
+                            {parseInt(this.state.indexToModify) === i?                            
+                                <tr>
+                                    <td colSpan="6">
+                                        {this.createProductForm()}
+                                    </td>
+                                </tr> : null
+                            }
+                            </React.Fragment>
+                        ))}
+                    </tbody>
+                </Table>
+                {/*                    
                             <FormGroup>
                                 <Label for="exampleEmail">Seleccionar producto</Label>
                                     <Input type="select" name="select" id="exampleSelect" 
                                     onChange={this.onSelect}>
-                                        {h.map((indice, index) => 
+                                        {this.state.products.map((indice, index) => 
                                         <option key={'idx'+index} 
                                         value={index}>{indice.nombre_producto}</option>)}
                                     </Input>                        
-                            </FormGroup>                                                 
+                            </FormGroup>      
+                                        */}                                           
                     </TabPane>
-                    <Form>
-                        <Row form >
-                            <Col md={4}>
-                                <FormGroup>
-                                    <Label for="nombrePoducto">Nombre del producto</Label>
-                                    <Input type="text" name="nombrePoducto" id="nombrePoducto" 
-                                    placeholder="Nombre" 
-                                    value={this.state.nombre}                                    
-                                    onChange = {this.onChange('nombre')}/>
-                                </FormGroup>                   
-                            </Col>
-                            <Col md={4}>
-                                <FormGroup>
-                                    <Label for="marcaPoducto">Marca</Label>
-                                    <Input type="text" name="marcaPoducto" id="marcaPoducto" 
-                                    placeholder="Marca" 
-                                    value={this.state.marca} 
-                                    onChange = {this.onChange('marca')}/>
-                                </FormGroup>                   
-                            </Col>
-                            <Col md={4}>
-                                <FormGroup>
-                                    <Label for="precio">Precio de venta</Label>
-                                    <Input type="number" name="precio" id="precio" 
-                                    placeholder="Precio" 
-                                    value={this.state.precio} 
-                                    onChange = {this.onChange('precio')}/>
-                                </FormGroup>
-                            </Col>
-                        </Row>
 
-                        <FormGroup>
-                            <Label for="descripcion">Descripcion</Label>
-                            <Input type="textarea" name="descripcion" id="descripcion" 
-                            value={this.state.descripcion} 
-                            onChange = {this.onChange('descripcion')}/>
-                        </FormGroup>
-                        
-                        <FormGroup>
-                            <Label for="indexTag">Seleccion una subcategoria</Label>
-                            <Input type="select" name="indexTag" id="indexTag"
-                            value={this.state.indexTag}
-                            onChange={this.onChangeParentTag('indexTag')}>
-                            {categorias.map((indice, index) => 
-                                <option key={indice.nombre_categoria+index} 
-                                value={index}>{indice.nombre_categoria}</option>)
-                            }
-                            </Input>      
+                    {this.state.activeTab==='1'?
+                        this.createProductForm() : null
+                    }
 
-                            <Input type="select" name="select" id="idModSubTagName"
-                            value={this.state.idSubTag}
-                            onChange={this.onChange('idSubTag')}>
-                            {this.state.categorias[this.state.indexTag].subcategoria.map((indice) => 
-                                <option key={indice.nombre_subcategoria} 
-                                value={indice.id_subcategoria}>{indice.nombre_subcategoria}</option>)
-                            }
-                            </Input>    
-                        </FormGroup>
-
-                        <FormGroup>
-                            <div id="img-container">
-                                <br/>
-                                <Label id="load-img-button" for="selectFile">
-                                    Cargar imagenes
-                                    <i className="fas fa-upload"></i>
-                                </Label>
-                            
-                                <Input type="file" name="file" onChange={this.selectFiles}
-                                id="selectFile" multiple/>
-
-                                <FormText color="muted">
-                                    {this.state.images.length? 
-                                    `Se ha seleccionado ${this.state.images.length} imagen(es) valida(s)` :
-                                    "(6 imagenes maximo). No se ha seleccionado ninguna imagen"}
-                                </FormText>
-
-                                {this.state.images.map((imagen, index) => (
-                                    <div key={`imagen${index}`} className="img-ctn">                                    
-                                        <button type="button" value={index} 
-                                        className="fa fa-times img-delete" 
-                                        onClick={this.deleteImage}/>
-                                        <img alt=""  
-                                        src={ URL.createObjectURL(imagen)}/>
-                                    </div>
-                                ))}
-                                {this.state.activeTab !== '1'?
-                                this.state.updateImages.length? 
-                                <p id="img-message" >{`${this.state.updateImages.length} Imagenes guardadas del producto`}</p>
-                                : null : null
-                                 }
-                                {this.state.activeTab !== '1'?
-                                    this.state.updateImages.map((imagen, index) => (
-                                        <div key={`uimg${imagen.id_imagen}`} className="img-ctn">
-                                            <button type="button" value={index} 
-                                            className="fa fa-times img-delete" 
-                                            onClick={this.deletePrevImage}/>
-                                            <img alt=""  
-                                            src={`http://localhost:4000/${imagen.ruta}`}/>
-                                        </div>
-                                    )) : null
-                                }
-                            </div>
-                        </FormGroup>                            
-                                                                                                           
-                    </Form>
-                    
-                    {this.state.activeTab !== '1'? 
+                    {this.state.activeTab === '1'? 
                         <div className="center">
-                            <Button color="primary" onClick={this.updateProduct} >Modificar</Button>{' '}
-                            <Button color="danger">Eliminar</Button>{' '}
-                        </div>:
-                        <div className="center">
-                        <Button color="primary" onClick={this.crearProducto}>Crear</Button>
-                        </div>
+                            <Button color="primary" onClick={this.crearProducto}>Crear</Button>
+                        </div>: null
                     }
                 </TabContent>
                 

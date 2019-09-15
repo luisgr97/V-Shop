@@ -1,5 +1,6 @@
 import Producto from '../models/producto';
 import Imagenes from '../models/imagen'
+import Subcategoria from '../models/subcategoria'
 
 // este es un metodo asincrono ya que toma tiempo para crearse, por ende, en funcion se le indica con "async" y en la constante con await, para esperar a su creacion antes de hacer el send
 export async function crearProducto(req, res) {
@@ -71,10 +72,18 @@ export async function crearProducto(req, res) {
 export async function getProductos(req, res) {
     try {
         const productos = await Producto.findAll({
-            include: [{
-                model: Imagenes,
-                attributes: ['id_imagen','ruta']
-            }]
+            include: [
+                {
+                    model: Imagenes,
+                    attributes: ['id_imagen','ruta']
+                },
+                {
+                    model: Subcategoria,
+                    as: 'subcategoria'
+                    
+                }
+            ]
+            
             //attributes: ['id_producto','nombre_producto', 'descripcion', 'marca', 'precio', 'id_subcategoria']
         });
         return res.json(productos);
@@ -82,7 +91,7 @@ export async function getProductos(req, res) {
         console.log(e);
         res.status(201).json({
             message: 'Algo salio mal 201',
-            data: {}
+            error: true
         });
     }
 }

@@ -10,7 +10,6 @@ import Cliente from './componentes/cliente/Dashboard'
 import LoginCliente from './componentes/cliente/LoginClient'
 
 import Header from './componentes/principal/Header'
-import Nav from './componentes/principal/Nav'
 import Main from './componentes/principal/Main'
 import Footer from './componentes/principal/Footer'
 import Regitro from './componentes/principal/Registro'
@@ -124,8 +123,7 @@ render(){
                             userNick={this.state.nickAdmin}
                         /> :
                         <LoginAdmon isAdmin={true}
-                            login={this.handleChangeLoggin}                            
-                            
+                            login={this.handleChangeLoggin}                                                        
                         />
                     }/>
 

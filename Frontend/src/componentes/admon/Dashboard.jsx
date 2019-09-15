@@ -100,7 +100,7 @@ export default class Example extends React.Component {
 
             <Route path="/manager/datos" render={() => (
                 <Registro actualizar={true}
-                  idCliente={this.props.id_usuario}
+                  idUser={this.props.userId}
                   datos={propiedades2}
                   mensaje={"ACTUALIZAR"} />
             )}/>

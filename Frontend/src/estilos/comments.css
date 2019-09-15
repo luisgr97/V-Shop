@@ -62,12 +62,19 @@
   .comment-edit {
     background: #2889ce;
   }
-
+  .comment-edit:hover {
+    color: #2889ce;
+    background: #E4E7ED
+  }
   .comment-check {
     background: rgb(54, 150, 129);
   }
-  
-  .comment-delete:hover, .comment-edit:hover {
+
+  .comment-check:hover {
+    color: rgb(54, 150, 129);
+    background: #E4E7ED
+  }
+  .comment-delete:hover{
     background-color: #E4E7ED;
     color: #D10024;
   }

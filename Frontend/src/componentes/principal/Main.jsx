@@ -18,7 +18,7 @@ class Main extends React.Component {
   }
 
   componentDidMount(){
-    Axios.get('http://localhost:4000/api/catalogos/inventario/getProductosHomePageByCatalogo/1')
+    Axios.get('http://localhost:4000/api/catalogos/inventario/getProductosHomePageByCatalogo/2')
     .then((response) => {
       if(response.data.error){
 

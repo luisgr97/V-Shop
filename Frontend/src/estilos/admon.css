@@ -33,7 +33,7 @@
   #admin-main{
     background: #eee;
     position: absolute;
-    padding: 30px;
+    padding: 10px;
     width: calc(100% - 260px);
     right: 0;
   }
@@ -211,6 +211,17 @@
     margin-top:50px;
   }
 
-  #admin-catalogo{
-      height: 90vh;
-  }
+/*
+  .table td, .table th {
+    padding: .1rem;
+}*/
+
+.table>tbody>tr>td.editcatalog{
+  padding-top: 40px;
+  padding-bottom: 70px
+}
+
+.table #seleccionado{
+  background-color: #eee;
+  transition: 0.8s
+}

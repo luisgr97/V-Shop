@@ -57,7 +57,7 @@ class Cliente extends Component {
               <Route path={`/cliente/${clientRoutes[0].id}`} 
                 render={()=>(
                   <Datos actualizar={true} 
-                  idCliente={this.props.idCliente}
+                  idUser={this.props.idCliente}
                   datos={this.state.cliente}
                   mensaje={"ACTUALIZAR"}/>
               )}/>
@@ -69,7 +69,7 @@ class Cliente extends Component {
 
               <Route path={`/cliente/${clientRoutes[2].id}`} 
                 render={()=>(
-                  <Comments idCliente={this.props.idCliente}/>
+                  <Comments idUser={this.props.idCliente}/>
               )}/>
                 
             </Col>
