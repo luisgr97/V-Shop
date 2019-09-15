@@ -82,14 +82,12 @@ export async function getOneUsuario(req, res) {
                 id_usuario
             }
         });
-        return res.json({
-            data: usuario
-        });
+        return res.json(usuario);
     } catch (e) {
         console.log(e);
         res.status(502).json({
             message: "Algo salio mal 503",
-            data: {}
+            erro:true
         });
     }
 }

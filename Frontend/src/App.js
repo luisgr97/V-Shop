@@ -20,6 +20,7 @@ import logo from './imagenes/logo-black.png'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const BlackLogo = () =>{
+    console.log("El black logo")
     return(
         <div className="header-logo-black">
             <Link className="logo" to={"/"} ><img src={logo} alt=""/></Link>                
@@ -147,7 +148,6 @@ render(){
                             <div id="registro-container">                    
                                 <Regitro isManager={false}
                                 actualizar={false}
-                                datos={propiedades}
                                 mensaje={"REGISTRARME"}                             
                                 />                                
                             </div>

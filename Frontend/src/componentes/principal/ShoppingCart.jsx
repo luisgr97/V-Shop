@@ -26,11 +26,8 @@ export default class ShoopingCart extends React.Component {
     })
   }
 
-  componentDidUpdate(){
-    console.log("Se actulaizdo esta monda")
-  }
   render() {
-
+    console.log("Se renderizo esta monda")
     //Componenete consumidor con estado
     const {productos, precioTotal, waveEffect} = this.context;
     const numPorductos = productos.length

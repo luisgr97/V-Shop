@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios'
+import Loading from '../principal/Loading'
 
 import { Col, Row, Button, Form, FormGroup, Label, Input, CustomInput } from 'reactstrap';
 import { Link, Redirect } from 'react-router-dom'
@@ -10,27 +11,55 @@ class Registro extends React.Component {
     constructor(props){
         super(props)      
         this.state={
-            tipo: props.datos.tipo_documento,
-            numero: props.datos.numero_documento,
-            nombre: props.datos.nombres,
-            apellidos: props.datos.apellidos,
-            telefono: props.datos.telefono,
-            direccion: props.datos.direccion,
-            nacimiento: props.datos.fecha_de_nacimiento,
-            correo: props.datos.correo,           
-            nick: props.datos.nick,
-            clave: props.datos.clave,
+            loading: true,
+            tipo: "CC",
+            numero: "",
+            nombre: "",
+            apellidos: "",
+            telefono: "",
+            direccion: "",
+            nacimiento: "",
+            correo: "",           
+            nick: "",
+            clave: "",
             clave2: "",            
             redirect: false
         };
+        this.getUserData = this.getUserData.bind(this)
         this.handleOnChange = this.handleOnChange.bind(this) 
-        this.enviar = this.enviar.bind(this)
+        this.enviarDatos = this.enviarDatos.bind(this)
         this.resetState = this.resetState.bind(this)
-
     }
 
-    componentWillMount(){
-        console.log("Se renderizo una sola vez")
+    getUserData(){
+        axios.get('http://localhost:4000/usuario/get/' + this.props.idUser)
+        .then(response => {
+            if(response.data.error){
+                alert(response.data.message)
+            }else{
+                this.setState({
+                    tipo: response.data.tipo_documento,
+                    numero: response.data.numero_documento,
+                    nombre: response.data.nombres,
+                    apellidos: response.data.apellidos,
+                    telefono: response.data.telefono,
+                    direccion: response.data.direccion,
+                    nacimiento: response.data.fecha_de_nacimiento,
+                    correo: response.data.correo,           
+                    nick: response.data.nick,
+                    loading: false
+                })
+            }
+        })
+    }
+
+    componentDidMount(){
+        if(this.props.actualizar){
+            this.getUserData()
+        }else{
+            this.setState({loading:false})
+        }
+        
     }
 
     resetState(){
@@ -58,7 +87,7 @@ class Registro extends React.Component {
     });
     }
     
-    enviar() {
+    enviarDatos() {
         let mensaje = {
             tipo_documento: this.state.tipo,
             numero_documento: this.state.numero,
@@ -109,11 +138,18 @@ class Registro extends React.Component {
     }
 
     render() {
+        if(this.props.actualizar){
+            if(this.state.loading){
+                return <Loading/>
+            }
+        }
+       
         const actualizar = this.props.actualizar
 
         if(this.state.redirect){
             return(<Redirect to="/login"/>)
         }
+
         return (            
             <Form className="registro">                
                 <Row form >                
@@ -257,7 +293,7 @@ class Registro extends React.Component {
                 <br />
                 <div>                         
                     <div className="center">
-                        <Button color="danger" onClick={this.enviar}>
+                        <Button color="danger" onClick={this.enviarDatos}>
                         {this.props.mensaje}
                         </Button>
                     </div>

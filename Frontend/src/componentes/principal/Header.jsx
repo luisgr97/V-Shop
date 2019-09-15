@@ -7,6 +7,7 @@ import logo from '../../imagenes/logo-white.png'
 import '../../estilos/header.css'
 
 const Header = (props) => {
+    console.log("header")
     return(        
         <div id="header">
         <div className="container">

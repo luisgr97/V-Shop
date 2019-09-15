@@ -28,7 +28,7 @@ const items = [
     }
   ];
 
-const ProductoPage = () => {
+const ProductoPage = () => {    
     return(
         <div className="section">
             <div className="product-container">

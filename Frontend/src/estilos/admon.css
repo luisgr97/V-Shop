@@ -31,7 +31,7 @@
   
   
   #admin-main{
-    background: #eee;
+    background: #fff;
     position: absolute;
     padding: 10px;
     width: calc(100% - 260px);
@@ -128,7 +128,7 @@
     background-color: #fff;
     border-bottom: 2px solid #D10024
   }
-  .admin-productos, #admin-catalogo, #admin-categorias{
+  .admin-productos, #admin-catalogo, #admin-categorias, #admin-manager{
     border: 1px solid #eee;
     position: relative;
     background: #fff;
@@ -225,3 +225,4 @@
   background-color: #eee;
   transition: 0.8s
 }
+

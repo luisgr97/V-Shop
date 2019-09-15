@@ -3,22 +3,12 @@ import { Route, Switch, Link, Redirect } from 'react-router-dom'
 
 import { Nav, NavItem } from 'reactstrap';
 import Registro from '../principal/Registro'
+
+import Managers from './Managers'
 import WhiteLogo from '../../imagenes/logo-white.png'
 import adminRoutes from './rutas'
 
 import '../../estilos/admon.css'
-const propiedades = {
-  tipo_documento: "CC",
-  numero_documento: "",
-  nombres: "",
-  apellidos: "",
-  telefono: "",
-  direccion: "",
-  fecha_de_nacimiento: "",
-  correo: "",
-  nick: "",
-  clave: "",
-};
 
 const propiedades2={
   tipo_documento: "CC",
@@ -42,7 +32,7 @@ export default class Example extends React.Component {
     }
   }
   render() {
-    console.log(this.props.userId, " ", this.props.userNick)
+    //console.log(this.props.userId, " ", this.props.userNick)
     return (
       <div id="admin-zone">
         <Nav vertical pills id="admin-sidebar">
@@ -99,17 +89,14 @@ export default class Example extends React.Component {
             }
 
             <Route path="/manager/datos" render={() => (
-                <Registro actualizar={true}
-                  idUser={this.props.userId}
-                  datos={propiedades2}
-                  mensaje={"ACTUALIZAR"} />
+              <Registro actualizar={true}
+              idUser={this.props.userId}
+              mensaje={"ACTUALIZAR"} />
+                
             )}/>
 
             <Route path="/manager/gerentes" render={() => (
-                <Registro isManager={true}  
-                  actualizar={false}                  
-                  datos={propiedades}
-                  mensaje={"REGISTRAR GERENTE"} />
+                <Managers userId={this.props.userId}/>
             )}/>
 
           </Switch>

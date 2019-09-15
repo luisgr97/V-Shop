@@ -24,9 +24,7 @@ class Cliente extends Component {
   componentDidMount(){
     axios.get('http://localhost:4000/usuario/getJoinFacturas/' + this.props.idCliente)
     .then((response) => {
-      console.log("Es response",response)
       response.data.data.clave=""
-      console.log(response.data.data)
       this.setState({
         cliente:response.data.data,
         loading: false
@@ -58,7 +56,6 @@ class Cliente extends Component {
                 render={()=>(
                   <Datos actualizar={true} 
                   idUser={this.props.idCliente}
-                  datos={this.state.cliente}
                   mensaje={"ACTUALIZAR"}/>
               )}/>
 
@@ -69,7 +66,7 @@ class Cliente extends Component {
 
               <Route path={`/cliente/${clientRoutes[2].id}`} 
                 render={()=>(
-                  <Comments idUser={this.props.idCliente}/>
+                  <Comments idCliente={this.props.idCliente}/>
               )}/>
                 
             </Col>

@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom'
 import clientRoutes from '../cliente/rutas'
 
 const UserList = (props) => {
+  console.log("tambien de renderizo el userlist")
     return (
       <UncontrolledDropdown className="option-list">
         <DropdownToggle caret nav>
