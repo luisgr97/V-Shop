@@ -30,11 +30,12 @@ class LoginClient extends Component {
       })
       const mensaje = {
         nick: this.state.nick,
-        clave: this.state.clave        
+        clave: this.state.clave,
+        tipo_usuario: "Cliente"        
       }
       //Axios se encarga de hacer solicitudes de forma sencilla
       axios.post('http://localhost:4000/usuario/login', mensaje)
-      .then((response) => {      
+      .then((response) => {
         this.setState({ loading: false })
         if(response.data.find){
           if(response.data.pass){

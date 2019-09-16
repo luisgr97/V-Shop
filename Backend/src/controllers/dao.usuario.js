@@ -225,13 +225,15 @@ export async function deleteUsuario(req, res) {
 
 //Esta funcion obtiene admin segun clave y nick
 export async function logUsuario(req, res) {
-    const { nick, clave } = req.body;
+    const { nick, clave, tipo_usuario } = req.body;
     console.log(nick, " ", clave)
     try {
         const usuario = await Usuario.findOne({
             attributes: ['id_usuario', 'nick', 'clave'],
             where: {
-                nick: nick
+                nick: nick,
+                tipo_usuario,
+                estado: 1
                 }
         });
         if (usuario) {
@@ -323,7 +325,7 @@ export async function getJoinFacturas(req, res) {
         console.log(e);
         res.status(502).json({
             message: "Algo salio mal 503",
-            data: {}
+            error: true
         });
     }
 }
@@ -387,7 +389,7 @@ export async function getJoinUsersAvalaibles(req, res){
         console.log(e);
         res.status(408).json({
             message: "error 408 no funca",
-            data: {}
+            error: true
         });
     }
 }

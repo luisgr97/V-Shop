@@ -11,7 +11,7 @@
 
   #admin-sidebar{
     position: fixed;
-    background: #15161D;
+    background: #333;
     width: 260px;
     height: 100vh;
     line-height: 3.5;
@@ -41,13 +41,14 @@
   #admin-sidebar .nav-link {
     padding-left:30px;
     transition: 0.4s all;
-    border-left:5px solid #15161D
+    border-left:5px solid #333
   
   }
   
   #admin-sidebar .nav-link:hover{
     padding-left: 40px;
-    border-left:5px solid #D10024
+    background-color: #d13438;
+    border-left:5px solid #d13438
   }
   #admin-sidebar .nav-link {
     border-radius: 0rem;
@@ -66,13 +67,13 @@
   }
   
   #admin-sidebar .nav-link.active {
-    background-color: #15161D;
-    border-left: 5px solid #D10024!important
+    background-color: #333;
+    border-left: 5px solid #d13438!important
   }
   
   
   #admin-sidebar .nav-link.active:hover, #admin-sidebar .show > .nav-link:hover {
-    background-color: #15161D;
+    background-color: #333;
     border-left: 5px solid #D10024
   }
   
@@ -257,4 +258,19 @@
 
 .manager-list{
   margin-top: 20px
+}
+
+.existencias{
+  max-width: 80px;
+}
+
+#inventory-ctn .img-ctn {
+  margin: 10px;
+  width: 150px;
+  height: 150px;
+}
+
+#inventory-ctn .img-ctn img {
+  max-width: 150px;
+  max-height: 150px;
 }

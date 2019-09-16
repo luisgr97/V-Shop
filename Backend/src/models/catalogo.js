@@ -23,5 +23,4 @@ const Catalogo = sequelize.define('catalogo',{
 });
 
 Catalogo.hasMany(Inventario_catalogo_productos,{foreignKey: 'id_catalogo', sourcekey:'id_catalogo'});
-
 export default Catalogo;

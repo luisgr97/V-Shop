@@ -25,12 +25,15 @@ export async function crear(req, res) {
 }
 
 export async function get(req, res) {
+    const {id_usuario} = req.params
     try {
         const consulta = await Catalogo.findAll({
             //attributes: ['id_catalogo','ciudad', 'id_gerente', 'nombre_catalogo']
             include: [{
-                model: Usuario
-            }]
+                model: Usuario,
+                where: {id_usuario}
+            }],
+            
         });
         return res.json(consulta);
     } catch (e) {

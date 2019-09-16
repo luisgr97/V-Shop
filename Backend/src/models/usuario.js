@@ -53,6 +53,8 @@ const Usuario = sequelize.define('usuario', {
 });
 
 Usuario.hasOne(Catalogo,{foreignKey: 'id_gerente', sourcekey:'id_usuario'});
+Catalogo.belongsTo(Usuario,{foreignKey: 'id_gerente', sourcekey:'id_usuario'});
+
 Usuario.hasMany(Comentario,{foreignKey: 'id_usuario', sourcekey:'id_usuario'});
 Comentario.belongsTo(Usuario,{foreignKey: 'id_usuario', sourcekey:'id_usuario'});
 Usuario.hasMany(Factura,{foreignKey: 'id_cliente', sourcekey:'id_usuario'});

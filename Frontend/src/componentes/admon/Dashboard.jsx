@@ -6,32 +6,43 @@ import Registro from '../principal/Registro'
 
 import Managers from './Managers'
 import WhiteLogo from '../../imagenes/logo-white.png'
-import adminRoutes from './rutas'
+import adminRoutes from './adminRoutes'
+import managerRoutes from './RoutesManager'
 
 import '../../estilos/admon.css'
-
-const propiedades2={
-  tipo_documento: "CC",
-  numero_documento: "12151518",
-  nombres: "Esneider Manzano",
-  apellidos: "Aranago",
-  telefono: "4455971",
-  direccion: "Cra 28 C # 54 - 123",
-  fecha_de_nacimiento: "1995-10-18",
-  correo: "esneider.manzano@correounivalle.edu.co",
-  nick: "loquendomanzano",
-  clave: "",       
-};
+import Axios from 'axios';
 
 export default class Example extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      id_usuario: this.props.userId,
-      nick: this.props.userNick
+      id_usuario: 12,//this.props.userId,
+      nick: this.props.userNick,
+      idSede: ""
     }
   }
+/*
+  componentDidMount(){
+    if(!this.props.isAdmin){
+      Axios.get('http://localhost:4000/api/catalogos/get-by-user/'+ this.props.userId)
+      .then(response => {
+        if(response.data.length===0){
+          alert("Usted no tiene ninguna sede asiganda")
+          this.props.login(2,{id_usuario:"", nick:""})
+        }else{
+          this.setState({
+            idSede: response.data.id_catalogo
+          })
+        }
+      })
+  }
+  }
+*/
   render() {
+    const {isAdmin} = this.props
+    const value = isAdmin? 1 : 2;
+    const Routes = isAdmin? adminRoutes : managerRoutes;
+    const roote = isAdmin? "/admin" : "/manager";
     //console.log(this.props.userId, " ", this.props.userNick)
     return (
       <div id="admin-zone">
@@ -39,40 +50,21 @@ export default class Example extends React.Component {
           <img alt="" src={WhiteLogo} height="60" width="189" />
           <div id="linea" />
 
-          {adminRoutes.map((ruta) => (
-            <Link key={ruta.id} to={`/manager/${ruta.id}`}
+          {Routes.map((ruta) => (
+            <Link key={ruta.id} to={`${roote}/${ruta.id}`}
             className={this.props.location.pathname.indexOf(ruta.id) > -1?
             "nav-link active" : "nav-link"}>
               <NavItem>
-                <i className="fa fa-university"></i>
+                <i className={`fa ${ruta.icon}`}></i>
                 <span>{ruta.name}</span>
               </NavItem>
             </Link>
-          ))}
+            ))}
 
-          <Link to="/manager/datos"
-            className={this.props.location.pathname.indexOf('datos') > -1?
-              "nav-link active" : "nav-link"}>
-            <NavItem>
-              <i className="fa fa-university"></i>
-              <span>Mis datos</span>
-            </NavItem>
-          </Link>
-
-          <Link to="/manager/gerentes"
-            className={this.props.location.pathname.indexOf('gerentes') > -1?
-            "nav-link active" : "nav-link"}>
-            <NavItem>
-              <i className="fa fa-university"></i>
-              <span>Gerentes</span>
-            </NavItem>
-          </Link>
-
-          <Link to={`/manager/${adminRoutes[0].id}`}          
-            className={true ? "nav-link" : "nav-link active"}>
-            <NavItem>
-              <i className="fa fa-university"></i>
-              <span>Cerrar cesion</span>
+          <Link to={`${roote}/`} className="nav-link">
+            <NavItem onClick={()=>this.props.login(value,{id_usuario:"", nick:""})}>
+              <i className="fa fa-sign-out-alt"></i>
+              <span>Cerrar sesion</span>
             </NavItem>
           </Link>
         </Nav>
@@ -80,29 +72,25 @@ export default class Example extends React.Component {
 
         <div id="admin-main">
           <Switch>
-            {adminRoutes.map((ruta) => (
-              <Route key={ruta.id} path={`/manager/${ruta.id}`}
+
+            {Routes.map((ruta) => (
+              <Route key={ruta.id} path={`${roote}/${ruta.id}`}
                 render={() => (
-                  <ruta.component />
+                  ruta.props?
+                    <ruta.component actualizar={true}  
+                    idUser={this.props.userId}
+                    mensaje={"ACTUALIZAR"}/> 
+                    : <ruta.component/>                                      
                 )} />
-            ))
-            }
-
-            <Route path="/manager/datos" render={() => (
-              <Registro actualizar={true}
-              idUser={this.props.userId}
-              mensaje={"ACTUALIZAR"} />
-                
-            )}/>
-
-            <Route path="/manager/gerentes" render={() => (
-                <Managers userId={this.props.userId}/>
-            )}/>
+            ))}
 
           </Switch>
-
         </div>
-        <Redirect to={`/manager/${adminRoutes[0].id}`}/>
+        {this.props.isAdmin? 
+        <Redirect to={`${roote}/${Routes[0].id}`}/>
+        : null
+        }
+        
       </div>
     );
   }

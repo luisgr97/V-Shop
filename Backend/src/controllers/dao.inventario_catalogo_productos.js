@@ -161,7 +161,7 @@ export async function getProductosHomePageByCatalogo(req, res) {
             include: [{
                 model: Producto,
                 //required: true,
-                attributes: ['id_producto', 'nombre_producto', 'precio'],
+                
                 include: [
                     {
                         model: SubCategoria, as: 'subcategoria',
@@ -210,7 +210,7 @@ export async function getProductoPage(req, res) {
             include: [{
                 model: Producto,
                 //required: true,
-                attributes: ['id_producto', 'nombre_producto', 'precio'],
+                attributes: ['id_producto', 'nombre_producto', 'precio', ],
                 include: [
                     {
                         model: SubCategoria, as: 'subcategoria',

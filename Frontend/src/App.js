@@ -38,7 +38,7 @@ class App extends Component {
             idCliente: "",
             nickCliente: "",   
 
-            adminLogueado: true,
+            adminLogueado: false,
             idAdmin: "",
             nickAdmin: "",
 
@@ -80,14 +80,14 @@ class App extends Component {
                     idCliente: usuario.id_usuario
                 })
             }           
-        }else if(valor===1){
+        }else if(valor===1){ //Si es dministrador
             this.setState({
                 adminLogueado: !this.state.adminLogueado,
                 idAdmin: usuario.id_usuario,
                 nickAdmin: usuario.nick
             })
         }else{
-            this.setState({
+            this.setState({ //Si es un manager
                 managerLogueado: !this.state.managerLogueado,
                 idManager: usuario.id_usuario,
                 nickManager: usuario.nick
@@ -122,6 +122,7 @@ render(){
                             location={location}
                             userId={this.state.idAdmin}
                             userNick={this.state.nickAdmin}
+                            login={this.handleChangeLoggin}  
                         /> :
                         <LoginAdmon isAdmin={true}
                             login={this.handleChangeLoggin}                                                        
@@ -134,6 +135,7 @@ render(){
                             location={location}
                             userId={this.state.idManager}
                             userNick={this.state.nickManager}
+                            login={this.handleChangeLoggin}
                         /> :
                         <LoginAdmon isAdmin={false}                    
                             login={this.handleChangeLoggin}

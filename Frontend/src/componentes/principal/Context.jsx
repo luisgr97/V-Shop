@@ -42,7 +42,8 @@ export class ProductoProvider extends React.Component{
       return this.state.count !== nextState.count
     }
 
-    componentWillUpdate(){
+    componentDidUpdate(){
+      console.log("Se ejecuta el didupdate", this.state.productos)
       localStorage.setItem('productos', JSON.stringify(this.state.productos))    
     }
 
@@ -59,7 +60,7 @@ export class ProductoProvider extends React.Component{
         productos: this.state.productos.filter(producto => producto.id !== e.target.value  ),
         count: this.state.count++
        
-     });           
+     });             
     }
 
     addProduct(mensaje){
@@ -77,10 +78,10 @@ export class ProductoProvider extends React.Component{
             })
           }, 900)
         })
-        console.log(this.state.productos)        
     }
 
     render(){
+         
         const {children} = this.props;
         return(
           <ProductContext.Provider 

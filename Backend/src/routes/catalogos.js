@@ -6,7 +6,7 @@ const router = Router();
 //Create category, requires body, return categoty || error
 router.post('/create', crear);
 //Get all categorys, return categotys || null
-router.get('/get', get);
+router.get('/get-by-user/:id_usuario', get);
 //Get one category, requires parameter id_categoria, return categoty || null
 router.get('/get/:id_catalogo', getOn);
 //Update category, requires parameter id_categoria, return 1 || 0

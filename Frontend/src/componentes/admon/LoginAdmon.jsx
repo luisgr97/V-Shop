@@ -18,7 +18,7 @@ class LoginAdmon extends Component {
       nick: ""
     };
     //Esto es necesario para la identificacion de funciones
-    this.enviar = this.enviar.bind(this);
+    this.enviarSolicitud = this.enviarSolicitud.bind(this);
     this.onChange = this.onChange.bind(this) 
   }
 
@@ -28,26 +28,32 @@ class LoginAdmon extends Component {
   }  
 
   //Funcion ejemplo para hacer solicitud al servidor
-  enviar() {
+  enviarSolicitud() {
     const mensaje = {
       nick: this.state.nick,
-      clave: this.state.password      
+      clave: this.state.password,
+      tipo_usuario: this.props.isAdmin? "Administrador" : "Gerente"      
     }
+    console.log(mensaje)
     //Axios se encarga de hacer solicitudes de forma sencilla
     axios.post('http://localhost:4000/usuario/login', mensaje)
     .then((response) => {
-      console.log(response.data)
       if(response.data.find){
-        if(this.props.isAdmin){
-          this.props.login(1, response.data)
+        if(response.data.pass){
+          if(this.props.isAdmin){
+            this.props.login(1, response.data)
+          }else{
+            this.props.login(2, response.data)
+          }
         }else{
-          this.props.login(2, response.data)
+          alert(response.data.message)
         }
-        
       }else{
-        console.log("Usuario invalido")
-      }  
-    })
+        alert(response.data.message)
+      } 
+    }).catch(err=>(
+      alert("Intentelo mas tarde")
+    ))
   }
 
   //El metodo render es obligario para los componentes con estado
@@ -72,7 +78,7 @@ class LoginAdmon extends Component {
           </FormGroup>
 
           <div className="center">
-            <Button color="danger" onClick={this.enviar}>
+            <Button color="danger" onClick={this.enviarSolicitud}>
               Iniciar
             </Button>
           </div>
