@@ -20,7 +20,6 @@ class Store extends React.Component {
             idCatalog: 1
         }
         this.changeIdCatalog = this.changeIdCatalog.bind(this)
-
     }
 /*
     componentDidMount(){
