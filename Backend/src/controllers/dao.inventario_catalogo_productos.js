@@ -212,11 +212,13 @@ export async function getProductoPage(req, res) {
     try {
         const inventario = await Inventario.findAll({
             attributes: ['cantidad_en_inventario'],
+            
             //required: true,
             include: [{
                 model: Producto,
                 //required: true,
-                attributes: ['id_producto', 'nombre_producto', 'precio', ],
+                //attributes: ['id_producto', 'nombre_producto', 'precio', ],
+                
                 include: [
                     {
                         model: SubCategoria, as: 'subcategoria',
@@ -231,9 +233,11 @@ export async function getProductoPage(req, res) {
                         //required: false
                     }, {
                         model: Comentario
+                       
+                        //group : ['inventario_catalogo_productos.id_producto'], raw: true,
                         //required: false
                     }
-                ]
+                ],
             }, {
                 model: Descuento,
                 //required: false,

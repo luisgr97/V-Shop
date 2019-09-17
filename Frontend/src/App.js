@@ -6,15 +6,9 @@ import { Fade } from 'reactstrap';
 
 import Admon from './componentes/admon/Dashboard'
 import LoginAdmon from './componentes/admon/LoginAdmon'
-import Cliente from './componentes/cliente/Dashboard'
 import LoginCliente from './componentes/cliente/LoginClient'
-
-import Header from './componentes/principal/Header'
-import Main from './componentes/principal/Main'
-import Footer from './componentes/principal/Footer'
 import Regitro from './componentes/principal/Registro'
-import ProductPage from './componentes/principal/ProductPage'
-import { ProductoProvider } from './componentes/principal/Context'
+import Store from './componentes/principal/Store'
 
 import logo from './imagenes/logo-black.png'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -168,35 +162,12 @@ render(){
                     {/*Aplicando patron singleton para el Header*/}
                     <Route path="/" render={() =>(
                         <div className="body-ctn">
-                            <ProductoProvider>
-                            <Fade in={true} >
-                                <Header                     
-                                    nombre={this.state.nickCliente}
-                                    login={this.handleChangeLoggin}                                 
-                                    logueado={this.state.clienteLogueado}                         
-                                />                                       
-                                <Switch>
-                                    <Route path="/cliente" render={({location}) =>
-                                        this.state.clienteLogueado ? 
-                                        (<Cliente location = {location}
-                                            idCliente={this.state.idCliente}                                                                    
-                                        />) : <Redirect to="/login" />
-                                                                       
-                                    }/>
-
-                                    <Route path="/producto/:id_producto" render={() => 
-                                            <ProductPage/>  
-                                    }/>
-
-                                    <Route exact path="/" render={() =>
-                                        <Main/>  
-                                    }/>
-
-                                    <Route render={() => (<h1>Pagina no encontrada</h1>)} />
-                                </Switch>  
-                                <Footer/>  
-                            </Fade> 
-                            </ProductoProvider>                           
+                            <Store
+                                nombre={this.state.nickCliente}
+                                login={this.handleChangeLoggin}                                 
+                                logueado={this.state.clienteLogueado}
+                                idCliente={this.state.idCliente}     
+                            />                      
                         </div>
                     )}/>                
                    

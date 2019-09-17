@@ -1,12 +1,14 @@
 import { Router } from 'express';
-import { crear, get, getOn, deleteOn, updateOn } from '../controllers/dao.catalogos';
+import { crear, get, getByUserId, getOn, deleteOn, updateOn } from '../controllers/dao.catalogos';
 const router = Router();
 
 /*CRUD category*/
 //Create category, requires body, return categoty || error
 router.post('/create', crear);
+//Return all ctalogs 
+router.get('/get', get);
 //Get all categorys, return categotys || null
-router.get('/get-by-user/:id_usuario', get);
+router.get('/get-by-user/:id_usuario', getByUserId);
 //Get one category, requires parameter id_categoria, return categoty || null
 router.get('/get/:id_catalogo', getOn);
 //Update category, requires parameter id_categoria, return 1 || 0

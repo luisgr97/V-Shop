@@ -25,6 +25,21 @@ export async function crear(req, res) {
 }
 
 export async function get(req, res) {
+    try {
+        const consulta = await Catalogo.findAll({
+            //attributes: ['id_catalogo','ciudad', 'id_gerente', 'nombre_catalogo']        
+        });
+        return res.json(consulta);
+    } catch (e) {
+        console.log(e);
+        res.status(801).json({
+            message: 'Algo salio mal 801',
+            error: true
+        });
+    }
+}
+
+export async function getByUserId(req, res) {
     const {id_usuario} = req.params
     try {
         const consulta = await Catalogo.findAll({

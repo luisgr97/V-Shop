@@ -1,10 +1,10 @@
 import React, {useContext} from 'react'
 import {Link} from 'react-router-dom'
 import {ProductContext} from './Context'
-
+import brokenImage from '../../imagenes/imagen-no-disponible.jpg'
 import '../../estilos/producto.css'
 
-const brokenImage = "http://karinlifoods.com/wp-content/uploads/2017/09/imagen-no-disponible.jpg"
+//const brokenImage = "http://karinlifoods.com/wp-content/uploads/2017/09/imagen-no-disponible.jpg"
 
 const Producto = (props) =>{
 
@@ -15,9 +15,13 @@ const Producto = (props) =>{
         <div className="product">
             <Link to={`/producto/${props.producto.id_producto}`}>
             <div className="product-img">
-            <img src={`http://localhost:4000/${props.producto.imagenes[0].ruta}`} 
-            onError={(e)=>{e.target.onerror = null; e.target.src=brokenImage}}
-            className="App-logo" alt="Producto" />
+                {props.producto.imagenes.length!==0?
+                <img src={`http://localhost:4000/${props.producto.imagenes[0].ruta}`} 
+                onError={(e)=>{e.target.onerror = null; e.target.src=brokenImage}}
+                className="App-logo" alt="Producto" /> :
+                <img src={brokenImage} className="App-logo" alt="Producto" />
+            }
+            
             {props.descuento.descuento!==0?
                 <div className="product-label">
                     <span className="sale">-{props.descuento.descuento*100}%</span>
@@ -57,7 +61,9 @@ const Producto = (props) =>{
                             id: String(props.producto.id_producto),
                             nombre: props.producto.nombre_producto,                            
                             precio: props.producto.precio,
-                            imagen: `http://localhost:4000/${props.producto.imagenes[0].ruta}`
+                            imagen: props.producto.imagenes.length!==0? 
+                            `http://localhost:4000/${props.producto.imagenes[0].ruta}` :
+                            brokenImage
                         }
                         addProduct(producto)    
                         }} className="add-to-cart-btn"><i className="fa fa-shopping-cart"></i> al carrito</button>

@@ -1,16 +1,14 @@
 import React from 'react';
+import Axios from 'axios';
 import { Route, Switch, Link, Redirect } from 'react-router-dom'
 
 import { Nav, NavItem } from 'reactstrap';
-import Registro from '../principal/Registro'
 
-import Managers from './Managers'
 import WhiteLogo from '../../imagenes/logo-white.png'
 import adminRoutes from './adminRoutes'
 import managerRoutes from './RoutesManager'
 
 import '../../estilos/admon.css'
-import Axios from 'axios';
 
 export default class Example extends React.Component {
   constructor(props) {
