@@ -2,10 +2,9 @@
 	PRODUCTO
 ===========================================================*/
 
-.product {
+.product{
   position: relative;
   margin: 15px 0px;
-  -webkit-box-shadow: 0px 0px 0px 0px #E4E7ED, 0px 0px 0px 1px #E4E7ED;
   box-shadow: 0px 0px 0px 0px #E4E7ED, 0px 0px 0px 1px #E4E7ED;
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
@@ -14,6 +13,7 @@
   margin: 15px;
   margin-bottom: 50px;
 }
+
 
 .product a:hover {
   text-decoration: none!important
@@ -135,53 +135,6 @@
   background-color: #E4E7ED;
 }
 
-/*
-.product .product-body .product-btns>button, .product-delete>button {
-  position: relative;
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
-  background: transparent;
-  border: none;
-  -webkit-transition: 0.2s all;
-  transition: 0.2s all;
-}
-
-.product .product-body .product-btns>button:hover, .product-delete>button:hover {
-  background-color: #E4E7ED;
-  color: #D10024;
-  border-radius: 50%;
-}
-
-.product .product-body .product-btns>button .tooltipp{
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -15px);
-  -ms-transform: translate(-50%, -15px);
-  transform: translate(-50%, -15px);
-  width: 150px;
-  padding: 10px;
-  font-size: 12px;
-  line-height: 10px;
-  background: #1e1f29;
-  color: #FFF;
-  text-transform: uppercase;
-  z-index: 10;
-  opacity: 0;
-  visibility: hidden;
-  -webkit-transition: 0.2s all;
-  transition: 0.2s all;
-}
-
-.product .product-body .product-btns>button:hover .tooltipp {
-  opacity: 1;
-  visibility: visible;
-  -webkit-transform: translate(-50%, -5px);
-  -ms-transform: translate(-50%, -5px);
-  transform: translate(-50%, -5px);
-}
-*/
 .product .add-to-cart {
   position: absolute;
   left: 1px;
@@ -247,3 +200,16 @@ outline: 0
   visibility: visible;
 }
 
+.disable{
+  overflow: hidden;
+  opacity: 0;
+  transition: 0.1s;
+  box-shadow: 0px 0px 0px 0px #E4E7ED, 0px 0px 0px 0px #E4E7ED;  
+  animation: slide-down .5s ease-out;
+  max-width: 0px;
+}
+
+@keyframes slide-down {
+  0% { max-width: 290px;  }   
+100% { max-width: 0px;}
+}

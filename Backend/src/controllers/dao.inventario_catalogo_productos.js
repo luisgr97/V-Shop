@@ -172,7 +172,7 @@ export async function getProductosHomePageByCatalogo(req, res) {
                         attributes: ['nombre_subcategoria'],
                         include: [{
                             model: Categoria, as: 'categoria',
-                            attributes: ['nombre_categoria']
+                            attributes: ['nombre_categoria','id_categoria']
                         }]
                     }, {
                         model: Imagenes,

@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
 import Checkout from './Checkout'
-import { ProductContext, ProductContextConsumer } from './Context'
 
 import {
   DropdownToggle,
@@ -27,9 +26,8 @@ export default class ShoopingCart extends React.Component {
   }
 
   render() {
-    console.log("Se renderizo esta monda")
     //Componenete consumidor con estado
-    const {productos, precioTotal, waveEffect} = this.context;
+    const {productos, precioTotal, waveEffect, eliminarProducto} = this.props;
     const numPorductos = productos.length
     return (
       <div className="carrito">                                
@@ -54,14 +52,12 @@ export default class ShoopingCart extends React.Component {
                             <Link to={`/producto/${product.id}`}>{product.nombre}</Link>
                           </h3>
                           <h4 className="product-price">${product.precio}</h4>
-                          <ProductContextConsumer>
-                            {({eliminarProducto}) => (
+                          
                               <button value={product.id} 
                                 className="fa fa-trash product-delete" 
                                 onClick={eliminarProducto}
                               />
-                            )}
-                          </ProductContextConsumer>
+                            
                       </div>                   
                   </div>
                 ))} 
@@ -91,5 +87,3 @@ export default class ShoopingCart extends React.Component {
     );
   }
 }
-
-ShoopingCart.contextType = ProductContext; 

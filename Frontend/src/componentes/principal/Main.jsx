@@ -13,12 +13,15 @@ class Main extends React.Component {
     super(props)
     this.state={
       loading: true,
-      catalogo: []
+      catalogo: [],
+      idTag: ""
     }
+    this.getProduts = this.getProduts.bind(this)
+    this.changeIdTag = this.changeIdTag.bind(this)
   }
 
-  componentDidMount(){
-    Axios.get('http://localhost:4000/api/catalogos/inventario/getProductosHomePageByCatalogo/2')
+  getProduts(){
+    Axios.get('http://localhost:4000/api/catalogos/inventario/getProductosHomePageByCatalogo/'+this.props.idCatalog)
     .then((response) => {
       if(response.data.error){
 
@@ -31,8 +34,20 @@ class Main extends React.Component {
     })
   }
 
+  componentDidMount(){
+    this.getProduts()
+  }
+
+
+  changeIdTag(value){
+    this.setState({
+      idTag: value
+    })
+  }
+
     //El metodo render es necesario
     render(){
+
      //Aqui podemos hacer validaciones para retonar diferentes cosas
       if(this.state.loading){
         return(
@@ -41,10 +56,20 @@ class Main extends React.Component {
       }
       return (
         <React.Fragment>
-          <Nav/>
-          <main>               
-            {this.state.catalogo.map((product,i) => (<Producto key={`producto${i}`} 
-            {...product}/>))}
+          <Nav changeIdTag={this.changeIdTag}/>
+          <main>           
+            
+
+              {this.state.catalogo.map((product,i) => (
+                <Producto key={`producto${i}`} 
+                addProduct={this.props.addProduct}
+                visible={this.state.idTag===""? true :
+                this.state.idTag===product.producto.subcategoria.categoria.id_categoria? true : false
+                }
+                {...product}/>
+              ))
+                }
+
           </main>
         </React.Fragment>
       );

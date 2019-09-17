@@ -1,6 +1,5 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import {Link} from 'react-router-dom'
-import {ProductContext} from './Context'
 import brokenImage from '../../imagenes/imagen-no-disponible.jpg'
 import '../../estilos/producto.css'
 
@@ -9,10 +8,9 @@ import '../../estilos/producto.css'
 const Producto = (props) =>{
 
     //Componenete consumidor sin estado
-    const {addProduct} = useContext(ProductContext)
-
+    const {addProduct} = props
     return(        
-        <div className="product">
+        <div className={props.visible? "product" : "product disable"}>
             <Link to={`/producto/${props.producto.id_producto}`}>
             <div className="product-img">
                 {props.producto.imagenes.length!==0?

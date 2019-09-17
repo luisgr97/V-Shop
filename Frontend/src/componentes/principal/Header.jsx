@@ -73,7 +73,12 @@ class Header extends React.Component {
                     <div className="col-md-auto">
                         <div className="header-ctn">
                                                                                             
-                            <Cart/>                                                                       
+                            <Cart
+                                productos={this.props.productos}
+                                precioTotal={this.props.precioTotal}
+                                eliminarProducto={this.props.eliminarProducto}                        
+                                waveEffect={this.props.waveEffect}
+                            />                                                                       
                             <div className="ingresarCliente">
                                 <i className="fa fa-user"></i>
                                 {

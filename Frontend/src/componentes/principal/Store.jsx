@@ -8,7 +8,6 @@ import Footer from './Footer'
 import Cliente from '../cliente/Dashboard'
 import ProductPage from './ProductPage'
 import Loading from './Loading'
-import { ProductoProvider } from './Context'
 import Axios from 'axios';
 
 class Store extends React.Component {
@@ -16,9 +15,15 @@ class Store extends React.Component {
         super(props)
         this.state={
             //loading: true,
-            idCatalog: 1
+            idCatalog: 2,
+            productos: [],
+            waveEffect: false,
+            count: 0
         }
         this.changeIdCatalog = this.changeIdCatalog.bind(this)
+        this.addProduct = this.addProduct.bind(this)
+        this.precioTotal = this.precioTotal.bind(this)
+        this.eliminarProducto= this.eliminarProducto.bind(this)
     }
 /*
     componentDidMount(){
@@ -35,28 +40,90 @@ class Store extends React.Component {
         })
     }
 */
+/*
+    shouldComponentUpdate(nextProps, nextState){
+        return nextState.idCatalog !== this.state.idCatalog    
+    }
+*/
+    componentDidMount(){
+        if(localStorage.getItem('productos')){
+        this.setState({
+            productos: JSON.parse(localStorage.getItem('productos')),
+            count: this.state.count + 1
+        })
+        }
+    }
+    
+    shouldComponentUpdate(nextProps, nextState){
+    return this.state.count !== nextState.count || this.props.logueado !== nextProps.logueado
+    }
+    
 
-shouldComponentUpdate(nextProps, nextState){
-    return nextState.idCatalog !== this.state.idCatalog    
-}
+
+
+    componentDidUpdate(){
+    console.log("Se ejecuta el didupdate", this.state.productos)
+    localStorage.setItem('productos', JSON.stringify(this.state.productos))    
+    }
+
+    precioTotal(){
+        let total = 0;
+        for(var i=0;i<this.state.productos.length;i++){
+        total += this.state.productos[i].precio
+        }
+        return total;
+    }
+
+    eliminarProducto = (e) =>{
+    this.setState({
+        productos: this.state.productos.filter(producto => producto.id !== e.target.value  ),
+        count: this.state.count + 1
+    
+    });             
+    }
+
+    addProduct(mensaje){
+        console.log("Se ejecuta")
+        let product = this.state.productos
+        product.push(mensaje)
+        this.setState({
+            productos : product,
+            waveEffect: true,
+            count: this.state.count + 1
+        }, ()=>{
+        window.setTimeout(() => {
+            this.setState({
+            waveEffect: false,
+            count: this.state.count + 1
+            })
+        }, 900)
+        })
+    }
+
 
     changeIdCatalog(e){
         this.setState({
-            idCatalog: e.target.value
+            idCatalog: e.target.value,
+            count: this.state.count + 1
         })
     }
 
 
     render(){
         return(
-            <ProductoProvider>
                 <Fade in={true} >
                     <Header                     
                         nombre={this.props.nombre}
                         login={this.props.login}                                 
                         logueado={this.props.logueado}   
+
                         idCatalog = {this.state.idCatalog}
-                        changeCatalog = {this.changeIdCatalog}                      
+                        changeCatalog = {this.changeIdCatalog}
+
+                        productos={this.state.productos}
+                        precioTotal={this.precioTotal}
+                        eliminarProducto={this.eliminarProducto}                        
+                        waveEffect={this.state.waveEffect}
                     />                                       
                     <Switch>
                         <Route path="/cliente" render={({location}) =>
@@ -72,14 +139,16 @@ shouldComponentUpdate(nextProps, nextState){
                         }/>
 
                         <Route exact path="/" render={() =>
-                            <Main idCatalog={this.state.idCatalog}/>  
+                            <Main 
+                            idCatalog={this.state.idCatalog}
+                            addProduct={this.addProduct}
+                            />  
                         }/>
 
                         <Route render={() => (<h1>Pagina no encontrada</h1>)} />
                     </Switch>  
                     <Footer/>  
                 </Fade> 
-                </ProductoProvider>     
         )
     }
 }

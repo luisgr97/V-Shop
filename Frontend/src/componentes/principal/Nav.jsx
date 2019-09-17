@@ -1,30 +1,44 @@
 import React from 'react';
 import { Nav, NavItem, NavLink } from 'reactstrap';
+import Axios from 'axios';
 
-export default class Example extends React.Component {
+export default class NavTag extends React.Component {
+  constructor(prosp){
+    super(prosp)
+    this.state = {
+      tags: []
+    }
+  }
+
+    componentDidMount(){
+      Axios.get('http://localhost:4000/api/categorias/get')
+      .then(Response=>{
+        this.setState({
+          tags: Response.data
+        })
+      }).catch(err=> (
+        alert("No se puedo cargar las categorias")
+      ))
+    }
+  
+
   render() {
     return (
       <nav id="navigation">
         <Nav >
-          <NavItem>
-            <NavLink href="#">Todos</NavLink>
+        <NavItem>
+            <NavLink 
+            onClick={()=>this.props.changeIdTag("")} 
+            href="#">Todos</NavLink>
           </NavItem>
-          <NavItem>
-            <NavLink href="#">Consolas</NavLink>
+         {this.state.tags.map((tag, i)=>(
+           <NavItem key={`tag${i}`}>
+            <NavLink 
+            onClick={()=>this.props.changeIdTag(tag.id_categoria)} 
+            href="#">{tag.nombre_categoria}           
+            </NavLink>
           </NavItem>
-          <NavItem>
-            <NavLink href="#">Camaras</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#">Computadores</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#">Robotica</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#">Smartphones</NavLink>
-          </NavItem>
-          
+         ))}
         </Nav>
         </nav>
     );
