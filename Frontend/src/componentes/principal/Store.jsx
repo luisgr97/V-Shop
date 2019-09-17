@@ -1,7 +1,6 @@
 import React from 'react'
-import axios from 'axios'
 import {  Route, Redirect, Switch } from 'react-router-dom'
-import { Fade, Spinner } from 'reactstrap';
+import { Fade } from 'reactstrap';
 
 import Header from './Header'
 import Main from './Main'
