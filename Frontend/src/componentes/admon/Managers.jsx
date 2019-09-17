@@ -31,11 +31,12 @@ class Managers extends React.Component{
             managers: [],
             activeTab: '1',
         }
+        this.getManagers = this.getManagers.bind(this)
         this.toggle = this.toggle.bind(this);
         this.changeUserState = this.changeUserState.bind(this)
     }
 
-    componentDidMount(){
+    getManagers(){
         Axios.get('http://localhost:4000/usuario/get-manager')
         .then(response => {
             if(response.data.error){
@@ -47,6 +48,10 @@ class Managers extends React.Component{
                 })
             }
         })
+    }
+
+    componentDidMount(){
+        this.getManagers()
     }
 
     changeUserState(value){
@@ -61,6 +66,7 @@ class Managers extends React.Component{
                 alert(response.data.message)
             }else{
                 alert("Se actualizo el estado con exito")
+                this.getManagers()
             }
         }).catch(err=>(
             alert("Por favor intentelo mas tarde")

@@ -129,7 +129,7 @@
     background-color: #fff;
     border-bottom: 2px solid #D10024
   }
-  .admin-productos, #admin-catalogo, #admin-categorias, #admin-manager{
+  .admin-productos, #admin-catalogo, #admin-categorias, #admin-manager, #inventory-ctn{
     border: 1px solid #eee;
     position: relative;
     background: #fff;
@@ -259,9 +259,16 @@
 .manager-list{
   margin-top: 20px
 }
+#inventory-ctn .form-control {
+  display: inline;
+}
 
 .existencias{
   max-width: 80px;
+}
+
+.discount{
+  max-width: 170px;
 }
 
 #inventory-ctn .img-ctn {

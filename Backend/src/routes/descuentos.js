@@ -1,12 +1,14 @@
 import { Router } from 'express';
-import { crear, get, getOn, deleteOn, updateOn } from '../controllers/dao.descuentos'; //funcion con los controladores para descuentos
+import { crear, get, getOn, deleteOn, getCurrent, updateOn } from '../controllers/dao.descuentos'; //funcion con los controladores para descuentos
 const router = Router();
 
 /*CRUD category*/
 //Create category, requires body, return categoty || error
 router.post('/create', crear);
-//Get all categorys, return categotys || null
+//Get all discounts, return categotys || null
 router.get('/get', get);
+//Return current discount
+router.get('/get-current', getCurrent);
 //Get one category, requires parameter id_categoria, return categoty || null
 router.get('/get/:id_descuento', getOn);
 //Update category, requires parameter id_categoria, return 1 || 0

@@ -21,23 +21,23 @@ export default class Example extends React.Component {
       idSede: ""
     }
   }
-/*
+
   componentDidMount(){
     if(!this.props.isAdmin){
-      Axios.get('http://localhost:4000/api/catalogos/get-by-user/'+ this.props.userId)
+      Axios.get('http://localhost:4000/api/catalogos/get-by-user/'+ this.state.id_usuario)
       .then(response => {
         if(response.data.length===0){
           alert("Usted no tiene ninguna sede asiganda")
           this.props.login(2,{id_usuario:"", nick:""})
         }else{
-          this.setState({
-            idSede: response.data.id_catalogo
+            this.setState({
+            idSede: response.data[0].id_catalogo
           })
         }
       })
   }
   }
-*/
+
   render() {
     const {isAdmin} = this.props
     const value = isAdmin? 1 : 2;
@@ -78,6 +78,7 @@ export default class Example extends React.Component {
                 render={() => (
                   ruta.props?
                     <ruta.component actualizar={true}  
+                    idSede = {this.state.idSede}
                     idUser={this.props.userId}
                     mensaje={"ACTUALIZAR"}/> 
                     : <ruta.component/>                                      

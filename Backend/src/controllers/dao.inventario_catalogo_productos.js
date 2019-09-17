@@ -5,7 +5,7 @@ import Categoria from '../models/categoria';
 import Descuento from '../models/descuento';
 import Imagenes from '../models/imagen';
 import Comentario from '../models/comentario';
-import Catalogo from '../models/catalogo';
+import Sequelize from 'sequelize';
 
 // este es un metodo asincrono ya que toma tiempo para crearse, por ende, en funcion se le indica con "async" y en la constante con await, para esperar a su creacion antes de hacer el send
 export async function crear(req, res) {
@@ -76,47 +76,48 @@ export async function deleteOn(req, res) {
                 id_catalogo
             }
         });
-        return res.json(numRowDelete);
+        return res.json({message:"Se elimino el producto del catalogo"});
     } catch (e) {
         console.log(e);
         res.status(903).json({
             message: "Algo salio mal 903",
-            data: {}
+            error: true
         });
     }
 }
 
 export async function updateOn(req, res) {
-    const { id_product, id_catal } = req.params;
+    const { id_product, id_catalogo } = req.params;
     try {
-        const { id_producto, cantidad_en_inventario, id_descuento, id_catalogo } = req.body;
+        const {cantidad_en_inventario, id_descuento } = req.body;
         const comentarioU = await Inventario.update({
-            id_producto,
             cantidad_en_inventario,
             id_descuento,
-            id_catalogo
         }, {
                 where: {
                     id_producto: id_product,
-                    id_catalogo: id_catal
+                    id_catalogo: id_catalogo
                 }
             });
-        return res.json(comentarioU);
+        return res.json({
+            message: "Se actualizo con exito"
+        });
     } catch (e) {
         console.log(e);
         res.status(904).json({
             message: "Algo salio mal 904",
-            data: {}
+            error: true
         });
     }
 }
-
+/*
 export async function updateOnCantidad(req, res) {
     const { id_producto, id_catalogo } = req.params;
     try {
-        const { cantidad_en_inventario } = req.body;
+        const { cantidad_en_inventario, id_descuento } = req.body;
         const comentarioU = await Inventario.update({
-            cantidad_en_inventario
+            cantidad_en_inventario,
+            id_descuento
         }, {
                 where: {
                     id_producto,
@@ -128,11 +129,11 @@ export async function updateOnCantidad(req, res) {
         console.log(e);
         res.status(905).json({
             message: "Algo salio mal 905",
-            data: {}
+            error: true
         });
     }
 }
-
+*/
 export async function getOnByProducto(req, res) {
     /*const { id_producto } = req.params;
     try {
@@ -154,6 +155,8 @@ export async function getOnByProducto(req, res) {
 
 export async function getProductosHomePageByCatalogo(req, res) {
     const { id_catalogo } = req.params;
+    const currentDate = new Date().toISOString().split("T")
+    const Op = Sequelize.Op
     try {
         const inventario = await Inventario.findAll({
             attributes: ['cantidad_en_inventario'],
@@ -182,14 +185,17 @@ export async function getProductosHomePageByCatalogo(req, res) {
                     }
                 ]
             }, {
-                model: Descuento,
-                //required: false,
-                attributes: ['descuento']
+                model: Descuento,                
             }],
             where : {
                 id_catalogo
             }
         });
+        for(var i=0;i<inventario.length;i++){
+            if(new Date(inventario[i].descuento.fecha_final) < new Date(currentDate[0])){
+                inventario[i].descuento.update({ id_descuento: 1 })
+            }            
+        }
         return res.json(inventario);
     } catch (e) {
         console.log(e);

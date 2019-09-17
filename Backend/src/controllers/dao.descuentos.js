@@ -1,4 +1,5 @@
 import Descuento from '../models/descuento';
+import Sequelize from 'sequelize';
 
 // este es un metodo asincrono ya que toma tiempo para crearse, por ende, en funcion se le indica con "async" y en la constante con await, para esperar a su creacion antes de hacer el send
 export async function crear(req, res) {
@@ -28,14 +29,30 @@ export async function crear(req, res) {
 export async function get(req, res) {
     try {
         const descuento = await Descuento.findAll({
-            attributes: ['id_descuento','descripcion', 'descuento', 'fecha_inicial', 'fecha_final']
         });
         return res.json(descuento);
     } catch (e) {
         console.log(e);
         res.status(701).json({
             message: 'Algo salio mal 701',
-            data: {}
+            error: true
+        });
+    }
+}
+
+export async function getCurrent(req, res) {
+    const currentDate = new Date().toISOString().split("T")
+    const Op = Sequelize.Op
+    try {
+        const descuento = await Descuento.findAll({
+            where: { fecha_final: { [Op.gte]:  currentDate[0] } }
+        });
+        return res.json(descuento);
+    } catch (e) {
+        console.log(e);
+        res.status(701).json({
+            message: 'Algo salio mal 701',
+            error: true
         });
     }
 }

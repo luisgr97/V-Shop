@@ -8,8 +8,8 @@ const adminRoutes = [
     name: 'Inventario',
     id: 'inventory',
     component: Inventory,
-    icon: "fa-shopping-bag",
-    props: false
+    icon: "fa-layer-group",
+    props: true
   },
   {
     name: 'Mis datos',

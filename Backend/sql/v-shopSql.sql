@@ -161,7 +161,7 @@ CREATE TABLE descuento
 );
 
 --Bloque insert para las descuentos: 5 Registros. 
-INSERT INTO descuento (descripcion, descuento, fecha_inicial, fecha_final) VALUES ('Sin Descuento', 0.0, '2019-02-18', '2019-02-19');
+INSERT INTO descuento (descripcion, descuento, fecha_inicial, fecha_final) VALUES ('Sin Descuento', 0.0, '2019-02-18', '2030-12-01');
 INSERT INTO descuento (descripcion, descuento, fecha_inicial, fecha_final) VALUES ('Nacimiento del niño Dios', 0.50, '2019-02-18', '2019-02-19');
 INSERT INTO descuento (descripcion, descuento, fecha_inicial, fecha_final) VALUES ('Dia de la brujitas', 0.25, '2019-02-18', '2019-02-19');
 INSERT INTO descuento (descripcion, descuento, fecha_inicial, fecha_final) VALUES ('Viernes Negro', 0.50, '2019-02-18', '2019-02-19');
