@@ -138,7 +138,6 @@ class Registro extends React.Component {
     }
 
     render() {
-        console.log("Se esta renderizando?",this.props.idUser)
         if(this.props.actualizar){
             if(this.state.loading){
                 return <Loading/>

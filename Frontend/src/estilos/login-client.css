@@ -5,6 +5,7 @@
     min-height: 100vh;
     background-size: cover;
     background-repeat: no-repeat;
+    background: #eee
 }
 
 .bloque-login {
@@ -14,11 +15,24 @@
     width: 820px;
     display: table;
 }
+.log{
+    animation: mov 0.5s;
+}
 
-.bloque-login .card-heading {
-    background: #1abc9c;
+@keyframes mov {
+    30% {
+        transform: translateY(10%)
+    }
+    100% {
+        transform: translateY(-125%);
+        opacity: 0.6;
+    }
+}
+
+.bloque-login .card-heading {    
     width: 50%;
     display: table-cell;
+    background: url("../imagenes/login.jpg") top center/cover no-repeat;
 }
 
 .bloque-login .card-heading #mundo {
@@ -80,17 +94,8 @@
     border-radius: 3px;
 }
 
-@keyframes latido {
-    35% {
-        margin-top: 100px;
-    }
-    43% {
-        margin-top: 93px;
-    }
-    51% {
-        margin-top: 100px;
-    }
-}
+
+
 
 @keyframes spin {
     from {
@@ -106,6 +111,12 @@
     position: relative;
     max-width: 300px!important;
     background: #fff;
+}
+
+#formularioLogin .gooey{
+    top:inherit;
+    bottom: 60px
+
 }
 #formularioLogin h3{
     text-align: center;
@@ -136,6 +147,7 @@
     background-color: #d11736;
 }
 
+
 @media screen and (max-width: 840px) {
     .card {
         max-width: 95%;
@@ -151,3 +163,4 @@
         display: none;
     }
 }
+

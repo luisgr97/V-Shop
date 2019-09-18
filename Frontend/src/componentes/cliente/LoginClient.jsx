@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { Button, FormGroup, Input } from 'reactstrap';
 import Loading from '../principal/Loading';
-
+import Taxi from '../../imagenes/taxi.png'
 import '../../estilos/login-client.css'
 
 class LoginClient extends Component {
@@ -13,7 +13,8 @@ class LoginClient extends Component {
         this.state = {
             nick: "",
             clave: "",
-            loading: false
+            loading: false,
+            log: false
         };
         this.handleOnchange = this.handleOnchange.bind(this);
         this.enviarSolicitud = this.enviarSolicitud.bind(this)
@@ -39,7 +40,14 @@ class LoginClient extends Component {
         this.setState({ loading: false })
         if(response.data.find){
           if(response.data.pass){
+            this.setState({
+              log: true
+          }, ()=>{
+          window.setTimeout(() => {
             this.props.login(0, response.data)
+          }, 500)
+          })
+            
           }else{
             alert(response.data.message)
           }
@@ -56,15 +64,13 @@ class LoginClient extends Component {
 
     render() {
         return (
-                <div className="bloque-login">
+                <div className={this.state.log? "bloque-login log" : "bloque-login"}>
+                  
                     <div className="card-heading">
-                    </div>
-                    <div id="formularioLogin">
-                        <h3>Iniciar Sesión</h3>
-                        {this.state.loading?
-                         <Loading/> : null
-                        }
-                         
+                    </div>                    
+                    <div id="formularioLogin">  
+                                     
+                        <h3>Iniciar Sesión</h3>                                               
                         <br />
                         <FormGroup>
                         <i className="fa fa-user"/>
@@ -82,6 +88,9 @@ class LoginClient extends Component {
                         <br />
                         <Button color="danger" block onClick={this.enviarSolicitud}>INGRESAR</Button>{' '}                       
                         <br /><br />
+                        {this.state.loading?
+                         <Loading/> : null
+                        } 
                         <div className="center">
                           <span>¿Aun sin cuenta? <Link to={"/registro"} >registrare aqui</Link>
                           </span>
