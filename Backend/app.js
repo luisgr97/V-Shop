@@ -14,6 +14,7 @@ import inventarioRoutes from './src/routes/inventario_catalogo_productosC';
 import facturaRoutes from './src/routes/factura';  
 import detalle_facturaRoutes from './src/routes/detalle_factura' ;
 import pagRoutes from './src/routes/pago'
+import reportesRoute from './src/routes/reportes';
 
 
 //initialization
@@ -37,6 +38,7 @@ app.use('/api/factura',facturaRoutes);
 app.use('/api/factura/detalle_factura',detalle_facturaRoutes);
 app.use('/api/pago',pagRoutes)
 app.use('/usuario',usersRoutes);
+app.use('/reportes', reportesRoute);
 
 app.use(express.static(__dirname + '/public'));
 
