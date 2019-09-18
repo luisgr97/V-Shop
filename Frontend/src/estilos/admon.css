@@ -129,7 +129,7 @@
     background-color: #fff;
     border-bottom: 2px solid #D10024
   }
-  .admin-productos, #admin-catalogo, #admin-categorias, #admin-manager, #inventory-ctn{
+  .admin-productos, #admin-catalogo, #admin-categorias, #admin-manager, #inventory-ctn, #discount-ctn{
     border: 1px solid #eee;
     position: relative;
     background: #fff;
@@ -137,6 +137,7 @@
     padding: 30px;
   }
   
+
   #selectFile{
     visibility: hidden
   }
@@ -280,4 +281,19 @@
 #inventory-ctn .img-ctn img {
   max-width: 150px;
   max-height: 150px;
+}
+
+#discount-ctn .expired{
+  background-color: #f6dada
+}
+
+#discount-ctn .current{
+  background: #daf6e8
+}
+
+#discount-ctn #newFInal{
+  max-width: 180px;
+}
+#discount-ctn #newValue{
+  max-width: 80px;
 }

@@ -14,23 +14,49 @@ export async function crear(req, res) {
             fields: ['descripcion', 'descuento', 'fecha_inicial', 'fecha_final']
         });
         return res.json({
-            message: "descuento creado con exito",
-            data : newDescuento
+            message: "Descuento creado con exito",            
         })
     } catch (e) {
         console.log(e);
         res.status(700).json({
             message: "Something goes wrong 700",
-            data: {}
+            error:true
         });
     }
 }
 
+/*
 export async function get(req, res) {
     try {
         const descuento = await Descuento.findAll({
         });
         return res.json(descuento);
+    } catch (e) {
+        console.log(e);
+        res.status(701).json({
+            message: 'Algo salio mal 701',
+            error: true
+        });
+    }
+}
+*/
+export async function get(req, res) {
+    const currentDate = new Date().toISOString().split("T")
+    //const Op = Sequelize.Op
+    try {
+        const descuento = await Descuento.findAll({
+            //where: { fecha_final: { [Op.gte]:  currentDate[0] } }
+        });
+
+        let expired = [], current =[]
+        descuento.forEach(discount => {
+            if(new Date(discount.fecha_final) > new Date(currentDate)){
+                current.push(discount)
+            }else{
+                expired.push(discount)
+            }
+        });
+        return res.send({"expired":expired, "current":current});
     } catch (e) {
         console.log(e);
         res.status(701).json({
@@ -97,23 +123,22 @@ export async function deleteOn(req, res) {
 export async function updateOn(req, res) {
     const { id_descuento } = req.params;
     try {
-        const { descripcion, descuento, fecha_inicial, fecha_final } = req.body;
+        const { descripcion, descuento, fecha_final } = req.body;
         const rowUpdate = await Descuento.update({
             descripcion,
             descuento,
-            fecha_inicial,
             fecha_final
         },{
             where: {
                 id_descuento
             }
         });
-        return res.json(rowUpdate);
+        return res.json({message:"Decuento actualizado con exito"});
     } catch (e) {
         console.log(e);
         res.status(704).json({
             message: "Algo salio mal 704",
-            data: {}
+            error:true
         });
     }
 }
