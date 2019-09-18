@@ -6,7 +6,7 @@
     max-width: 100%;
     background: #f8f8f8;
     padding: 10px;
-    transition: 0.2s all ease-in-out
+    transition: 0.2s all ease-in-out;
 }
 .comment-box{
     position: relative;

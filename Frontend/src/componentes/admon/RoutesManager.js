@@ -1,6 +1,6 @@
 import Inventory from './Inventory'
 import Registro from '../principal/Registro'
-
+import Discount from './Discount'
 
 const adminRoutes = [
 
@@ -10,6 +10,13 @@ const adminRoutes = [
     component: Inventory,
     icon: "fa-layer-group",
     props: true
+  },
+  {
+    name: 'Descuentos',
+    id: 'discount',
+    component: Discount,
+    icon: "fa-percent",
+    props: false
   },
   {
     name: 'Mis datos',

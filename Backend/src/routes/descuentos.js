@@ -6,6 +6,8 @@ const router = Router();
 //Create category, requires body, return categoty || error
 router.post('/create', crear);
 //Get all discounts, return categotys || null
+//router.get('/get', get);
+//Return expired and current discounts
 router.get('/get', get);
 //Return current discount
 router.get('/get-current', getCurrent);
