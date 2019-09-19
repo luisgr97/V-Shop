@@ -1,27 +1,48 @@
 import Factura from '../models/factura'
 import Detalle_factura from '../models/detalle_factura';
 import Producto from '../models/producto';
+import Pago from '../models/pago'
+
 
 export async function crearFactura(req, res) {
-    const { fecha, id_cliente, id_catalogo, total } = req.body;
+    const currentDate = new Date().toISOString().split("T")
+    const { id_cliente, total, detalles, pagos } = req.body;
     try {
         let nuevaFactura = await Factura.create({
-            fecha, 
+            fecha: currentDate, 
             id_cliente, 
-            id_catalogo, 
             total
         },{
-            fields: ['fecha', 'id_cliente', 'id_catalogo', 'total']
+            fields: ['fecha', 'id_cliente', 'total']
         });
+        for(var i=0;i<detalles.length;i++){
+            detalles[i].id_factura = nuevaFactura.id_factura
+        }
+        for(var i=0;i<pagos.length;i++){
+            pagos[i].id_factura = nuevaFactura.id_factura
+        }
+
+        let detallesFactura =  Detalle_factura.bulkCreate(
+            detalles
+            ,{
+                fields: ['id_factura', 'id_producto', 'cantidad_comprada', 'descuento', 'precio_actual']
+            }
+        )
+        let pagoFactura = Pago.bulkCreate(
+            pagos
+            ,{
+            fields: ['id_factura', 'modo_de_pago', 'banco_entidad', 'numero_tarjeta_cuenta',
+            'monto_del_pago','cuotas']
+        });
+
         return res.json({
-            message: "Factura creada con exito",
-            data : nuevaFactura
+            message: "Factura creada con exito",           
         })
     } catch (e) {
         console.log(e);
         res.status(200).json({
             message: "Something goes wrong 200",
-            data: {}
+            error:true
         });
     }
 }
@@ -29,7 +50,7 @@ export async function crearFactura(req, res) {
 export async function getFacturas(req, res) {
     try {
         const factura = await Factura.findAll({
-            attributes: ['id_factura','fecha', 'id_cliente', 'id_catalogo', 'total']
+            attributes: ['id_factura','fecha', 'id_cliente', 'total']
         });
         return res.json(factura);
     } catch (e) {
@@ -45,7 +66,7 @@ export async function getOnFactura(req, res) {
     const { id_factura } = req.params;
     try {
         const oneFactura = await Factura.findOne({
-            attributes: ['id_factura','fecha', 'id_cliente', 'id_catalogo', 'total'],
+            attributes: ['id_factura','fecha', 'id_cliente', 'total'],
             where: {
                 id_factura
             }
@@ -105,7 +126,7 @@ export async function getJoinDetalles(req, res) {
             attributes: ['id_factura','fecha','total'],
             include:[{
                 model: Detalle_factura,
-                attributes: ['num_detalle','cantidad_comprada', 'precio_actual'],
+                attributes: ['num_detalle','cantidad_comprada', 'descuento', 'precio_actual'],
                 include:[{
                     model: Producto,
                     attributes: ['id_producto','nombre_producto']

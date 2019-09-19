@@ -27,7 +27,8 @@ export default class ShoopingCart extends React.Component {
 
   render() {
     //Componenete consumidor con estado
-    const {productos, precioTotal, waveEffect, eliminarProducto} = this.props;
+    const {productos, waveEffect, eliminarProducto} = this.props;
+    const precioTotal = this.props.precioTotal()
     const numPorductos = productos.length
     return (
       <div className="carrito">                                
@@ -49,10 +50,13 @@ export default class ShoopingCart extends React.Component {
                       </div>
                       <div className="product-body">
                           <h3 className="product-name">
-                            <Link to={`/producto/${product.id}`}>{product.nombre}</Link>
+                            <a href={`/producto/${product.id}`}>{product.nombre}</a>
                           </h3>
-                          <h4 className="product-price">${product.precio}</h4>
-                          
+                          {product.descuento!==0?
+                            <h4 className="product-discount">Descuento de {product.descuento*100}%</h4> : null
+                          }
+                                                                       
+                          <h4 className="product-price">${product.precio}</h4>                          
                               <button value={product.id} 
                                 className="fa fa-trash product-delete" 
                                 onClick={eliminarProducto}
@@ -69,17 +73,28 @@ export default class ShoopingCart extends React.Component {
                           " productos agregados" : 
                           " producto agregado"} 
                   </small>
-                  <h5>{numPorductos? `TOTAL ${precioTotal()}`: "Carrito vacio"}</h5>
+                  <h5>{numPorductos? `TOTAL ${precioTotal}`: "Carrito vacio"}</h5>
               </div>
               {numPorductos? 
+              this.props.logueado?
+              <div className="cart-btns">                   
+                  <div onClick={this.handleOnBuyClik}>Comprar    <i className="fa fa-arrow-circle-right"></i></div>
+                </div>
+                : 
                 <div className="cart-btns">                   
-                    <div onClick={this.handleOnBuyClik}>Comprar    <i className="fa fa-arrow-circle-right"></i></div>
-                </div>: ""
+                    <Link to="/login">
+                      <div>Comprar    <i className="fa fa-arrow-circle-right"></i></div>
+                    </Link>
+                </div>
+                 : ""
               }
               
           </DropdownMenu>
         </UncontrolledDropdown>
         <Checkout 
+          idCliente={this.props.idCliente}
+          precioTotal = {precioTotal}
+          productos = {productos}
           switchModal = {this.handleOnBuyClik} 
           openModal={this.state.openModal}
         />

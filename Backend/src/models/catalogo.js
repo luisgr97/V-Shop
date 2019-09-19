@@ -16,6 +16,9 @@ const Catalogo = sequelize.define('catalogo',{
     },
     nombre_catalogo:{
         type: Sequelize.STRING(30)
+    },
+    estado:{
+        type: Sequelize.INTEGER
     }
 },{
     timestamps: false,

@@ -12,7 +12,7 @@ const Producto = sequelize.define('producto',{
         primaryKey: true
     },
     nombre_producto:{
-        type: Sequelize.STRING(20)
+        type: Sequelize.TEXT
     },
     descripcion:{
         type: Sequelize.STRING(100)
@@ -25,7 +25,11 @@ const Producto = sequelize.define('producto',{
     },
     id_subcategoria:{
         type: Sequelize.INTEGER
+    },
+    estado:{
+        type: Sequelize.INTEGER
     }
+    
 },{
     timestamps: false,
     freezeTableName: true

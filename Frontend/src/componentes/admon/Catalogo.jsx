@@ -147,7 +147,6 @@ class Sedes extends React.Component {
     }
 
     render() {
-        console.log("Se renderizo el catalogo")
         if(this.state.loadingManager || this.state.loadingCatalog){
             return <Loading/>
         }

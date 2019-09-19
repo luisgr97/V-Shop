@@ -58,7 +58,8 @@ const Producto = (props) =>{
                         var producto = {
                             id: String(props.producto.id_producto),
                             nombre: props.producto.nombre_producto,                            
-                            precio: props.producto.precio,
+                            precio: props.producto.precio*(1-props.descuento.descuento),
+                            descuento: props.descuento.descuento,
                             imagen: props.producto.imagenes.length!==0? 
                             `http://localhost:4000/${props.producto.imagenes[0].ruta}` :
                             brokenImage

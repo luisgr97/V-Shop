@@ -4,31 +4,27 @@ import Producto from '../models/producto';
 
 //Create category made join
 export async function createCategoria(req, res) {
-    const { nombre_categoria, linkimagen } = req.body;
+    const { nombre_categoria } = req.body;
 
     //-------Validacion de las entradas---------------
     //--Variables necesarias
     var go = false; //Variable bandera para determinar si las entradas son correctas, en caso de que todas las entredas sean correctas, go cambiara su valor a true
     var categoriaValidation = { //este objeto contiene los atributos del modelo categoria, si algun atributo no es valido, se cambia su valor a false. Al final, como respuesta se retorna este objeto
         nombre_categoria: true,
-        linkimagen: true
     };
     //--Condicionales
     //Evaluamos si los atributos son del tipo esperado o son variables vacias, es caso de cumplirse, se cambia el valor del atributo en el objeto de validaciones a false
     //En caso de pasar por los condicionales de manera satisfactoria, se establese el valor de go a true
     if(typeof(nombre_categoria) != 'string'|| nombre_categoria == ""){
         categoriaValidation.nombre_categoria = false;
-    }else if(typeof(linkimagen) != 'string'|| linkimagen == ""){
-        categoriaValidation.linkimagen = false;
     }else{
 
     }
     try {
         const categoria = await Categoria.create({
             nombre_categoria,
-            linkimagen
         },{
-            fields: ['nombre_categoria','linkimagen']
+            fields: ['nombre_categoria']
         });
         return res.json({
             message: "Categoria creada con exito",
@@ -79,11 +75,10 @@ export async function getOneCategoria(req, res){
 //Delete one category
 export async function updateCategorias(req, res) {
     const { id_categoria } = req.params;
-    const { nombre_categoria, linkimagen } = req.body;
+    const { nombre_categoria } = req.body;
     try{
         const updatecategorias = await Categoria.update({
             nombre_categoria,
-            linkimagen
         },{
             where: {
                 id_categoria

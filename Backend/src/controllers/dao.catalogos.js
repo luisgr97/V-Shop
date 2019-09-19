@@ -8,9 +8,10 @@ export async function crear(req, res) {
         let newCatalogo = await Catalogo.create({
             ciudad,
             id_gerente,
-            nombre_catalogo
+            nombre_catalogo,
+            estado: 1
         },{
-            fields: ['ciudad', 'id_gerente', 'nombre_catalogo']
+            fields: ['ciudad', 'id_gerente', 'nombre_catalogo', 'estado']
         });
         return res.json({
             message: "catalogo creado con exito",            
@@ -27,7 +28,8 @@ export async function crear(req, res) {
 export async function get(req, res) {
     try {
         const consulta = await Catalogo.findAll({
-            //attributes: ['id_catalogo','ciudad', 'id_gerente', 'nombre_catalogo']        
+            //attributes: ['id_catalogo','ciudad', 'id_gerente', 'nombre_catalogo'] 
+            where:{estado:1}       
         });
         return res.json(consulta);
     } catch (e) {
@@ -48,6 +50,7 @@ export async function getByUserId(req, res) {
                 model: Usuario,
                 where: {id_usuario}
             }],
+            where: {estado:1}
             
         });
         return res.json(consulta);
@@ -64,7 +67,7 @@ export async function getOn(req, res) {
     const { id_catalogo } = req.params;
     try {
         const oneCatalogo = await Catalogo.findOne({
-            attributes: ['id_catalogo','ciudad', 'id_gerente', 'nombre_catalogo'],
+            //attributes: ['id_catalogo','ciudad', 'id_gerente', 'nombre_catalogo'],
             where: {
                 id_catalogo
             }
@@ -82,7 +85,8 @@ export async function getOn(req, res) {
 export async function deleteOn(req, res) {
     const { id_catalogo } = req.params;
     try {
-        const numRowDelete = await Catalogo.destroy({
+        const numRowDelete = await Catalogo.update({
+            estado: 0,
             where: {
                 id_catalogo
             }

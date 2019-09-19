@@ -12,7 +12,6 @@ import clientRoutes from '../cliente/rutas'
 class UserList extends React.PureComponent {
 
   render(){
-  console.log("tambien de renderizo el userlist")
     return (
       <UncontrolledDropdown className="option-list">
         <DropdownToggle caret nav>

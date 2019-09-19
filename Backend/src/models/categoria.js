@@ -9,10 +9,8 @@ const Categoria = sequelize.define('categoria',{
     },
     nombre_categoria:{
         type: Sequelize.STRING(30)
-    },
-    linkimagen:{
-        type: Sequelize.STRING(100)
     }
+
 },{
     underscored: false,
     timestamps: false,
