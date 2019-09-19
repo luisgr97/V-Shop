@@ -227,10 +227,8 @@ function buscarCatalogo(id_catalogo, arrayobjetivo) {
     Menos vendidos de toda la tienda
     En el documento la profesora no expecifica si los menos vendidos de cada sede
 */
-export async function getMenosVendidos(req, res) {
-    const Op = Sequelize.Op;
-    try {
-        const ventas = await Catalogo.findAll({
+/*
+    const ventas = await Catalogo.findAll({
             attributes: ['catalogo.id_catalogo','detalle_factura.id_producto','detalle_factura->producto.nombre_producto',[sequelize.fn('sum', sequelize.col('cantidad_comprada')), 'total_ventas']],
             include:[{
                 model: Detalle_factura, as: 'detalle_factura',
@@ -241,6 +239,20 @@ export async function getMenosVendidos(req, res) {
                 }]
             }],
             group: ['catalogo.id_catalogo', 'detalle_factura.id_producto','detalle_factura->producto.nombre_producto'],
+            order: sequelize.literal('total_ventas'),
+            raw: true
+        });
+*/
+export async function getMenosVendidos(req, res) {
+    const Op = Sequelize.Op;
+    try {
+        const ventas = await Detalle_factura.findAll({
+            attributes: ['producto.id_producto','producto.nombre_producto',[sequelize.fn('sum', sequelize.col('cantidad_comprada')), 'total_ventas']],
+            include:[{
+                model: Producto,
+                attributes: []
+            }],
+            group: ['producto.id_producto'],
             order: sequelize.literal('total_ventas'),
             raw: true
         });
@@ -257,6 +269,42 @@ export async function getMenosVendidos(req, res) {
     }
 }
 
+/*
+    Retorna los productos menos vendidos para determindado catalogo
+*/
+export async function getMenosVendidosPorSede(req, res) {
+    const Op = Sequelize.Op;
+    const { id_catalogo } = req.params;
+    try {
+        const ventas = await Catalogo.findAll({
+            attributes: ['catalogo.id_catalogo','detalle_factura.id_producto','detalle_factura->producto.nombre_producto',[sequelize.fn('sum', sequelize.col('cantidad_comprada')), 'total_ventas']],
+            include:[{
+                model: Detalle_factura, as: 'detalle_factura',
+                attributes: [],
+                include: [{
+                    model: Producto, as: 'producto',
+                    attributes:[]
+                }]
+            }],
+            where:{
+                id_catalogo
+            },
+            group: ['catalogo.id_catalogo', 'detalle_factura.id_producto','detalle_factura->producto.nombre_producto'],
+            order: sequelize.literal('total_ventas'),
+            raw: true
+        });
+        return res.json({
+            message: "10 menos vendidos",
+            data: ventas
+        });
+    } catch (e) {
+        console.log(e);
+        res.status(201).json({
+            message: 'Algo salio mal 201',
+            error: true
+        });
+    }
+}
 
 //Informe #216
 /*
@@ -287,9 +335,10 @@ export async function getMejoresClientes(req, res) {
 
 //Informe #213
 /*
-    Productos mas vendidos en la tienda
+    Productos mas vendidos en la sede que se especifque
 */
-export async function getMasVendidos(req, res) {
+export async function getMasVendidosPorSede(req, res) {
+    const { id_catalogo } = req.params;
     const Op = Sequelize.Op;
     try {
         const ventas = await Catalogo.findAll({
@@ -302,12 +351,44 @@ export async function getMasVendidos(req, res) {
                     attributes:[]
                 }]
             }],
+            where:{
+                id_catalogo
+            },
             group: ['catalogo.id_catalogo', 'detalle_factura.id_producto','detalle_factura->producto.nombre_producto'],
             order: sequelize.literal('total_ventas DESC'),
             raw: true
         });
         return res.json({
-            message: "10 menos vendidos",
+            message: "10 mas vendidos",
+            data: ventas
+        });
+    } catch (e) {
+        console.log(e);
+        res.status(201).json({
+            message: 'Algo salio mal 201',
+            error: true
+        });
+    }
+}
+
+/*
+    Productos mas vendidos en toda la tienda
+*/
+export async function getMasVendidos(req, res) {
+    const Op = Sequelize.Op;
+    try {
+        const ventas = await Detalle_factura.findAll({
+            attributes: ['producto.id_producto','producto.nombre_producto',[sequelize.fn('sum', sequelize.col('cantidad_comprada')), 'total_ventas']],
+            include:[{
+                model: Producto,
+                attributes: []
+            }],
+            group: ['producto.id_producto'],
+            order: sequelize.literal('total_ventas DESC'),
+            raw: true
+        });
+        return res.json({
+            message: "10 mas vendidos DESC",
             data: ventas
         });
     } catch (e) {

@@ -6,7 +6,9 @@ import {
     getMenosVendidos,
     getVentasMesTienda,
     getMejoresClientes,
-    getMasVendidos
+    getMasVendidos,
+    getMenosVendidosPorSede,
+    getMasVendidosPorSede
 } from '../controllers/dao.reportes';
 const router = Router();
 
@@ -17,7 +19,11 @@ router.get('/getProductLessTen', getProductLessTen);
 
 router.post('/getVentasMesProducto', getVentasMesProducto);
 
-router.get('/getMenosVendidos', getMenosVendidos);
+router.get('/getMenosVendidos', getMenosVendidos);getMenosVendidosPorSede
+
+router.get('/getMenosVendidosPorSede/:id_catalogo', getMenosVendidosPorSede);
+
+router.get('/getMasVendidosPorSede/:id_catalogo', getMasVendidosPorSede);
 
 router.get('/getMasVendidos', getMasVendidos);
 
