@@ -45,11 +45,17 @@ export async function getBirthDayUsers(req, res) {
 */
 export async function getProductLessTen(req, res) {
     const Op = Sequelize.Op;
+    const {id_catalogo} = req.params
     try {
         const productos = await Producto.findAll({
+            attributes:['nombre_producto', 'precio', 'marca'],
+            where:{
+                estado: 1
+            },
             include: [{
                 model: Inventario_catalogo_productos,
                 where: {
+                    id_catalogo: id_catalogo,
                     cantidad_en_inventario: {
                         [Op.lte]: 10
                     }

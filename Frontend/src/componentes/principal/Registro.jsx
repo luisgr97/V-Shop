@@ -106,8 +106,7 @@ class Registro extends React.Component {
             // Si es una actualizacion
             axios.put('http://localhost:4000/usuario/update/' + this.props.idUser, mensaje)
             .then((response) => {
-            alert(JSON.stringify(response.data))
-            console.log("Se actualizaron los datos con exito")
+                alert("Se actualizaron los datos con exito")
             })
             .catch(err=>{
                 alert("Intentelo mas tarde registro")

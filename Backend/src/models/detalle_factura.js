@@ -10,9 +10,6 @@ const Detalle_factura = sequelize.define('detalle_factura',{
         type: Sequelize.INTEGER,
         primaryKey: true
     },
-    id_catalogo:{
-        type: Sequelize.INTEGER
-    },
     id_producto:{
         type: Sequelize.INTEGER
     },

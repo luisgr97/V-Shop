@@ -39,7 +39,7 @@ class Inventory extends React.Component {
     }
 
     getProducts(){
-        Axios.get('http://localhost:4000/api/catalogos/inventario/getProductosHomePageByCatalogo/2')
+        Axios.get('http://localhost:4000/api/catalogos/inventario/getProductosHomePageByCatalogo/'+this.props.idSede)
         .then((response) => {
           if(response.data.error){
             alert(response.data.message)

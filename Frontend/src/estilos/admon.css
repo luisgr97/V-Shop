@@ -129,7 +129,7 @@
     background-color: #fff;
     border-bottom: 2px solid #D10024
   }
-  .admin-productos, #admin-catalogo, #admin-categorias, #admin-manager, #inventory-ctn, #discount-ctn{
+  .admin-productos, #admin-catalogo, #admin-categorias, #admin-manager, #inventory-ctn, #discount-ctn, #reportes-ctn{
     border: 1px solid #eee;
     position: relative;
     background: #fff;
@@ -296,4 +296,18 @@
 }
 #discount-ctn #newValue{
   max-width: 80px;
+}
+
+#reportes-ctn button{
+  right: 10px;
+  position: absolute;
+  top: 5px;
+}
+
+.chart-ctn{
+  text-align: center;
+  margin: auto;
+  padding-top:20px;
+  max-width: 600px;
+
 }

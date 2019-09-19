@@ -3,7 +3,7 @@ import Productos from './Productos'
 import Catalogo from './Catalogo'
 import Managers from './Managers'
 import Registro from '../principal/Registro'
-
+import Reporte from './reportAdmin'
 const adminRoutes = [
 
   {
@@ -39,6 +39,13 @@ const adminRoutes = [
     id: 'data',
     component: Registro,
     icon: "fa-user-edit",
+    props: true
+  },
+  {
+    name: 'Resportes',
+    id: 'report',
+    component: Reporte,
+    icon: "fa-chart-pie",
     props: true
   }
 ]

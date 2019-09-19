@@ -15,7 +15,7 @@ const router = Router();
 //return array with data of birthday users
 router.get('/getBirthDayUsers', getBirthDayUsers);
 
-router.get('/getProductLessTen', getProductLessTen);
+router.get('/getProductLessTen/:id_catalogo', getProductLessTen);
 
 router.post('/getVentasMesProducto', getVentasMesProducto);
 

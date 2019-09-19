@@ -7,13 +7,14 @@ import { Nav, NavItem } from 'reactstrap';
 import WhiteLogo from '../../imagenes/logo-white.png'
 import adminRoutes from './adminRoutes'
 import managerRoutes from './RoutesManager'
-
+import Loading from '../principal/Loading'
 import '../../estilos/admon.css'
 
 export default class Example extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      loading: true,
       id_usuario: this.props.userId,
       nick: this.props.userNick,
       idSede: ""
@@ -29,7 +30,8 @@ export default class Example extends React.Component {
           this.props.login(2,{id_usuario:"", nick:""})
         }else{
             this.setState({
-            idSede: response.data[0].id_catalogo
+            idSede: response.data[0].id_catalogo,
+            loading: false
           })
         }
       })
@@ -37,6 +39,12 @@ export default class Example extends React.Component {
   }
 
   render() {
+    if(!this.props.isAdmin){
+      if(this.state.loading)
+      {
+        return <Loading/>
+      }
+    }
     const {isAdmin} = this.props
     const value = isAdmin? 1 : 2;
     const Routes = isAdmin? adminRoutes : managerRoutes;
@@ -77,7 +85,7 @@ export default class Example extends React.Component {
                   ruta.props?
                     <ruta.component actualizar={true}  
                     idSede = {this.state.idSede}
-                    idUser={this.props.userId}
+                    idUser={this.state.id_usuario}
                     mensaje={"ACTUALIZAR"}/> 
                     : <ruta.component/>                                      
                 )} />

@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize';
-
+/*
 export const sequelize = new Sequelize(
     'd64mbtp8omnrhv', //database 
     'lyxzouckcdbwnh', //user 
@@ -19,13 +19,13 @@ export const sequelize = new Sequelize(
         }
     }
 )
+*/
 
-/*
 export const sequelize = new Sequelize(
     //'FaztCode', //database
-    'Mvshop', //database
+    'vshop', //database
     'postgres', //user
-    '1996', //pass
+    'loquendo', //pass
     {
         host: 'localhost',
         dialect: 'postgres',
@@ -38,4 +38,3 @@ export const sequelize = new Sequelize(
         logging: false
     }
 )
-*/
