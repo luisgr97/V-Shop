@@ -30,7 +30,6 @@ class Header extends React.Component {
     }
 
     render(){
-        console.log("Se imprime?",this.props.idCatalog)
         return(        
             <div id="header">
             <div className="container">
@@ -74,6 +73,7 @@ class Header extends React.Component {
                         <div className="header-ctn">
                                                                                             
                             <Cart
+                                idCliente={this.props.idCliente}
                                 productos={this.props.productos}
                                 precioTotal={this.props.precioTotal}
                                 eliminarProducto={this.props.eliminarProducto}                        

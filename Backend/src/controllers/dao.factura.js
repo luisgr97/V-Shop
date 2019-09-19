@@ -1,27 +1,50 @@
 import Factura from '../models/factura'
 import Detalle_factura from '../models/detalle_factura';
 import Producto from '../models/producto';
+import Pago from '../models/pago'
+
 
 export async function crearFactura(req, res) {
-    const { fecha, id_cliente, id_catalogo, total } = req.body;
+    const currentDate = new Date().toISOString().split("T")
+    const { id_cliente, id_catalogo, total, detalles, pagos } = req.body;
     try {
         let nuevaFactura = await Factura.create({
-            fecha, 
+            fecha: currentDate, 
             id_cliente, 
             id_catalogo, 
             total
         },{
             fields: ['fecha', 'id_cliente', 'id_catalogo', 'total']
         });
+        for(var i=0;i<detalles.length;i++){
+            detalles[i].id_factura = nuevaFactura.id_factura
+        }
+        for(var i=0;i<pagos.length;i++){
+            pagos[i].id_factura = nuevaFactura.id_factura
+        }
+        console.log(detalles)
+        console.log(pagos)
+        let detallesFactura =  Detalle_factura.bulkCreate(
+            detalles
+            ,{
+                fields: ['id_factura', 'id_producto', 'cantidad_comprada', 'precio_actual']
+            }
+        )
+        let pagoFactura = Pago.bulkCreate(
+            pagos
+            ,{
+            fields: ['id_factura', 'modo_de_pago', 'banco_entidad', 'numero_tarjeta_cuenta',
+            'monto_del_pago','cuotas']
+        });
+
         return res.json({
-            message: "Factura creada con exito",
-            data : nuevaFactura
+            message: "Factura creada con exito",           
         })
     } catch (e) {
         console.log(e);
         res.status(200).json({
             message: "Something goes wrong 200",
-            data: {}
+            error:true
         });
     }
 }

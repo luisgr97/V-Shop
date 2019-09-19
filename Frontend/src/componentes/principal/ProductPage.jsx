@@ -15,7 +15,7 @@ class ProductoPage extends React.Component {
     }
 
     componentDidMount(){
-        axios.get('http://localhost:4000/api/catalogos/inventario/getProductoPage/2/1')
+        axios.get('http://localhost:4000/api/catalogos/inventario/getProductoPage/'+this.props.idCatalog+'/'+this.props.id_product)
         .then(response => {
             if(response.data.length===0){
                 alert("No hay ese producto en esta tienda")               

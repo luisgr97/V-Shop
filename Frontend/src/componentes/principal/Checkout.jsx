@@ -10,15 +10,18 @@ import { Label,
 	Progress, 
 	ListGroup,
 	ListGroupItem,
-	UncontrolledCollapse } from 'reactstrap';
+	UncontrolledCollapse,
+	Spinner } from 'reactstrap';
 
 import Cards from '../../imagenes/credit-card.png'
 import '../../estilos/checkout.css'
+import Axios from 'axios';
 
 class CartToPay extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {			
+		this.state = {	
+			loading: false,		
 			unique: true,
 			uniquePayMethod: "",
 			uniqueNumber: "",
@@ -29,6 +32,7 @@ class CartToPay extends React.Component {
 		};
 
 		//this.toggle = this.toggle.bind(this);
+		this.realizarVenta = this.realizarVenta.bind(this)
 		this.hadlePayMethod = this.hadlePayMethod.bind(this)
 		this.handleRadioChange = this.handleRadioChange.bind(this)
 		this.nestedRadioChange = this.nestedRadioChange.bind(this)
@@ -39,6 +43,76 @@ class CartToPay extends React.Component {
 		this.otherPayMethod = this.otherPayMethod.bind(this)
 	}
 
+	realizarVenta(){
+		this.setState({
+			loading: true
+		})
+		let bancoEntidad = "Ninguno", cuotas = this.state.cuotas;
+		let detalles = [], pagos =[];
+		this.props.productos.forEach(product=>{
+			detalles.push({
+				id_producto: product.id,
+				cantidad_comprada: 1,
+				precio_actual: product.precio
+			})
+		})
+		if(this.state.unique){
+			if(this.state.uniquePayMethod==='efecty'){
+				bancoEntidad = 'Efecty'
+				cuotas = 1
+			}else if(this.state.uniquePayMethod==='banco'){
+				bancoEntidad = this.state.uniqueBanco
+				cuotas = 1
+			}
+			pagos.push({
+				modo_de_pago: this.state.uniquePayMethod,
+				banco_entidad: bancoEntidad,
+				numero_tarjeta_cuenta: this.state.uniqueNumber,
+				monto_del_pago: this.props.precioTotal,
+				cuotas: cuotas
+			})
+		}else{
+			this.state.payments.forEach(pay=>{
+				if(pay.uniquePayMethod==='efecty'){
+					bancoEntidad = 'Efecty'
+					cuotas = 1
+				}else if(pay.uniquePayMethod==='banco'){
+					bancoEntidad = this.state.uniqueBanco
+					cuotas = 1
+				}
+				pagos.push({
+					modo_de_pago: pay.uniquePayMethod,
+					banco_entidad: bancoEntidad,
+					numero_tarjeta_cuenta: pay.uniqueNumber,
+					monto_del_pago: pay.monto,
+					cuotas: pay.cuotas
+				})
+			})
+		}
+		const mensaje ={
+			id_cliente: this.props.idCliente,
+            id_catalogo: 2, 
+			total: this.props.precioTotal,
+			detalles: detalles,
+			pagos: pagos
+		}
+		Axios.post('http://localhost:4000/api/factura/create', mensaje)
+		.then(response=> {
+			if(response.data.error){
+				alert(response.data.message)
+			}else{
+				alert(response.data.message)
+				this.setState({
+					loading: false
+				})
+			}
+		}).catch(err=>(
+			alert("Error al procesar el pedido")
+		))
+		console.log(mensaje)
+	}
+
+	//Elegir el tipo de pago, unico o particionado
 	hadlePayMethod(e){
 		const value = e.target.value === "unique"? true : false
 		this.setState({
@@ -232,6 +306,7 @@ class CartToPay extends React.Component {
 	}
 
 	render() {
+
 		let mensaje = ""
 		if(this.state.uniquePayMethod===''){
 		}else if(this.state.uniquePayMethod==='credito'){
@@ -252,10 +327,22 @@ class CartToPay extends React.Component {
 
 		return (
 			<div>
+				
 				<Modal isOpen={this.props.openModal} toggle={this.props.switchModal} id="detalle-carrito">
+				{this.state.loading?		
+				<React.Fragment>
+					
+					<div id="loading-pay">
+						<div className="center">
+					<Spinner style={{ width: '5rem', height: '5rem' }} color="danger"  />
+					</div></div>
+						
+				</React.Fragment>	
+						 : null
+					}
 					<ModalHeader toggle={this.props.switchModal}>Iniciar compra</ModalHeader>
 					<ModalBody>
-
+					
 						<div className="col-md-12 order-details">
 							<div className="section-title text-center">
 								<h3 className="title">Tu pedido</h3>
@@ -437,7 +524,7 @@ class CartToPay extends React.Component {
 									this.state.uniquePayMethod!==""? false : true 
 									: sum!==total? true : false
 									}
-									onClick={this.props.switchModal} 							
+									onClick={this.realizarVenta} 							
 									className="primary-btn order-submit">
 										Realizar pedido
 									</button>

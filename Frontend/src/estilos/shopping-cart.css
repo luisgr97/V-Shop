@@ -166,9 +166,3 @@
     box-shadow: 0 0 0 0 rgba(209,0,36, 1);
   }
 }
-
-#one-pay, #multiple-pay{
-  font-size: 18px;
-  display: inline-block;
-  margin-top:2px
-}

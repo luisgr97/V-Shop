@@ -14,7 +14,7 @@ export default class ShoopingCart extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      openModal: true,
+      openModal: false,
     }
     this.handleOnBuyClik = this.handleOnBuyClik.bind(this)
   }
@@ -28,7 +28,6 @@ export default class ShoopingCart extends React.Component {
   render() {
     //Componenete consumidor con estado
     const {productos, waveEffect, eliminarProducto} = this.props;
-    console.log(productos)
     const precioTotal = this.props.precioTotal()
     const numPorductos = productos.length
     return (
@@ -93,6 +92,7 @@ export default class ShoopingCart extends React.Component {
           </DropdownMenu>
         </UncontrolledDropdown>
         <Checkout 
+          idCliente={this.props.idCliente}
           precioTotal = {precioTotal}
           productos = {productos}
           switchModal = {this.handleOnBuyClik} 
