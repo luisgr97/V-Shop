@@ -31,7 +31,7 @@ export async function addOne(req, res) {
 export async function get(req, res) {
     try {
         const consulta = await Detalle_factura.findAll({
-            attributes: ['num_detalle', 'id_factura', 'id_producto',
+            attributes: ['num_detalle', 'id_factura', 'id_catalogo', 'id_producto',
              'cantidad_comprada', 'precio_actual']
         });
         return res.json(consulta);

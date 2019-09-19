@@ -1,5 +1,13 @@
 import { Router } from 'express';
-import { getBirthDayUsers, getProductLessTen, getVentasMesProducto } from '../controllers/dao.reportes';
+import {
+    getBirthDayUsers,
+    getProductLessTen,
+    getVentasMesProducto,
+    getMenosVendidos,
+    getVentasMesTienda,
+    getMejoresClientes,
+    getMasVendidos
+} from '../controllers/dao.reportes';
 const router = Router();
 
 //return array with data of birthday users
@@ -7,7 +15,15 @@ router.get('/getBirthDayUsers', getBirthDayUsers);
 
 router.get('/getProductLessTen', getProductLessTen);
 
-router.get('/getVentasMesProducto', getVentasMesProducto);
+router.post('/getVentasMesProducto', getVentasMesProducto);
+
+router.get('/getMenosVendidos', getMenosVendidos);
+
+router.get('/getMasVendidos', getMasVendidos);
+
+router.post('/getVentasMesTienda', getVentasMesTienda);
+
+router.get('/getMejoresClientes', getMejoresClientes);
 
 
 

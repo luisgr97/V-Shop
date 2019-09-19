@@ -14,9 +14,6 @@ const Factura = sequelize.define('factura',{
     id_cliente:{
         type: Sequelize.INTEGER
     },
-    id_catalogo:{
-        type: Sequelize.INTEGER
-    },
     total: {
         type: Sequelize.FLOAT//EL total de la factura (la suma del precio en detalle factura.)
     }

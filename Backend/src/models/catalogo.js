@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../database/database';
 import Inventario_catalogo_productos from './inventario_catalogo_productos';
-import Usuario from './usuario'
+import Detalle_factura from './detalle_factura';
 
 const Catalogo = sequelize.define('catalogo',{
     id_catalogo:{
@@ -23,4 +23,8 @@ const Catalogo = sequelize.define('catalogo',{
 });
 
 Catalogo.hasMany(Inventario_catalogo_productos,{foreignKey: 'id_catalogo', sourcekey:'id_catalogo'});
+
+Catalogo.hasMany(Detalle_factura,{as:'detalle_factura',foreignKey: 'id_catalogo', sourcekey:'id_catalogo'});
+Detalle_factura.belongsTo(Catalogo,{foreignKey: 'id_catalogo', sourcekey:'id_catalogo'});
+
 export default Catalogo;
