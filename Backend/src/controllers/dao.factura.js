@@ -25,7 +25,7 @@ export async function crearFactura(req, res) {
         let detallesFactura =  Detalle_factura.bulkCreate(
             detalles
             ,{
-                fields: ['id_factura', 'id_producto', 'cantidad_comprada', 'descuento', 'precio_actual']
+                fields: ['id_factura', 'id_producto', 'id_catalogo', 'cantidad_comprada', 'descuento', 'precio_actual']
             }
         )
         let pagoFactura = Pago.bulkCreate(

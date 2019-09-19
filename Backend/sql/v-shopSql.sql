@@ -1747,3 +1747,19 @@ INSERT INTO detalle_factura (id_factura,id_producto,id_catalogo ,cantidad_compra
 ( 206 , 24 , 2 , 1 , 0 , 63199 ),
 ( 206 , 11 , 1 , 2 , 0 , 51594 ),
 ( 206 , 15 , 2 , 1 , 0 , 40616 );
+
+
+CREATE OR REPLACE FUNCTION rellenar_datos() RETURNS TRIGGER AS $rellenar_datos$
+  DECLARE
+    actual int := (select cantidad_en_inventario from inventario_catalogo_productos where id_producto = NEW.id_producto and id_catalogo = NEW.id_catalogo) - NEW.cantidad_comprada;
+  BEGIN
+
+    UPDATE inventario_catalogo_productos SET cantidad_en_inventario = actual WHERE id_producto = NEW.id_producto and id_catalogo = NEW.id_catalogo;
+
+    RETURN NEW;
+  END;
+$rellenar_datos$ LANGUAGE plpgsql;
+
+CREATE TRIGGER rellenar_datos AFTER INSERT
+    ON detalle_factura FOR EACH ROW 
+    EXECUTE PROCEDURE rellenar_datos();
