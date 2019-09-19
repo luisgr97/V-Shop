@@ -10,7 +10,7 @@ const Comentario = sequelize.define('comentario',{
         type: Sequelize.STRING(50)
     },
     calificacion:{
-        type: Sequelize.STRING(2)
+        type: Sequelize.INTEGER
     },
     fecha:{
         type: Sequelize.DATE

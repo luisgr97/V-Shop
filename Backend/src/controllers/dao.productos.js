@@ -13,7 +13,8 @@ export async function crearProducto(req, res) {
         descripcion: true,
         marca: true,
         precio: true,
-        id_subcategoria: true
+        id_subcategoria: true,
+        estado: 1
     };
 
     if(typeof(parseInt(precio)) != 'number'){
@@ -51,9 +52,10 @@ export async function crearProducto(req, res) {
             nombre_producto,
             descripcion,
             marca, precio,
-            id_subcategoria
+            id_subcategoria,
+            estado: 1
         },{
-            fields: ['nombre_producto', 'descripcion', 'marca', 'precio', 'id_subcategoria']
+            fields: ['nombre_producto', 'descripcion', 'marca', 'precio', 'id_subcategoria', 'estado']
         });
         return res.json({
             message: "Producto creado con exito",
@@ -82,7 +84,9 @@ export async function getProductos(req, res) {
                     as: 'subcategoria'
                     
                 }
-            ]
+            ], where:{
+                estado: 1
+            }
             
             //attributes: ['id_producto','nombre_producto', 'descripcion', 'marca', 'precio', 'id_subcategoria']
         });
@@ -102,7 +106,8 @@ export async function getOnProducto(req, res) {
         const oneProducto = await Producto.findOne({
             attributes: ['id_producto','nombre_producto', 'descripcion', 'marca', 'precio', 'id_subcategoria'],
             where: {
-                id_producto
+                id_producto,
+                estado: 1
             }
         });
         return res.json(oneProducto);
@@ -118,7 +123,8 @@ export async function getOnProducto(req, res) {
 export async function deleteOnProducto(req, res) {
     const { id_producto } = req.params;
     try {
-        const numRowDelete = await Producto.destroy({
+        const numRowDelete = await Producto.update({
+            estado: 0,
             where: {
                 id_producto
             }
@@ -128,7 +134,7 @@ export async function deleteOnProducto(req, res) {
         console.log(e);
         res.status(203).json({
             message: "Algo salio mal 203",
-            data: {}
+            error:true
         });
     }
 }
@@ -163,6 +169,7 @@ export async function getOnProductoBySubcategoria(req, res) {
         const productos = await Producto.findAll({
             attributes: ['id_producto','nombre_producto', 'descripcion', 'marca', 'precio', 'id_subcategoria'],
             where: {
+                estado: 1,
                 id_subcategoria
             }
         });

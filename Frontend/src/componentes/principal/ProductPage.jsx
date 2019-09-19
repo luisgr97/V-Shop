@@ -15,6 +15,7 @@ class ProductoPage extends React.Component {
     }
 
     componentDidMount(){
+        console.log("Llega el idcatalog",this.props.idCatalog)
         axios.get('http://localhost:4000/api/catalogos/inventario/getProductoPage/'+this.props.idCatalog+'/'+this.props.id_product)
         .then(response => {
             if(response.data.length===0){

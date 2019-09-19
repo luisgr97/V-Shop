@@ -36,7 +36,7 @@ class App extends Component {
             idAdmin: "",
             nickAdmin: "",
 
-            managerLogueado: true,
+            managerLogueado: false,
             idManager: "",
             nickManager: "",
         };

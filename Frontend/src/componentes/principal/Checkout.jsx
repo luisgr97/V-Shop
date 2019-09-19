@@ -52,6 +52,7 @@ class CartToPay extends React.Component {
 		this.props.productos.forEach(product=>{
 			detalles.push({
 				id_producto: product.id,
+				id_catalogo: 2,
 				cantidad_comprada: 1,
 				precio_actual: product.precio
 			})
@@ -91,7 +92,6 @@ class CartToPay extends React.Component {
 		}
 		const mensaje ={
 			id_cliente: this.props.idCliente,
-            id_catalogo: 2, 
 			total: this.props.precioTotal,
 			detalles: detalles,
 			pagos: pagos

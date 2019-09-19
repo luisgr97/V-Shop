@@ -2,6 +2,7 @@
 import React from 'react'
 import Nav from './Nav'
 import Producto from './Producto'
+import NoProdcut from '../../imagenes/no-productos.png'
 /*
 Los componentes con estado deben ser clases vea un ejemplo de componente sin estado en el footer o header
 */
@@ -53,7 +54,9 @@ class Main extends React.Component {
           <main>           
             
 
-              {this.props.catalogo.map((product,i) => (
+              {this.props.catalogo.length===0?
+              <img id="no-product" src={NoProdcut} alt="No hay productos"/> :
+              this.props.catalogo.map((product,i) => (
                 <Producto key={`producto${i}`} 
                 addProduct={this.props.addProduct}
                 visible={this.state.idTag===""? true :
@@ -61,7 +64,7 @@ class Main extends React.Component {
                 }
                 {...product}/>
               ))
-                }
+              }
 
           </main>
         </React.Fragment>

@@ -14,7 +14,7 @@ export default class Example extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      id_usuario: 12,//this.props.userId,
+      id_usuario: this.props.userId,
       nick: this.props.userNick,
       idSede: ""
     }
@@ -85,10 +85,9 @@ export default class Example extends React.Component {
 
           </Switch>
         </div>
-        {this.props.isAdmin? 
+        
         <Redirect to={`${roote}/${Routes[0].id}`}/>
-        : null
-        }
+        
         
       </div>
     );

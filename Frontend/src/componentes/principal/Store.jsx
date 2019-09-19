@@ -50,21 +50,19 @@ class Store extends React.Component {
     }
 */
 
+
     getProduts(value){
         let idCatalog = this.state.idCatalog
-        console.log("Esl eatdo",this.state.idCatalog)
-        if(value){
+        if(typeof(value)!=='undefined'){
             idCatalog = value
         }
-        console.log(value)
-        console.log("catalog",this.state.idCatalog)
         Axios.get('http://localhost:4000/api/catalogos/inventario/getProductosHomePageByCatalogo/' + idCatalog)
         .then((response) => {
         if(response.data.error){
 
         }else{
             this.setState({
-            idCatalog: value,
+            idCatalog: idCatalog,
             catalogo: response.data,
             loading: false,
             count: this.state.count + 1

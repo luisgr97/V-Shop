@@ -2,14 +2,13 @@ import SubCategoria from '../models/subcategoria';
 import Categoria from '../models/categoria';
 
 export async function createSubCategoria(req, res) {
-    const { nombre_subcategoria, linkimagen, id_categoria } = req.body;
+    const { nombre_subcategoria, id_categoria } = req.body;
     try {
         const subcategoria = await SubCategoria.create({
             nombre_subcategoria,
-            linkimagen,
             id_categoria
         },{
-            fields: ['nombre_subcategoria', 'linkimagen','id_categoria']
+            fields: ['nombre_subcategoria','id_categoria']
         });
 
         return res.json({
@@ -28,7 +27,7 @@ export async function createSubCategoria(req, res) {
 export async function getSubCategorias(req, res) {
     try {
         const subcategorias = await SubCategoria.findAll({
-            attributes: ['id_subcategoria', 'nombre_subcategoria', 'linkimagen','id_categoria']
+            attributes: ['id_subcategoria', 'nombre_subcategoria','id_categoria']
         });
         return res.json(subcategorias);
     } catch (e) {
@@ -44,7 +43,7 @@ export async function getOneSubCategoria(req, res) {
     const { id_subcategoria } = req.params;
     try {
         const subcategoria = await SubCategoria.findOne({
-            attributes: ['id_subcategoria', 'nombre_subcategoria', 'linkimagen','id_categoria'],
+            attributes: ['id_subcategoria', 'nombre_subcategoria','id_categoria'],
             where: {
                 id_subcategoria
             }
@@ -64,7 +63,7 @@ export async function getSubCategoriasByCategoria(req, res) {
     console.log(id_categoria);
     try {
         const subcategorias = await SubCategoria.findAll({
-            attributes: ['id_subcategoria', 'nombre_subcategoria', 'linkimagen','id_categoria'],
+            attributes: ['id_subcategoria', 'nombre_subcategoria','id_categoria'],
             where: {
                 id_categoria
             }
@@ -81,11 +80,10 @@ export async function getSubCategoriasByCategoria(req, res) {
 
 export async function updateSubCategorias(req, res) {
     const { id_subcategoria } = req.params;
-    const { nombre_subcategoria, linkimagen, id_categoria } = req.body;
+    const { nombre_subcategoria, id_categoria } = req.body;
     try{
         const subcategorias = await SubCategoria.update({
             nombre_subcategoria,
-            linkimagen,
             id_categoria
         },{
             where: {
@@ -127,8 +125,6 @@ export async function getSubCategoriasPorCategoria(req, res) {
         const subcategorias = await SubCategoria.findAll({
             attributes: ['id_subcategoria', 'nombre']
         });
-
-        
 
         let donh = [{
             'ome': 'Lady'

@@ -6,15 +6,14 @@ import Pago from '../models/pago'
 
 export async function crearFactura(req, res) {
     const currentDate = new Date().toISOString().split("T")
-    const { id_cliente, id_catalogo, total, detalles, pagos } = req.body;
+    const { id_cliente, total, detalles, pagos } = req.body;
     try {
         let nuevaFactura = await Factura.create({
             fecha: currentDate, 
             id_cliente, 
-            id_catalogo, 
             total
         },{
-            fields: ['fecha', 'id_cliente', 'id_catalogo', 'total']
+            fields: ['fecha', 'id_cliente', 'total']
         });
         for(var i=0;i<detalles.length;i++){
             detalles[i].id_factura = nuevaFactura.id_factura
@@ -52,7 +51,7 @@ export async function crearFactura(req, res) {
 export async function getFacturas(req, res) {
     try {
         const factura = await Factura.findAll({
-            attributes: ['id_factura','fecha', 'id_cliente', 'id_catalogo', 'total']
+            attributes: ['id_factura','fecha', 'id_cliente', 'total']
         });
         return res.json(factura);
     } catch (e) {
@@ -68,7 +67,7 @@ export async function getOnFactura(req, res) {
     const { id_factura } = req.params;
     try {
         const oneFactura = await Factura.findOne({
-            attributes: ['id_factura','fecha', 'id_cliente', 'id_catalogo', 'total'],
+            attributes: ['id_factura','fecha', 'id_cliente', 'total'],
             where: {
                 id_factura
             }

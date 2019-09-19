@@ -2,7 +2,7 @@ import Detalle_factura from '../models/detalle_factura';
 
 export async function addOne(req, res) {
     const { //num_detalle,
-            id_factura, id_producto, cantidad_comprada, precio_actual} = req.body;
+            id_factura, id_producto, id_catalogo, cantidad_comprada, precio_actual} = req.body;
     try {
          
         //adiciona el producto al detalle
@@ -10,10 +10,11 @@ export async function addOne(req, res) {
             //num_detalle, es auto generado
             id_factura,
             id_producto,
+            id_catalogo,
             cantidad_comprada,
             precio_actual
         },{
-            fields: ['id_factura', 'id_producto', 'cantidad_comprada', 'precio_actual']
+            fields: ['id_factura', 'id_producto', 'id_catalogo', 'cantidad_comprada', 'precio_actual']
         });
         return res.json({
             message: "producto add con exito",
@@ -32,7 +33,7 @@ export async function get(req, res) {
     try {
         const consulta = await Detalle_factura.findAll({
             attributes: ['num_detalle', 'id_factura', 'id_producto',
-             'cantidad_comprada', 'precio_actual']
+             'id_catalogo', 'cantidad_comprada', 'precio_actual']
         });
         return res.json(consulta);
     } catch (e) {
@@ -49,7 +50,7 @@ export async function getOn(req, res) {
     try {
         const consulta = await Detalle_factura.findOne({
             attributes: ['num_detalle', 'id_factura', 'id_producto',
-            'cantidad_comprada', 'precio_actual'],
+            'id_catalogo', 'cantidad_comprada', 'precio_actual'],
             where: {
                 num_detalle
             }

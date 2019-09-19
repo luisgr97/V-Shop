@@ -63,8 +63,7 @@ class Categorias extends Component {
 
     crearCategoria() {
         const mensaje = {
-          nombre_categoria: this.state.newTag,
-          linkimagen : "jalamelavalija.com"
+          nombre_categoria: this.state.newTag
         }        
         //Axios se encarga de hacer solicitudes de forma sencilla
         axios.post('http://localhost:4000/api/categorias', mensaje)
@@ -77,8 +76,7 @@ class Categorias extends Component {
     actualizarCategoria() {
       const id_categoria = this.state.idModTagName
       const mensaje = {
-          nombre_categoria: this.state.modTagName,
-          linkimagen: "jalamelavalija.com"
+          nombre_categoria: this.state.modTagName
       }
       //Axios se encarga de hacer solicitudes de forma sencilla
       axios.put('http://localhost:4000/api/categorias/update/' + id_categoria, mensaje)
@@ -103,7 +101,6 @@ class Categorias extends Component {
     crearSubCategoria() {
       const mensaje = {
           nombre_subcategoria: this.state.newSubTag,
-          linkimagen: "jalamelavalija.com",
           id_categoria: this.state.idTagForNewSubTag
       }
       //Axios se encarga de hacer solicitudes de forma sencilla
@@ -118,7 +115,6 @@ class Categorias extends Component {
         const id_subcategoria =  this.state.idModSubTagName;
         const mensaje = {
           nombre_subcategoria: this.state.modSubTagName,
-          linkimagen: "jalamelavalija.com",
           id_categoria: this.state.categorias[this.state.indexForModTag].id_categoria
         }
         //Axios se encarga de hacer solicitudes de forma sencilla

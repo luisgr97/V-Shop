@@ -13,6 +13,9 @@ const Detalle_factura = sequelize.define('detalle_factura',{
     id_producto:{
         type: Sequelize.INTEGER
     },
+    id_catalogo:{
+        type: Sequelize.INTEGER
+    },
     cantidad_comprada: {
         type: Sequelize.INTEGER//cantidad a comprar
     },

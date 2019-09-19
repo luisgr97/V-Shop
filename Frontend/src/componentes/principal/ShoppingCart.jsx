@@ -50,7 +50,7 @@ export default class ShoopingCart extends React.Component {
                       </div>
                       <div className="product-body">
                           <h3 className="product-name">
-                            <Link to={`/producto/${product.id}`}>{product.nombre}</Link>
+                            <a href={`/producto/${product.id}`}>{product.nombre}</a>
                           </h3>
                           {product.descuento!==0?
                             <h4 className="product-discount">Descuento de {product.descuento*100}%</h4> : null
