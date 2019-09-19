@@ -89,20 +89,7 @@ class App extends Component {
         }         
     }
 
-render(){
-    
-    const propiedades={
-        tipo_documento: "CC",
-        numero_documento: "",
-        nombres: "",
-        apellidos: "",
-        telefono: "",
-        direccion: "",
-        fecha_de_nacimiento: "",
-        correo: "",           
-        nick: "",
-        clave: "",
-    };
+render(){   
 
     return (
         //En react, para dar estilos CSS usamos className en lugar de class

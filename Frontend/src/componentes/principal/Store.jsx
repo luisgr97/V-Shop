@@ -7,8 +7,8 @@ import Main from './Main'
 import Footer from './Footer'
 import Cliente from '../cliente/Dashboard'
 import ProductPage from './ProductPage'
-import Loading from './Loading'
-import Axios from 'axios';
+//import Loading from './Loading'
+//import Axios from 'axios';
 
 class Store extends React.Component {
     constructor(props){

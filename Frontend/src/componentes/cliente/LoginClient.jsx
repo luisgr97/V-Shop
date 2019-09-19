@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { Button, FormGroup, Input } from 'reactstrap';
 import Loading from '../principal/Loading';
-import Taxi from '../../imagenes/taxi.png'
 import '../../estilos/login-client.css'
 
 class LoginClient extends Component {

@@ -78,6 +78,7 @@ class Header extends React.Component {
                                 precioTotal={this.props.precioTotal}
                                 eliminarProducto={this.props.eliminarProducto}                        
                                 waveEffect={this.props.waveEffect}
+                                logueado={this.props.logueado}
                             />                                                                       
                             <div className="ingresarCliente">
                                 <i className="fa fa-user"></i>
