@@ -88,6 +88,11 @@ class Registro extends React.Component {
     }
     
     enviarDatos() {
+        const currentDate = new Date().toISOString().split("T")
+        if(new Date(currentDate) < new Date(this.state.nacimiento)){
+            alert("La fecha es invalida")
+            return null
+        } 
         let mensaje = {
             tipo_documento: this.state.tipo,
             numero_documento: this.state.numero,
