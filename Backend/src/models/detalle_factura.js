@@ -19,9 +19,12 @@ const Detalle_factura = sequelize.define('detalle_factura',{
     cantidad_comprada: {
         type: Sequelize.INTEGER//cantidad a comprar
     },
+    descuento: {
+        type: Sequelize.FLOAT
+    },
     precio_actual: {
-        type: Sequelize.FLOAT//El precio con el descuento aplicado si lo tiene.
-    }
+        type: Sequelize.FLOAT
+    },
 },{
     timestamps: false,
     freezeTableName: true

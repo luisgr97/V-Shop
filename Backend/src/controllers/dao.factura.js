@@ -21,12 +21,11 @@ export async function crearFactura(req, res) {
         for(var i=0;i<pagos.length;i++){
             pagos[i].id_factura = nuevaFactura.id_factura
         }
-        console.log(detalles)
-        console.log(pagos)
+
         let detallesFactura =  Detalle_factura.bulkCreate(
             detalles
             ,{
-                fields: ['id_factura', 'id_producto', 'cantidad_comprada', 'precio_actual']
+                fields: ['id_factura', 'id_producto', 'cantidad_comprada', 'descuento', 'precio_actual']
             }
         )
         let pagoFactura = Pago.bulkCreate(
@@ -127,7 +126,7 @@ export async function getJoinDetalles(req, res) {
             attributes: ['id_factura','fecha','total'],
             include:[{
                 model: Detalle_factura,
-                attributes: ['num_detalle','cantidad_comprada', 'precio_actual'],
+                attributes: ['num_detalle','cantidad_comprada', 'descuento', 'precio_actual'],
                 include:[{
                     model: Producto,
                     attributes: ['id_producto','nombre_producto']

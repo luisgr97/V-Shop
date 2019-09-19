@@ -54,6 +54,7 @@ class CartToPay extends React.Component {
 				id_producto: product.id,
 				id_catalogo: 2,
 				cantidad_comprada: 1,
+				descuento: product.descuento,
 				precio_actual: product.precio
 			})
 		})

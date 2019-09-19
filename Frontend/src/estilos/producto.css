@@ -205,11 +205,12 @@ outline: 0
   opacity: 0;
   transition: 0.1s;
   box-shadow: 0px 0px 0px 0px #E4E7ED, 0px 0px 0px 0px #E4E7ED;  
-  animation: slide-down .5s ease-out;
+  animation: slide-down 1s ease-out;
+  
   max-width: 0px;
 }
 
 @keyframes slide-down {
-  0% { max-width: 290px;  }   
-100% { max-width: 0px;}
+  0% { max-width: 290px;  transform: scale(1)}   
+100% { max-width: 0px; transform: scale(0)}
 }
