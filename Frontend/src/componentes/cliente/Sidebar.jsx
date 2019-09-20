@@ -15,7 +15,7 @@ const Sidebar = (props) => {
                 )
               )
             }          
-            <ListGroupItem id="close-acount" action>
+            <ListGroupItem id="close-acount" action onClick={()=> props.changeUserState()}>
               <i className="fa fa-exclamation-triangle"></i>
               <span>Cerrar cuenta</span>
             </ListGroupItem>                  

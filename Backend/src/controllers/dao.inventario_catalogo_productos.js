@@ -6,6 +6,8 @@ import Descuento from '../models/descuento';
 import Imagenes from '../models/imagen';
 import Comentario from '../models/comentario';
 import Sequelize from 'sequelize';
+import Catalogo from '../models/catalogo'
+import Usuario from '../models/usuario'
 
 // este es un metodo asincrono ya que toma tiempo para crearse, por ende, en funcion se le indica con "async" y en la constante con await, para esperar a su creacion antes de hacer el send
 export async function crear(req, res) {
@@ -20,14 +22,13 @@ export async function crear(req, res) {
                 fields: ['id_producto', 'cantidad_en_inventario', 'id_descuento', 'id_catalogo']
             });
         return res.json({
-            message: "inventario add con exito",
-            data: newInventario
+            message: "Porducto agregado al inventario con exito",
         })
     } catch (e) {
         console.log(e);
         res.status(900).json({
             message: "Something goes wrong 900",
-            data: {}
+            error:true
         });
     }
 }
@@ -134,23 +135,29 @@ export async function updateOnCantidad(req, res) {
     }
 }
 */
-export async function getOnByProducto(req, res) {
-    /*const { id_producto } = req.params;
+export async function geAvailableProduts(req, res) {
+    const { id_producto } = req.params;
     try {
-        const comentarios = await Inventario.findAll({
-            attributes: ['id_comentario','comentario', 'calificacion', 'fecha', 'id_producto'],
-            where: {
-                id_producto
-            }
+        const inventario = await Inventario.findAll({
+            include: [{
+                model: Producto,
+                required: false,
+                
+            }],
+            where: Sequelize.where(
+                Sequelize.col('inventario_catalogo_productos.id_catalogo'),
+                'IS',
+                null
+            )                     
         });
-        return res.json(comentarios);
+        return res.json(inventario);
     } catch (e) {
         console.log(e);
         res.status(605).json({
             message: "Algo salio mal 605",
             data: {}
         });
-    }*/
+    }
 }
 
 export async function getProductosHomePageByCatalogo(req, res) {
@@ -183,9 +190,15 @@ export async function getProductosHomePageByCatalogo(req, res) {
                         attributes: ['calificacion'],
                         //required: false
                     }
-                ]
+                ],
+                where: {
+                    estado: 1
+                }
             }, {
                 model: Descuento,                
+            },{
+                model: Catalogo,
+                attributes:['ciudad']                
             }],
             where : {
                 id_catalogo
@@ -216,6 +229,9 @@ export async function getProductoPage(req, res) {
             //required: true,
             include: [{
                 model: Producto,
+                where:{
+                    estado: 1
+                },
                 //required: true,
                 //attributes: ['id_producto', 'nombre_producto', 'precio', ],
                 
@@ -232,7 +248,11 @@ export async function getProductoPage(req, res) {
                         model: Imagenes
                         //required: false
                     }, {
-                        model: Comentario
+                        model: Comentario,
+                        include: [{
+                            model: Usuario,
+                            attributes:['nombres']
+                        }]
                        
                         //group : ['inventario_catalogo_productos.id_producto'], raw: true,
                         //required: false
@@ -242,10 +262,15 @@ export async function getProductoPage(req, res) {
                 model: Descuento,
                 //required: false,
                 attributes: ['descuento']
+            },
+            {
+                model: Catalogo,
+                //required: false,
+                attributes: ['ciudad']
             }],
             where: {
                 id_catalogo,
-                id_producto
+                id_producto,
             }
         });
         return res.json(inventario);

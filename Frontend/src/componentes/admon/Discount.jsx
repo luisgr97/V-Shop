@@ -21,6 +21,7 @@ class Discount extends React.Component {
         this.getDiscounts = this.getDiscounts.bind(this)
         this.createDiscount = this.createDiscount.bind(this)
         this.updateDiscount = this.updateDiscount.bind(this)
+        this.deleteDiscount = this.deleteDiscount.bind(this)
         this.editDiscount = this.editDiscount.bind(this)
         this.onChange = this.onChange.bind(this)
     }
@@ -53,7 +54,7 @@ class Discount extends React.Component {
         }        
         axios.post('http://localhost:4000/api/descuentos/create', mensaje)
         .then(response => {
-            if(response.data.eror){
+            if(response.data.error){
                 alert(response.data.message)
             }else{
                 alert(response.data.message)
@@ -75,7 +76,21 @@ class Discount extends React.Component {
         }        
         axios.put('http://localhost:4000/api/descuentos/update/'+this.state.idDiscount, mensaje)
         .then(response => {
-            if(response.data.eror){
+            if(response.data.error){
+                alert(response.data.message)
+            }else{
+                alert(response.data.message)
+                this.getDiscounts()
+            }
+        }).catch(err=> (
+            alert('Intentelo mas tarde')
+        ))
+    }
+
+    deleteDiscount(e){    
+        axios.delete('http://localhost:4000/api/descuentos/delete/'+ e.target.value)
+        .then(response => {
+            if(response.data.error){
                 alert(response.data.message)
             }else{
                 alert(response.data.message)
@@ -185,7 +200,8 @@ class Discount extends React.Component {
                         <td>{discount.fecha_inicial}</td>
                         <td>{discount.fecha_final}</td>
                         <td>
-                            <button                                
+                            <button  value={discount.id_descuento} 
+                            onClick={this.deleteDiscount}                        
                              className="fa fa-trash comment-delete"/>
                         </td>
                     </tr>

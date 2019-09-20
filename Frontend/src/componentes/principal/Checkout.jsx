@@ -52,8 +52,8 @@ class CartToPay extends React.Component {
 		this.props.productos.forEach(product=>{
 			detalles.push({
 				id_producto: product.id,
-				id_catalogo: 2,
-				cantidad_comprada: 1,
+				id_catalogo: product.id_sede,
+				cantidad_comprada: product.cantidad,
 				descuento: product.descuento,
 				precio_actual: product.precio
 			})
@@ -329,7 +329,8 @@ class CartToPay extends React.Component {
 		return (
 			<div>
 				
-				<Modal isOpen={this.props.openModal} toggle={this.props.switchModal} id="detalle-carrito">
+				<Modal isOpen={this.props.openModal}
+				 toggle={this.props.switchModal} id="detalle-carrito">
 				{this.state.loading?		
 				<React.Fragment>
 					
@@ -355,10 +356,27 @@ class CartToPay extends React.Component {
 								</div>
 								<div className="order-products">
 									{this.props.productos.map((product, i)=>(
-										<div key={`buy${i}`} className="order-col">
-										<div><b>1</b>{` x ${product.nombre}`}</div>
-										<div>{product.precio}</div>
-									</div>
+										<React.Fragment key={`buy${i}`}>
+											<div id={`pdetail${i}`} className="order-col">
+												<div><b>{`${product.cantidad}`}</b>
+												{` x ${product.nombre}`}
+												</div>
+												<div>{product.precio}</div>
+											</div>
+											<UncontrolledCollapse toggler={`pdetail${i}`}>											
+												<div className="pay-product-detail">
+												<img src={product.imagen} alt=""/>
+												<ul className="pd-details">
+												<li>{`De ${product.sede}`}</li>
+												<li>{`Descuento aplicado: ${product.descuento*100}`}</li>
+												{product.descuento!==0?
+												<li>{`Precio original ${product.precio/(1-product.descuento)}`}</li> : null
+												}
+												</ul>
+												
+												</div>												
+											</UncontrolledCollapse>
+										</React.Fragment>
 									))}																	
 								</div>
 								<div className="order-col">

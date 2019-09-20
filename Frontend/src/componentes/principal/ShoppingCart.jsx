@@ -28,6 +28,8 @@ export default class ShoopingCart extends React.Component {
   render() {
     //Componenete consumidor con estado
     const {productos, waveEffect, eliminarProducto} = this.props;
+    console.log(productos)
+
     const precioTotal = this.props.precioTotal()
     const numPorductos = productos.length
     return (
@@ -52,12 +54,13 @@ export default class ShoopingCart extends React.Component {
                           <h3 className="product-name">
                             <a href={`/producto/${product.id}`}>{product.nombre}</a>
                           </h3>
+                          <span className="cantidad">{`x${product.cantidad}`}</span>
                           {product.descuento!==0?
                             <h4 className="product-discount">Descuento de {product.descuento*100}%</h4> : null
                           }
                                                                        
                           <h4 className="product-price">${product.precio}</h4>                          
-                              <button value={product.id} 
+                              <button value={index} 
                                 className="fa fa-trash product-delete" 
                                 onClick={eliminarProducto}
                               />

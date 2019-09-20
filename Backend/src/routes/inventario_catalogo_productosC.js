@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { crear, get, getOn, deleteOn, updateOn, getProductosHomePageByCatalogo, getProductoPage } from '../controllers/dao.inventario_catalogo_productos'; //funcion con los controladores para productos
+import { crear, get, getOn, deleteOn, updateOn, getProductosHomePageByCatalogo, getProductoPage, 
+    geAvailableProduts } from '../controllers/dao.inventario_catalogo_productos'; //funcion con los controladores para productos
 const router = Router();
 
 /*CRUD category*/
@@ -15,7 +16,7 @@ router.put('/update/:id_product/:id_catalogo', updateOn);
 router.delete('/delete/:id_producto/:id_catalogo', deleteOn);
 
 /*functions*/
-//router.put('/update/stock/:id_producto/:id_catalogo', updateOnCantidad);
+router.get('/get-available', geAvailableProduts);
 router.get('/getProductosHomePageByCatalogo/:id_catalogo',getProductosHomePageByCatalogo);
 router.get('/getProductoPage/:id_catalogo/:id_producto',getProductoPage);
 

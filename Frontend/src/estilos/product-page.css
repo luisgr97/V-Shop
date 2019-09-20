@@ -324,6 +324,11 @@
   .review-form .input {
     margin-bottom: 15px;
   }
+
+  .review-form textarea.input {
+    min-height: 190px;
+  }
+  
   
   .review-form .input-rating {
     margin-bottom: 15px;
@@ -408,4 +413,14 @@ transform: scale(2);
 
 .product-container{
   padding: 50px
+}
+
+#comentar{
+  text-align: center
+}
+
+#comentar i{
+  margin-top: 30px;
+  font-size: 100px;
+  color:#797979
 }

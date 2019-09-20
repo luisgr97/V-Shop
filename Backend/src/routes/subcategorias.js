@@ -1,5 +1,11 @@
 import { Router } from 'express';
-import { createSubCategoria, getSubCategorias, getOneSubCategoria, deleteOnSubCategoria, updateSubCategorias, getSubCategoriasByCategoria } from '../controllers/dao.subcategorias';
+import { createSubCategoria, 
+    getSubCategorias, 
+    getOneSubCategoria, 
+    deleteOnSubCategoria, 
+    updateSubCategorias, 
+    getSubCategoriasByCategoria,
+    getSubJoinProduct } from '../controllers/dao.subcategorias';
 
 const router = Router();
 
@@ -10,6 +16,8 @@ router.post('/create', createSubCategoria);
 router.get('/get', getSubCategorias);
 //Get one category, requires parameter id_categoria, return categoty || null
 router.get('/get/:id_subcategoria', getOneSubCategoria);
+//Return subtags join products
+router.get('/available/:id_subcategoria', getSubJoinProduct);
 //Update category, requires parameter id_categoria, return 1 || 0
 router.put('/update/:id_subcategoria', updateSubCategorias);
 //Delete category, requires parameter id_categoria, return 1 || 0

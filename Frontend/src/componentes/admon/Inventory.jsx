@@ -205,7 +205,7 @@ class Inventory extends React.Component {
                         :  
                         <button value={i}
                         onClick={this.changeProduct}                                                                                      
-                        className="fa fa-plus comment-edit"/>
+                        className="fa fa-pen comment-edit"/>
                     }
                     </td>
                 </tr>

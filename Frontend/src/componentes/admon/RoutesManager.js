@@ -1,4 +1,5 @@
 import Inventory from './Inventory'
+import ProductList from './ProductList'
 import Registro from '../principal/Registro'
 import Discount from './Discount'
 import Reporte  from './reportManager'
@@ -9,6 +10,13 @@ const adminRoutes = [
     id: 'inventory',
     component: Inventory,
     icon: "fa-layer-group",
+    props: true
+  },
+  {
+    name: 'Productos',
+    id: 'products',
+    component: ProductList,
+    icon: "fa-shopping-bag",
     props: true
   },
   {

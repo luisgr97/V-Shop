@@ -88,8 +88,16 @@ class Registro extends React.Component {
     }
     
     enviarDatos() {
+        if(this.state.clave.length<6){
+            alert("La contraseña es muy corta")
+            return null
+        }
+        if(this.state.clave !== this.state.clave2){
+            alert("Las contraseñas no coinciden")
+            return null
+        }
         const currentDate = new Date().toISOString().split("T")
-        if(new Date(currentDate) < new Date(this.state.nacimiento)){
+        if(new Date(currentDate) <= new Date(this.state.nacimiento)){
             alert("La fecha es invalida")
             return null
         } 
@@ -107,11 +115,23 @@ class Registro extends React.Component {
             nick: this.state.nick,
             tipo_usuario: "Cliente",
         }
+
         if(this.props.actualizar){
             // Si es una actualizacion
             axios.put('http://localhost:4000/usuario/update/' + this.props.idUser, mensaje)
             .then((response) => {
-                alert("Se actualizaron los datos con exito")
+                if(response.data.error){
+                    alert(response.data.message)
+                }else{
+                    if(response.data.succes){
+                        alert(response.data.message)
+                        this.getUserData()
+
+                    }else{
+                        alert(response.data.message)
+                    }
+                    
+                }
             })
             .catch(err=>{
                 alert("Intentelo mas tarde registro")
@@ -180,7 +200,7 @@ class Registro extends React.Component {
                                 disabled={
                                     actualizar?
                                     this.state.tipo==='CC'? true : false :
-                                    false
+                                    this.props.isManager? true : false
                                 }
                             />
                         </FormGroup>   

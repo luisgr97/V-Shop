@@ -72,7 +72,7 @@ class Header extends React.Component {
                     <div className="col-md-auto">
                         <div className="header-ctn">
                                                                                             
-                            <Cart
+                            <Cart                                
                                 idCliente={this.props.idCliente}
                                 productos={this.props.productos}
                                 precioTotal={this.props.precioTotal}

@@ -110,12 +110,12 @@ export async function deleteOn(req, res) {
                 id_descuento
             }
         });
-        return res.json(numRowDelete);
+        return res.json({message: "Se elimino el descuento"});
     } catch (e) {
         console.log(e);
         res.status(703).json({
             message: "Algo salio mal 703",
-            data: {}
+            error: true
         });
     }
 }

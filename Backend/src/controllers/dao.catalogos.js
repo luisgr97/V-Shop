@@ -87,16 +87,18 @@ export async function deleteOn(req, res) {
     try {
         const numRowDelete = await Catalogo.update({
             estado: 0,
+            id_gerente: 0,            
+        },{
             where: {
                 id_catalogo
             }
         });
-        return res.json(numRowDelete);
+        return res.json({message:"Se inhabilito el catalogo"});
     } catch (e) {
         console.log(e);
         res.status(703).json({
             message: "Algo salio mal 703",
-            data: {}
+            error: true
         });
     }
 }

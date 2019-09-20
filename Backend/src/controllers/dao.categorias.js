@@ -27,14 +27,13 @@ export async function createCategoria(req, res) {
             fields: ['nombre_categoria']
         });
         return res.json({
-            message: "Categoria creada con exito",
-            data: categoria
+            message: "Categoria creada con exito",            
         });
     } catch (e) {
         console.log(e);
         res.status(400).json({
             message: "Ups! algo salio mal 400",
-            data: {}
+            error: true
         });
     }
 }
@@ -85,12 +84,12 @@ export async function updateCategorias(req, res) {
             }
             
         });
-        return res.json(updatecategorias);
+        return res.json({message: "Categoria actualizada con exito"});
     }catch (e){
         console.log(e);
         res.status(402).json({
             message: "error 403",
-            data: {}
+            error: true
         });
     }
 }
@@ -103,12 +102,12 @@ export async function deleteOnCategoria(req, res) {
                 id_categoria
             }
         });
-        return res.json(numRowDelete);
+        return res.json({message: "Se elimino la categoria exitosamente"});
     } catch (e) {
         console.log(e);
         res.status(403).json({
             message: "error 404",
-            data: {}
+            error: true
         });
     }
 }

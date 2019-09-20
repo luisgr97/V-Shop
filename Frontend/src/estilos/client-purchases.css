@@ -24,6 +24,13 @@
     width: 100%;
   }
   
+  .order-summary .order-col .bill-city{
+    font-size: 12px;
+    color:#595959;
+    margin-left: 10px;
+  }
+  
+
   .order-summary .order-col:after {
     content: "";
     display: block;

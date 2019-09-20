@@ -166,3 +166,10 @@
     box-shadow: 0 0 0 0 rgba(209,0,36, 1);
   }
 }
+
+.product-body .cantidad{
+  position: absolute;
+  margin-top:-25px;
+  color:#797979;
+  font-size: 15px
+}

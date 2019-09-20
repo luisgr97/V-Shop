@@ -29,6 +29,7 @@ class Sedes extends React.Component {
         this.onChange = this.onChange.bind(this)
         this.crearCatalogo = this.crearCatalogo.bind(this)
         this.editCatalog = this.editCatalog.bind(this)
+        this.deleteCatalog = this.deleteCatalog.bind(this)
         this.getAvailableManagers = this.getAvailableManagers.bind(this)
         this.getCatalogos = this.getCatalogos.bind(this)
         this.handleEditCatalog = this.handleEditCatalog.bind(this)
@@ -104,9 +105,11 @@ class Sedes extends React.Component {
     editCatalog(){
         let mensaje = {
             ciudad: this.state.editCity,
-            id_gerente: this.state.editManager,
+            id_gerente: this.state.editManager===""? 0 : this.state.editManager,
             nombre_catalogo: this.state.editName
         }
+
+        console.log(mensaje)
         Axios.put('http://localhost:4000/api/catalogos/update/' + this.state.idEditCatalog, mensaje)
         .then(response => {
             if(response.data.error){
@@ -118,6 +121,30 @@ class Sedes extends React.Component {
                 this.getCatalogos()
             }
         }).catch(err => (alert("Intentelo mas tarde")))
+    }
+
+    deleteCatalog(e){
+        var confirmar = window.confirm("¿Seguro que desea eliminar el catalogo?, "+
+        "Sí lo hace dejara de estar disponible y el gerente encargado estara sin asginar")
+        if(this.state.catalogs.length===1){
+            alert("No puede eliminar este catalogo, debe tener al menos uno")
+            return null
+        }
+        if(confirmar){
+            Axios.delete('http://localhost:4000/api/catalogos/delete/' + e.target.value)
+            .then(response=>{
+                if(response.data.error){
+                    alert(response.data.message)
+                }else{
+                    alert(response.data.message)
+                    this.resetAll()
+                    this.getAvailableManagers()
+                    this.getCatalogos()
+                }
+            }).catch(err=>(
+                alert("Oops!, mejo intentelos mas tarde")
+            ))
+        }
     }
 
     //Captura en el estado correspondiente, el teclado
@@ -132,7 +159,7 @@ class Sedes extends React.Component {
             idEditCatalog: this.state.catalogs[index].catalogo.id_catalogo,
             editName: this.state.catalogs[index].catalogo.nombre_catalogo,
             editCity: this.state.catalogs[index].catalogo.ciudad,
-            editManager: this.state.managers.length===0? "" : this.state.managers[0].id_usuario,
+            editManager: this.state.catalogs[index].id_usuario,
         })    
     }
 
@@ -233,7 +260,8 @@ class Sedes extends React.Component {
                                     <button value={i}
                                     onClick={this.handleEditCatalog}                               
                                     className="fa fa-pen comment-edit" />
-                                    <button onClick={this.closeEditCatalog}                                   
+                                    <button onClick={this.deleteCatalog}  
+                                        value={ele.catalogo.id_catalogo}                           
                                         className="fa fa-trash comment-delete"/>
                                 </React.Fragment> 
                             }                                                                
@@ -267,13 +295,15 @@ class Sedes extends React.Component {
                                         <Label>Nuevo Gerente</Label>
                                         <Input type="select" name="editManager" id="editManager"
                                             onChange={this.onChange('editManager')}>
-                                            {this.state.managers.length!==0?
-                                            this.state.managers.map((gerente) =>
+                                            {this.state.managers.map((gerente) =>
                                                 <option key={`manager${gerente.id_usuario}`}
                                                     value={gerente.id_usuario}>
                                                     {`${gerente.nombres} ${gerente.apellidos} - cc ${gerente.numero_documento}`}
-                                                </option>) : <option>Ninguno</option>
+                                                </option>) 
                                             }
+                                            <option value={this.state.catalogs[this.state.indexCatalogModify].id_usuario}>
+                                            Dejar el mismo encargado
+                                            </option>
                                         </Input>                                        
                                     </Form>
                     

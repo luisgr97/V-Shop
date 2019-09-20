@@ -276,7 +276,7 @@ Copyright (c) 2015 Daniel Eden
    
 textarea.form-control {
   max-width: 100%;
-  min-height: 100px;
+  min-height: 200px;
   padding: 10px 10px 0 0;
   resize: none;
   border: none;

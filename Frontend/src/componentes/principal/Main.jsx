@@ -57,7 +57,8 @@ class Main extends React.Component {
               {this.props.catalogo.length===0?
               <img id="no-product" src={NoProdcut} alt="No hay productos"/> :
               this.props.catalogo.map((product,i) => (
-                <Producto key={`producto${i}`} 
+                <Producto key={`producto${i}`}
+                idCatalog={this.props.idCatalog} 
                 addProduct={this.props.addProduct}
                 visible={this.state.idTag===""? true :
                 this.state.idTag===product.producto.subcategoria.categoria.id_categoria? true : false

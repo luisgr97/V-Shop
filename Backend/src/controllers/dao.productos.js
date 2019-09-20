@@ -125,11 +125,12 @@ export async function deleteOnProducto(req, res) {
     try {
         const numRowDelete = await Producto.update({
             estado: 0,
+        },{
             where: {
                 id_producto
             }
         });
-        return res.json(numRowDelete);
+        return res.json({message: " Se desactivo el producto con exito"});
     } catch (e) {
         console.log(e);
         res.status(203).json({
@@ -171,14 +172,15 @@ export async function getOnProductoBySubcategoria(req, res) {
             where: {
                 estado: 1,
                 id_subcategoria
-            }
+            },
+            limit: 1
         });
         return res.json(productos);
     } catch (e) {
         console.log(e);
         res.status(202).json({
             message: "Algo salio mal 202",
-            data: {}
+            error: true
         });
     }
 }

@@ -71,11 +71,11 @@ CREATE TABLE categoria
 
 
 --Bloque insert para las categorias: 5 Registros. 
-INSERT INTO categoria (nombre_categoria) VALUES ('EQUIPOS DE COMPUTO'),
-                                                ('DISPOSITIVOS MOVILES'),
-                                                ('CONSOLAS DE VIDEO JUEGOS'),
-                                                ('SMART WIDGETS'),
-                                                ('ZONA MULTIMEDIA');
+INSERT INTO categoria (nombre_categoria) VALUES ('Computadores'),
+                                                ('Dispositivos moviles'),
+                                                ('Videojuegos'),
+                                                ('Smart Widgets'),
+                                                ('Multimedia');
 
 ------------------------------------------------------------------------------------------------------------
 DROP TABLE IF EXISTS subcategoria CASCADE;
@@ -348,7 +348,7 @@ CREATE TABLE descuento
 --Bloque insert para las descuentos: 5 Registros. 
 INSERT INTO descuento (descripcion, descuento, fecha_inicial, fecha_final) VALUES ('Sin Descuento', 0.0, '2019-02-18', '3000-02-19');
 INSERT INTO descuento (descripcion, descuento, fecha_inicial, fecha_final) VALUES ('Nacimiento del niño Dios', 0.50, '2019-02-18', '2019-02-19');
-INSERT INTO descuento (descripcion, descuento, fecha_inicial, fecha_final) VALUES ('Dia de la brujitas', 0.25, '2019-02-18', '2019-02-19');
+INSERT INTO descuento (descripcion, descuento, fecha_inicial, fecha_final) VALUES ('Dia de la brujitas', 0.25, '2019-02-18', '2019-10-19');
 INSERT INTO descuento (descripcion, descuento, fecha_inicial, fecha_final) VALUES ('Viernes Negro', 0.50, '2019-02-18', '2019-02-19');
 INSERT INTO descuento (descripcion, descuento, fecha_inicial, fecha_final) VALUES ('Remate Anual', 0.75, '2019-02-18', '2019-02-19');
 ------------------------------------------------------------------------------------------------------------------------------
@@ -361,8 +361,8 @@ CREATE TABLE catalogo
     ciudad VARCHAR(30) UNIQUE NOT NULL,
     id_gerente INTEGER,--tiene un gerente.
     nombre_catalogo VARCHAR(30) UNIQUE NOT NULL,
-    estado INTEGER NOT NULL,
-    FOREIGN KEY (id_gerente) REFERENCES usuario (id_usuario) ON DELETE CASCADE
+    estado INTEGER NOT NULL
+    --FOREIGN KEY (id_gerente) REFERENCES usuario (id_usuario) ON DELETE CASCADE
 );
 
 INSERT INTO catalogo (ciudad, id_gerente, nombre_catalogo, estado) VALUES ('Santiago de Cali', 2,'V-Shop Cali',1),
@@ -376,7 +376,7 @@ CREATE TABLE inventario_catalogo_productos
 (
     id_producto INTEGER NOT NULL,
     cantidad_en_inventario INTEGER NOT NULL,--cantidad de productos disponibles en la tienda.
-    id_descuento INTEGER NOT NULL,--relaciona el producto con el descuento.
+    id_descuento INTEGER NOT NULL DEFAULT 1,--relaciona el producto con el descuento.
     id_catalogo INTEGER NOT NULL,
     FOREIGN KEY (id_producto) REFERENCES producto(id_producto) ON DELETE CASCADE,
     FOREIGN KEY (id_descuento) REFERENCES descuento (id_descuento) ON DELETE SET DEFAULT ,

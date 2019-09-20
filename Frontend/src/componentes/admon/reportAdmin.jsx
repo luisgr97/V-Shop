@@ -139,6 +139,12 @@ class Reporte extends React.Component {
             alert("Fecha invalida")
             return null
         }
+
+        if(new Date(this.state.initDate) > new Date(this.state.finalDate)){
+            alert("La fecha inicial es mayor a la final")
+            return null
+        }
+        
         let labels = [], data = [];
         let mensaje={
             since: this.state.initDate,

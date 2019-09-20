@@ -1,5 +1,6 @@
 import SubCategoria from '../models/subcategoria';
 import Categoria from '../models/categoria';
+import Producto from '../models/producto';
 
 export async function createSubCategoria(req, res) {
     const { nombre_subcategoria, id_categoria } = req.body;
@@ -13,13 +14,12 @@ export async function createSubCategoria(req, res) {
 
         return res.json({
             message: "SubCategoria creada con exito",
-            data: subcategoria
         });
     } catch (e) {
         console.log(e);
         res.status(300).json({
             message: "Ups! algo salio mal 300",
-            data: subcategoria
+            error: true
         });
     }
 }
@@ -47,6 +47,28 @@ export async function getOneSubCategoria(req, res) {
             where: {
                 id_subcategoria
             }
+        });
+        return res.json(subcategoria);
+    } catch (e) {
+        console.log(e);
+        res.status(302).json({
+            message: "error 302",
+            data: {}
+        });
+    }
+}
+
+export async function getSubJoinProduct(req, res) {
+    const { id_subcategoria } = req.params;
+    try {
+        const subcategoria = await SubCategoria.findOne({
+            where: {
+                id_subcategoria
+            },
+            include: [{
+                model: Producto,
+                limit: 1
+            }]
         });
         return res.json(subcategoria);
     } catch (e) {
@@ -90,12 +112,12 @@ export async function updateSubCategorias(req, res) {
                 id_subcategoria
             }
         });
-        return res.json(subcategorias);
+        return res.json({message: "Se actualizo la subcategoria"});
     }catch (e){
         console.log(e);
         res.status(301).json({
             message: "error 305",
-            data: {}
+            error: true
         });
     }
 }
@@ -108,12 +130,12 @@ export async function deleteOnSubCategoria(req, res) {
                 id_subcategoria
             }
         });
-        return res.json(numRowDelete);
+        return res.json({message: "Se elimino la subcategoria"});
     } catch (e) {
         console.log(e);
         res.status(303).json({
             message: "error 304",
-            data: {}
+            error: true
         });
     }
 }

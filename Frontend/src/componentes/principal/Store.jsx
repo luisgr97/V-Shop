@@ -29,27 +29,6 @@ class Store extends React.Component {
         this.precioTotal = this.precioTotal.bind(this)
         this.eliminarProducto= this.eliminarProducto.bind(this)
     }
-/*
-    componentDidMount(){
-        axios.get('http://localhost:4000/api/catalogos/get')
-        .then(response => {
-            if(response.data.error){
-                alert(response.data.message)
-            }else{
-                this.setState({
-                    idCatalog: response.data[0].id_catalogo,
-                    //loading: false
-                })
-            }
-        })
-    }
-*/
-/*
-    shouldComponentUpdate(nextProps, nextState){
-        return nextState.idCatalog !== this.state.idCatalog    
-    }
-*/
-
 
     getProduts(value){
         let idCatalog = this.state.idCatalog
@@ -62,7 +41,7 @@ class Store extends React.Component {
 
         }else{
             this.setState({
-            idCatalog: idCatalog,
+            idCatalog: parseInt(idCatalog),
             catalogo: response.data,
             loading: false,
             count: this.state.count + 1
@@ -85,9 +64,6 @@ class Store extends React.Component {
     return this.state.count !== nextState.count || this.props.logueado !== nextProps.logueado
     }
     
-
-
-
     componentDidUpdate(){
     localStorage.setItem('productos', JSON.stringify(this.state.productos))    
     }
@@ -102,15 +78,32 @@ class Store extends React.Component {
 
     eliminarProducto = (e) =>{
     this.setState({
-        productos: this.state.productos.filter(producto => producto.id !== e.target.value  ),
-        count: this.state.count + 1
-    
+        productos: this.state.productos.filter((producto, i) => i !== parseInt(e.target.value)  ),
+        count: this.state.count + 1    
     });             
     }
 
     addProduct(mensaje){
+        if(parseInt(mensaje.cantidad) <1){
+            alert("Valor incorrecto")
+            return null
+        }
         let product = this.state.productos
-        product.push(mensaje)
+        let find = false
+        for(var i=0; i<product.length;i++){
+            if(product[i].id===mensaje.id){
+                if(product[i].id_sede===mensaje.id_sede){
+                    product[i].cantidad += parseInt(mensaje.cantidad)
+                    product[i].precio += parseInt(mensaje.precio)*parseInt(mensaje.cantidad)
+                    find = true;
+                    break;
+                }
+            }
+        }
+        if(!find){
+            product.push(mensaje)
+        }
+        
         this.setState({
             productos : product,
             waveEffect: true,
@@ -165,13 +158,17 @@ class Store extends React.Component {
 
                         <Route path="/producto/:id_producto" render={({match}) => 
                             <ProductPage 
+                            idCliente={this.props.idCliente}
+                            logueado={this.props.logueado}
                             idCatalog={this.state.idCatalog}
                             id_product={match.params.id_producto}
+                            addProduct={this.addProduct}
                             />  
                         }/>
 
                         <Route exact path="/" render={() =>
                             <Main 
+                            idCatalog={this.state.idCatalog}
                             catalogo={this.state.catalogo}
                             addProduct={this.addProduct}
                             />  

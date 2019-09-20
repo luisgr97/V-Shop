@@ -26,6 +26,7 @@ const Catalogo = sequelize.define('catalogo',{
 });
 
 Catalogo.hasMany(Inventario_catalogo_productos,{foreignKey: 'id_catalogo', sourcekey:'id_catalogo'});
+Inventario_catalogo_productos.belongsTo(Catalogo,{foreignKey: 'id_catalogo', sourcekey:'id_catalogo'});
 
 Catalogo.hasMany(Detalle_factura,{as:'detalle_factura',foreignKey: 'id_catalogo', sourcekey:'id_catalogo'});
 Detalle_factura.belongsTo(Catalogo,{foreignKey: 'id_catalogo', sourcekey:'id_catalogo'});

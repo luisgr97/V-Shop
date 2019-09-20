@@ -26,6 +26,7 @@
 .order-summary .order-col {
   display: table;
   width: 100%;
+  cursor: pointer;
 }
 
 .order-summary .order-col:after {
@@ -182,4 +183,17 @@
   bottom: 210px;
   left: calc(50% - 2.5rem);
   z-index: 10010!important;
+}
+
+.pay-product-detail{
+ padding: 10px;
+ text-align: center
+}
+.pay-product-detail img{
+  max-width: 150px;
+  margin-right: 10px;
+}
+.pay-product-detail ul{
+  display: inline-block;
+  text-align: left
 }

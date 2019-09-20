@@ -71,7 +71,6 @@ class Managers extends React.Component{
         }).catch(err=>(
             alert("Por favor intentelo mas tarde")
         ))
-        console.log(mensaje)
     }
 
     toggle(tab) {

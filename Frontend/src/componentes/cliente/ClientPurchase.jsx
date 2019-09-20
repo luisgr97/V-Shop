@@ -22,7 +22,12 @@ const Factura = (props) =>{
                         
                     {props.detalle_facturas.map((indice, index) => (
                             <div className="order-col" key={indice.num_detalle+index}>
-                                <div>{`${indice.cantidad_comprada}x  ${indice.producto.nombre_producto}`}</div>
+                                <div>
+                                    <b>{`${indice.cantidad_comprada}`}</b>
+                                    {` x  ${indice.producto.nombre_producto}`}
+                                    <span className="bill-city">{` de ${indice.catalogo.ciudad}`}
+                                    {` con ${indice.descuento*100}% de descuento`}</span>
+                                </div>
                             <div>{indice.precio_actual}</div>
                         </div>
                         ))}                

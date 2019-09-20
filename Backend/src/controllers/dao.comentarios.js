@@ -4,25 +4,26 @@ import Usuario from '../models/usuario';
 
 // este es un metodo asincrono ya que toma tiempo para crearse, por ende, en funcion se le indica con "async" y en la constante con await, para esperar a su creacion antes de hacer el send
 export async function crear(req, res) {
-    const { comentario, calificacion, fecha, id_producto } = req.body;
+    const currentDate = new Date().toISOString().split("T")
+    const { comentario, calificacion, id_usuario, id_producto } = req.body;
     try {
         let nuevoComentario = await Comentario.create({
             comentario,
             calificacion,
-            fecha,
-            id_producto
+            fecha: currentDate,
+            id_producto,
+            id_usuario
         },{
-            fields: ['comentario', 'calificacion', 'fecha', 'id_producto']
+            fields: ['comentario', 'calificacion', 'fecha', 'id_producto','id_usuario']
         });
         return res.json({
-            message: "comenrario creado con exito",
-            data : nuevoComentario
+            message: "comenrario creado con exito",            
         })
     } catch (e) {
         console.log(e);
         res.status(600).json({
             message: "Something goes wrong 600",
-            data: {}
+            error: true
         });
     }
 }

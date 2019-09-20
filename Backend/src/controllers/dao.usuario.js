@@ -178,7 +178,7 @@ export async function updateUsuario(req, res) {
                                     where: { id_usuario }
                                 });
                             if (updateUsuario) {
-                                res.json(updateUsuario);
+                                res.json({succes: true, message: "Se actualizaron su datos"});
                             }else {
                                 res.json({message: 'El usuario no se pudo actualizar Correctamente.'});
                             }
@@ -195,7 +195,7 @@ export async function updateUsuario(req, res) {
         console.log(e);
         res.status(502).json({
             message: "Algo salio mal 504",
-            data: {}
+            error: true
         });
     }
 }
@@ -307,10 +307,13 @@ export async function getJoinFacturas(req, res) {
                 attributes: ['id_factura', 'fecha', 'total'],
                 include: [{
                     model: Detalle_factura,
-                    attributes: ['num_detalle', 'cantidad_comprada', 'precio_actual'],
+                    attributes: ['num_detalle', 'cantidad_comprada', 'descuento', 'precio_actual'],
                     include: [{
                         model: Producto,
                         attributes: ['id_producto', 'nombre_producto']
+                    },{
+                        model: Catalogo,
+                        attributes: ['ciudad']
                     }]
                 }]
             }],

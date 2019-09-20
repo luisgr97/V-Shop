@@ -19,6 +19,7 @@ class Cliente extends Component {
       },
       loading: true
     }
+    this.changeUserState = this.changeUserState.bind(this)
   };
 
   componentDidMount(){
@@ -35,6 +36,35 @@ class Cliente extends Component {
     })
   }
 
+  changeUserState(){
+    console.log("funciona la mona")
+    let confirmar = window.confirm("ATENCIÓN! Esta a punto de desactivar su cuenta, por ende" +
+    " ya NO tendra acceso a la misma, NO podra editar sus comentarios y No podra "+
+    "ver sus compras realizadas. Para reactivarla debe llenar el "+
+    "formulario en la seccion contacto, solicitando la reactivacion de su cuenta. \n\n"+
+    "¿ESTA SEGURO QUE DESEA DESACTIVAR SU CUENTA?");
+
+    if(!confirmar){
+      return null
+    }
+    const mensaje = {
+        estado: 0,
+        id_usuario: this.props.idCliente
+    }
+    axios.post('http://localhost:4000/usuario/change-state', mensaje)
+    .then(response =>{
+        if(response.data.error){
+            alert(response.data.message)
+        }else{
+            alert("Se actualizo el estado con exito")  
+            localStorage.removeItem('token-login')
+            window.location.reload()          
+        }
+    }).catch(err=>(
+        alert("Por favor intentelo mas tarde")
+    ))
+}
+
   render(){
     const {location} = this.props
 
@@ -48,7 +78,10 @@ class Cliente extends Component {
           <br/>
           <Row>
             <Col xs="3">
-              <Sidebar pathname = {location.pathname}/>
+              <Sidebar 
+              pathname = {location.pathname}
+              changeUserState = {this.changeUserState}
+              />
             </Col>
             <Col xs="9">
               

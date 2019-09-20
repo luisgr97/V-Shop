@@ -37,6 +37,7 @@ class Articulo extends Component {
 
         this.crearProducto = this.crearProducto.bind(this)
         this.updateProduct = this.updateProduct.bind(this)
+        this.deleteProduct = this.deleteProduct.bind(this)
         this.onChange = this.onChange.bind(this) 
         this.onChangeParentTag = this.onChangeParentTag.bind(this)
 
@@ -310,6 +311,24 @@ class Articulo extends Component {
     }
     }
 
+    deleteProduct(e){
+        var confirmar = window.confirm("Sí desactiva el producto, ya no estara disponible, ¿desea continuar?")
+        if(confirmar){
+            axios.delete('http://localhost:4000/api/productos/delete/' + e.target.value)
+            .then(response=>{
+                if(response.data.error){
+                    alert(response.data.message)
+                }else{
+                    alert(response.data.message)
+                    this.getProductos()
+                }
+            }).catch(err=>(
+                alert("Error, recargue la pagina")
+            ))
+        }   
+    }
+
+
     createProductForm(){
         const categorias = this.state.categorias;
         return(
@@ -346,7 +365,7 @@ class Articulo extends Component {
 
             <FormGroup>
                 <Label for="descripcion">Descripcion</Label>
-                <Input type="textarea" name="descripcion" id="descripcion" 
+                <Input type="textarea" row="10" name="descripcion" id="descripcion" 
                 value={this.state.descripcion} 
                 onChange = {this.onChange('descripcion')}/>
             </FormGroup>
@@ -493,7 +512,8 @@ class Articulo extends Component {
                                         <button value={i} 
                                             onClick={this.onSelectProductToEdit}                                                                
                                             className="fa fa-pen comment-edit"/>
-                                        <button  onClick={this.closeProductToEdit}                               
+                                        <button  value={producto.id_producto} 
+                                            onClick={this.deleteProduct}                               
                                             className="fa fa-trash comment-delete"/>
                                         </React.Fragment>
                                     }
